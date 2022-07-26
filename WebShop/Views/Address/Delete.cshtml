@@ -1,0 +1,54 @@
+﻿@using WebShop.Services.Interface;
+@model WebShop.Models.ViewModel.AddressViewModel
+@inject ICustomerService customerService
+@{
+    ViewData["Title"] = "Delete Address";
+    var users = await customerService.GetApplicationUsers();
+}
+
+<!-- Delete Address -->
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="login-form">
+                    <h2>Delete Address</h2>
+                </div>
+                <form method="post" asp-action="Delete">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <select name="ApplicationUserId" disabled class="form-select" aria-label="Default select example">
+                                @foreach (var item in users)
+                                {
+                                    if (item.Id == Model.ApplicationUserId)
+                                    {
+                                        <option selected value="@item.Id">@item.FirstName @item.LastName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Street" type="text" disabled class="form-control mt-3">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="City" type="text" disabled class="form-control mt-3">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="PostCode" type="text" disabled class="form-control mt-3">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Country" type="text" disabled class="form-control mt-3">
+                        </div>
+                    </div>
+                    <div align="right">
+                        <button type="submit" class="mt-3 primary-btn">Delete</button><a asp-controller="Address" asp-action="Index" class="mt-3 secondary-btn">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

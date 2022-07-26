@@ -1,0 +1,186 @@
+﻿@model WebShop.Models.ViewModel.ShoppingCartViewModel
+@using Microsoft.AspNetCore.Identity
+@using WebShop.Models.Dbo
+@using WebShop.Services.Interface
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject ICustomerService customerService
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await UserManager.GetUserAsync(User);
+    var address = await customerService.GetAddress(user.Id);
+
+    decimal totalPrice = 0;
+    decimal totalPriceWithVat = 0;
+    string documentId = string.Empty;
+
+    if (Model != null)
+    {
+        totalPrice = Model.GetTotalPrice();
+        //totalPriceWithVat = Model.GetTotalPriceWithVAT();
+        documentId = Model.Id + "-" + Model.Created.ToString("dd-MM-yyyy");
+
+    }
+
+    int counter = 1;
+}
+
+@section Scripts{
+    <script>
+        function TrigerModal() {
+            console.log("modal aktiviran!");
+            $('#mojModal').modal('show');
+        }
+        function HideModal() {
+            $('#mojModal').modal('hide');
+        }
+    </script>
+}
+
+    <div class="container">
+        @if (Model != null)
+    {
+        @section modalSection{
+        <div class="modal" id="mojModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header"><h5 class="modal-title">Storniranje</h5></div>
+                    <div class="modal-body"><p>Stvarno obrisat?</p></div>
+
+                    <div class="modal-footer">
+                        @Html.ActionLink("Potvrdi", "SuspendShoppingCart", new {  id=Model.Id  },new {@class= "btn btn-danger"})
+                        @*             <button type="button" class="btn btn-primary">Save changes</button>*@
+                        <button type="button" class="btn btn-secondary" onclick="HideModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+        string documentStatus = Model.ShoppingCartStatus.ToString();
+
+        <div class="mt-5 card">
+            <div class="card-header">
+                Shopping Cart: <strong>@documentId - @user.FirstName @user.LastName</strong><span class="float-right"> Status: <strong> @documentStatus</strong></span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive-sm">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 3%" class="center">#</th>
+                                <th style="width: 10%">Image</th>
+                                <th style="width: 20%">Title</th>
+                                <th class="center">Category</th>
+                                <th class="right">Price</th>
+                                <th class="right">Quantity</th>
+                                <th class="right">Total</th>
+                                <th style="width: 3%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ShoppingCartItems)
+                            {
+                                <tr>
+                                    <td class="center">@counter</td>
+                                    <td class="left"><img src="@item.Product.Image" width="100px"></td>
+                                    <td class="left strong">@item.Product.Title</td>
+                                    <td class="right">@item.Product.ProductCategory.Title</td>
+                                    <td class="right">@item.Price</td>
+                                    <td class="center">@item.Quantity</td>
+                                    <td class="right">@((item.Quantity * item.Price).ToString("c"))</td>
+                                    <td>@Html.ActionLink("X", "SuspendShoppingCartItem", new {  id=item.Id  },new {@class= "btn btn-danger"})</td>
+                                </tr>
+                                counter++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="row">
+                    <div class="col">
+                        
+                        <div class="card">
+                            <div class="card-header">SHIPPING DETAILS</div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">@user.FirstName @user.LastName</h5>
+                                <p class="card-text">@user.PhoneNumber</p>
+                                <p class="card-text">@address.Street</p>
+                                <p class="card-text">@address.PostCode @address.City</p>
+                                <p class="card-text">@address.Country</p>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
+                            </div>
+                        </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>
+                    <div class="col">
+                        <div class="col-md-10 offset-2">
+                            <table class="table table-clear">
+                                <tbody>
+                                    <tr>
+                                        <td class="left"><strong>Total Product</strong></td>
+                                        <td align="right">@string.Format("{0:C}",totalPrice)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left"><strong>Shipping Croatia</strong></td>
+                                        <td align="right">55,00 kn</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="left"><strong>Total</strong></td>
+                                        <td align="right">
+                                            <strong>@string.Format("{0:C}",totalPrice + 55)</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        @*<button type="button" class="btn btn-danger" onclick="TrigerModal()">Storno</button>*@
+                        @*@Html.ActionLink("Storno", "SuspendShoppingCart", new {  id=Model.Id  },new {@class= "btn btn-danger"})*@
+                        
+                        <div class="mt-5" align="right">
+                            
+                            @if (Model != null)
+                            {
+                                using (Html.BeginForm())
+                                {
+                                    <input type="text" name="ShoppingCartId" value="@Model.Id" hidden>
+                                    <a asp-controller="Shop" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
+                                    <input type="submit" class="btn btn-success" value="Buy Now">
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    else
+    {
+        <div class="card mt-5 col-md-6 offset-1">
+            <h5 class="card-header">Shopping Cart</h5>
+            <div class="card-body">
+                <h5 class="card-title">Your shopping cart is empty!</h5>
+                <p class="card-text">Check out our offer!</p>
+                @Html.ActionLink("Go To Shop","Index","Shop",null,new {@class = "btn btn-primary"})
+
+                @*       <a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    }
+
+</div>

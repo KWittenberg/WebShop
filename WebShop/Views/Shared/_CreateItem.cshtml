@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebShop.Models.Dbo
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@model string;
+
+@if (user != null)
+{
+    <div style="position: fixed; right: 50px; bottom: 50px;" class="text-white">
+        <a asp-controller="@Model" asp-action="Create" class="primary-btn">Add New</a>
+    </div>
+}

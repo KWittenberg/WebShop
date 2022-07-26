@@ -1,0 +1,19 @@
+﻿@model WebShop.Models.Dbo.ProductCategory
+@{
+    ViewData["Title"] = "Details Category";
+}
+
+<br/>
+<br/>
+<div class="container mt-5" align="center">
+    <div class="card text-bg-light mb-3" style="max-width: 30rem;">
+        <div class="card-header" align="left" style="background-color: #3A3F44">Details Category<a type="button" class="btn-close float-end" asp-controller="ProductCategories" asp-action="Index"></a>
+        </div>
+        <div class="card-body" style="background-color: #272B30">
+            <h3 class="card-title" align="left">@Model.Title</h3>
+            <p class="card-text" align="left">@Model.Description</p>
+            
+        </div>
+        <div class="card-footer" align="right">@Model.Created.ToShortDateString()</div>
+    </div>
+</div>

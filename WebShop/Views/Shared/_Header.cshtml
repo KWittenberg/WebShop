@@ -1,0 +1,120 @@
+﻿@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<header class="header-section">
+
+    <div class="container">
+        <div class="inner-header">
+            <div class="row">
+                <div class="col-lg-2 col-md-2">
+                    <div class="logo">
+                        <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index">BoltaShop</a>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="col-lg-5 col-md-6 offset-sm-1">
+                    <div class="advanced-search">
+                        <button type="button" class="category-btn text-white-50">Books</button>
+                        <form class="input-group" asp-controller="Shop" asp-action="Filter">
+                            <input name="searchString" class="bg-primary" type="text" placeholder="Search for a book..." />
+                            <button type="submit"><i class="ti-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- WhisList & ShoppingCart -->
+                <div class="col-lg-3 text-right col-md-3">
+                    <ul class="nav-right">
+                        <li class="heart-icon"><a href="#"><i class="icon_heart_alt" style="color:darkgray"></i><span>1</span></a></li>
+                        <li class="cart-icon">
+                            <a href="@Url.Action("ShoppingCart", "Shop")">
+                                <i class="fa-solid fa-cart-shopping" style="color:darkgray"></i>
+                                @*<i class="icon_bag_alt"></i>*@
+                                <span>2</span>
+                            </a>
+                            <partial name="_CartHover" />
+                            </li>
+                        <li class="cart-price text-white-50">600.00 Kn</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-item">
+        <div class="container">
+            <div class="nav-depart">
+                @*<div class="depart-btn">
+                <i class="ti-menu"></i>
+                <span>All Books</span>
+                <ul class="depart-hover">
+                <li class="active"><a href="#">Groblja Požeške Doline</a></li>
+                <li><a href="#">Rudina</a></li>
+                <li><a href="#">Puvarija</a></li>
+                <li><a href="#">Sesvetački Kraj U Srcu Poljadije</a></li>
+                <li><a href="#">Pjesme - Vladimir Hip</a></li>
+                <li><a href="#">Putopisne Impresije - Branko Živković</a></li>
+                <li><a href="#">Osam Generacija Thallera</a></li>
+                <li><a href="#">Vetovo</a></li>
+                <li><a href="#">100 Godina DVD Buk</a></li>
+                <li><a href="#">Almanah Gimnazije</a></li>
+                <li><a href="#">Brestovac</a></li>
+                <li><a href="#">Smotra</a></li>
+                </ul>
+                </div>*@
+
+                @if (user != null)
+                {
+                    var userRoles = await UserManager.GetRolesAsync(user);
+                    @switch (userRoles[0])
+                    {
+                        case Roles.Admin:
+                            <div class="depart-btn">
+                                <i class="ti-menu"></i>
+                                <span>Admin</span>
+                                <ul class="depart-hover">
+                                    <li><a class="nav-link" asp-controller="ProductCategories" asp-action="Index">Category</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ProductAdministration">Product</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="ApplicationUser" asp-action="Index">ApplicationUser</a>
+                                    <a class="dropdown-item" asp-controller="User" asp-action="Index">User</a>
+                                    <a class="dropdown-item" asp-controller="Roles" asp-action="Index">Role</a>
+                                    <a class="dropdown-item" asp-controller="Address" asp-action="Index">Address</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Orders">Orders</a>
+                                </ul>
+                            </div>
+                            break;
+                    }
+                }
+
+            </div>
+            <nav class="nav-menu mobile-menu">
+                <ul>
+                    @*<li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
+                    <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+
+                    <li>
+                        <a class="nav-link" asp-area="" asp-controller="Shop" asp-action="Index">Shop</a>
+                        <ul class="dropdown">
+                            <li><a asp-area="" asp-controller="Shop" asp-action="Index">CardView</a></li>
+                            <li><a asp-area="" asp-controller="Shop" asp-action="ListView">ListView</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link" href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-plus"></i> Cart</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
+
+
+                    <li><partial name="_LoginPartial" /></li>
+                </ul>
+            </nav>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </div>
+</header>

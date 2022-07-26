@@ -1,0 +1,49 @@
+﻿@model List<WebShop.Models.ViewModel.ProductViewModel>
+@{
+    int counter = 1;
+}
+
+<!-- Category -->
+<div class="container mt-5">
+    <main role="main" class="pb-3">
+        <h1>Product</h1>
+        <div class="card-body mt-3 p-0">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 2%">#</th>
+                        <th style="width: 10%">Image</th>
+                        <th style="width: 20%">Title</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th style="width: 12%"><a asp-controller="Admin" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td><a href="@item.Image" class="popupImg"><img src="@item.Image" /></a></td>
+                            <td>@item.Title</td>
+                            <td>@item.ShortDescription</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="Admin" asp-action="DetailsProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Admin")

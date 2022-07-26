@@ -1,0 +1,786 @@
+﻿@using WebShop.Models.Dbo
+@using Microsoft.AspNetCore.Identity
+@using WebShop.Models.ViewModel
+@model List<ProductViewModel>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+    int counter = 1;
+}
+
+
+@*<div class="text-center">
+    <br />
+    <h1 class="display-4">Welcome</h1>
+    <br />
+    <br />
+
+    <!-- dio koda ima grešku kod prazne baze -->
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        var userRoles = await UserManager.GetRolesAsync(user);
+
+
+        <h2>@user.FirstName @user.LastName you are @foreach (var role in userRoles){@role}</h2>
+    }
+    <br />
+    <br />
+
+    <p>WebShop <a href="https://www.behance.net/kwittenberg">ASP.NET Core 6 MVC EF</a>.</p>
+</div>*@
+
+
+
+
+
+
+
+
+
+
+
+<!-- Hero section -->
+<section class="hero-section">
+    <div class="hero-items owl-carousel">
+        
+        <!-- Rudina -->
+        <div class="single-hero-items set-bg" data-setbg="img/hero-01-rudina.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <span>T. Wittenberg</span>
+                        <h1>Rudina</h1>
+                        <p>
+                            Rudina je bila centar ili bolje rečeno središte centralne Slavonije u kojoj se spaja sve ono najbolje toga vremena.
+                            'Rudina se rudila od crvenih fresaka.' - Akademik Matko Peić.
+                        </p>
+                        <a href="#" class="primary-btn">Shop Now</a>
+                    </div>
+                </div>
+                @*<div class="off-card">
+                    <h2><b>Sale</b><span>- 30%</span></h2>
+                </div>*@
+            </div>
+        </div>
+        
+        <!-- Puvarija -->
+        <div class="single-hero-items set-bg" data-setbg="img/hero-02-puvarija.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <span>T. Wittenberg</span>
+                        <h1>Puvarija</h1>
+                        <p>Prva cjelovita obrada sjeverno-zapadnog dijela Dilj-gore i naselja na diljskim padinama, od srednjeg vijeka do današnjih dana.</p>
+                        <a href="#" class="primary-btn">Shop Now</a>
+                    </div>
+                </div>
+               @* <div class="off-card">
+                    <h2><b>Sale</b><span>- 30%</span></h2>
+                </div>*@
+            </div>
+        </div>
+        
+        <!-- Almanah Gimnazije -->
+        <div class="single-hero-items set-bg" data-setbg="img/hero-03.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 offset-sm-7">
+                        <span>T. Wittenberg</span>
+                        <h2 style="color: white">Almanah Gimnazije '48</h2>
+                        <p style="color: white">Iako se pišu monografije o samo onim osobama koje su, kako se to obično kaže ‘postigle’ nešto o životu, a onda svakako da su završile gimnaziju, ja sam se opredijelio da navedem sve učenike upisnike te školske godine 1948./49.</p>
+                        <a href="#" class="primary-btn float-right">Shop Now</a>
+                    </div>
+                </div>
+                <div class="off-card">
+                    <h2><b>Sale</b><span>- 25%</span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+
+
+
+<!-- Banner -->
+<p>
+    @*<div class="banner-section spad">
+    <div class="container-fluid">
+    <div class="row">
+    <div class="col-lg-4">
+    <div class="single-banner">
+    <img src="img/banner-1.jpg" alt="" />
+    <div class="inner-text">
+    <h4>Men’s</h4>
+    </div>
+    </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="single-banner">
+    <img src="img/banner-2.jpg" alt="" />
+    <div class="inner-text">
+    <h4>Women’s</h4>
+    </div>
+    </div>
+    </div>
+    <div class="col-lg-4">
+    <div class="single-banner">
+    <img src="img/banner-3.jpg" alt="" />
+    <div class="inner-text">
+    <h4>Kid’s</h4>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+</p>
+
+
+
+<section class="women-banner spad">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="filter-control">
+                    <div class="section-title"><h2 style="color: darkgray">Best Offer</h2></div>
+                    @*<ul>
+                    <li class="active">Clothings</li>
+                    <li>HandBag</li>
+                    <li>Shoes</li>
+                    <li>Accessories</li>
+                    </ul>*@
+                </div>
+
+                <div class="product-slider owl-carousel">
+
+                    <!-- 1996 Groblja Pozeske Doline -->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="img/1996 Groblja Pozeske Doline/1996 Groblja Pozeske Doline.jpg" alt="" />
+                            @*<div class="percentage"><i class="fa-solid fa-percent"></i></div>*@
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Groblja Pozeske Doline</h4></a>
+                            <div class="product-price">200.00 Kn@*<span>150.00 Kn</span>*@</div>
+                        </div>
+                    </div>
+
+                    <!-- 1997 Rudina -->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="img/1997 Rudina/1997 Rudina.jpg" alt="" />
+                            @*<div class="sale">Sale</div>*@
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Rudina</h4></a>
+                            <div class="product-price">300.00 Kn@*<span>250.00 Kn</span>*@</div>
+                        </div>
+                    </div>
+
+                    <!-- 1998 Puvarija -->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="img/1998 Puvarija/1998 Puvarija.jpg" alt="" />
+                            @*<div class="sale">Sale</div>*@
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Puvarija</h4></a>
+                            <div class="product-price">300.00 Kn@*<span>250.00 Kn</span>*@</div>
+                        </div>
+                    </div>
+
+                    <!-- 2002 Sesvetacki Kraj U Srcu Poljadije-->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije.jpg" alt="" />
+                            @*<div class="sale">Sale</div>*@
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Sesvetački Kraj U Srcu Poljadije</h4></a>
+                            <div class="product-price">300.00 Kn@*<span>250.00 Kn</span>*@</div>
+                        </div>
+                    </div>
+
+                    <!-- 2011 Brestovac -->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="/img/2011 Brestovac/2011 Brestovac.jpg" />
+                            <div class="sale">Sale</div>
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Brestovac</h4></a>
+                            <div class="product-price">250.00 Kn <span>300.00 Kn</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2012 Smotra -->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="/img/2012 Smotra/2012 Smotra.jpg" />
+                            <div class="sale">Sale</div>
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Smotra</h4></a>
+                            <div class="product-price">70.00 Kn <span>100.00 Kn</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2009 Almanah Gimnazije -->
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="/img/2009 Almanah Gimnazije/2009 Almanah Gimnazije.jpg" />
+                            <div class="sale">Sale</div>
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
+                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">T. Wittenberg</div>
+                            <a href="#"><h4 style="color: darkgray">Almanah Gimnazije</h4></a>
+                            <div class="product-price">150.00 Kn <span>200.00 Kn</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- deal-of-week -->
+<section class="deal-of-week set-bg spad" data-setbg="img/DealOfTheMonth072022.jpg">
+    <div class="container">
+        <div class="col-lg-6 text-center">
+            <div class="section-title">
+                <h2>Deal Of The Month</h2>
+                <p>LWebShopITED OFFER</p>
+                <div class="product-price">
+                    400 Kn
+                    <span>/ <s>600 Kn</s></span>
+                </div>
+            </div>
+            <div class="countdown-timer">
+                <div class="cd-item">
+                    <span><a id="days"></a></span>
+                    <p>Days</p>
+                </div>
+                <div class="cd-item">
+                    <span><a id="hrs"></a></span>
+                    <p>Hrs</p>
+                </div>
+                <div class="cd-item">
+                    <span><a id="min"></a></span>
+                    <p>Min</p>
+                </div>
+                <div class="cd-item">
+                    <span><a id="sec"></a></span>
+                    <p>Sec</p>
+                </div>
+            </div>
+            <a href="#" class="primary-btn">Shop Now</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- man-banner -->
+<p>
+    @* <section class="man-banner spad">
+    <div class="container-fluid">
+    <div class="row">
+    <div class="col-lg-8">
+    <div class="filter-control">
+    <ul>
+    <li class="active">Clothings</li>
+    <li>HandBag</li>
+    <li>Shoes</li>
+    <li>Accessories</li>
+    </ul>
+    </div>
+    <div class="product-slider owl-carousel">
+    <div class="product-item">
+    <div class="pi-pic">
+    <img src="img/man-1.jpg" alt="" />
+    <div class="sale">Sale</div>
+    <div class="icon">
+    <i class="icon_heart_alt"></i>
+    </div>
+    <ul>
+    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+    <li class="quick-view"><a href="#">+ Quick View</a></li>
+    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+    </ul>
+    </div>
+    <div class="pi-text">
+    <div class="catagory-name">Coat</div>
+    <a href="#">
+    <h5>Pure Pineapple</h5>
+    </a>
+    <div class="product-price">
+    $14.00
+    <span>$35.00</span>
+    </div>
+    </div>
+    </div>
+    <div class="product-item">
+    <div class="pi-pic">
+    <img src="img/man-2.jpg" alt="" />
+    <div class="icon">
+    <i class="icon_heart_alt"></i>
+    </div>
+    <ul>
+    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+    <li class="quick-view"><a href="#">+ Quick View</a></li>
+    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+    </ul>
+    </div>
+    <div class="pi-text">
+    <div class="catagory-name">Shoes</div>
+    <a href="#">
+    <h5>Guangzhou sweater</h5>
+    </a>
+    <div class="product-price">
+    $13.00
+    </div>
+    </div>
+    </div>
+    <div class="product-item">
+    <div class="pi-pic">
+    <img src="img/man-3.jpg" alt="" />
+    <div class="icon">
+    <i class="icon_heart_alt"></i>
+    </div>
+    <ul>
+    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+    <li class="quick-view"><a href="#">+ Quick View</a></li>
+    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+    </ul>
+    </div>
+    <div class="pi-text">
+    <div class="catagory-name">Towel</div>
+    <a href="#">
+    <h5>Pure Pineapple</h5>
+    </a>
+    <div class="product-price">
+    $34.00
+    </div>
+    </div>
+    </div>
+    <div class="product-item">
+    <div class="pi-pic">
+    <img src="img/man-4.jpg" alt="" />
+    <div class="icon">
+    <i class="icon_heart_alt"></i>
+    </div>
+    <ul>
+    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+    <li class="quick-view"><a href="#">+ Quick View</a></li>
+    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+    </ul>
+    </div>
+    <div class="pi-text">
+    <div class="catagory-name">Towel</div>
+    <a href="#">
+    <h5>Converse Shoes</h5>
+    </a>
+    <div class="product-price">
+    $34.00
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-lg-3 offset-lg-1">
+    <div class="product-large set-bg m-large" data-setbg="img/man-large.jpg">
+    <h2>Men’s</h2>
+    <a href="#">Discover More</a>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>*@
+</p>
+
+
+
+
+
+
+
+
+
+<!-- From The Blog -->
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title"><h2 style="color: darkgray">From The Blog</h2></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="img/3&3 do01072022.jpg" alt="" />
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                May 4,2021
+                            </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                5
+                            </div>
+                        </div>
+                        <a href="#">
+                            <h4>Ponuda izdanja</h4>
+                        </a>
+                        <p>Limited edition</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="img/2&3 do01032022.jpg" alt="" />
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                May 4,2021
+                            </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                5
+                            </div>
+                        </div>
+                        <a href="#">
+                            <h4>2&3 Ponuda izdanja</h4>
+                        </a>
+                        <p>Limited edition</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-latest-blog">
+                    <img src="img/3&2 14do20022022.jpg" alt="" />
+                    <div class="latest-text">
+                        <div class="tag-list">
+                            <div class="tag-item">
+                                <i class="fa fa-calendar-o"></i>
+                                May 4,2021
+                            </div>
+                            <div class="tag-item">
+                                <i class="fa fa-comment-o"></i>
+                                5
+                            </div>
+                        </div>
+                        <a href="#">
+                            <h4>3&2 Ponuda izdanja</h4>
+                        </a>
+                        <p>Limited edition</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="benefit-items">
+            @* <div class="row">
+            <div class="col-lg-4">
+            <div class="single-benefit">
+            <div class="sb-icon">
+            <img src="img/icon-1.png" alt="" />
+            </div>
+            <div class="sb-text">
+            <h6>Fast Shipping</h6>
+            <p>For all order over 999 Kn <pre wp-pre-tag-1=""></pre>
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-4">
+            <div class="single-benefit">
+            <div class="sb-icon">
+            <img src="img/icon-2.png" alt="" />
+            </div>
+            <div class="sb-text">
+            <h6>Delivery On Time</h6>
+            <p>If good have prolems</p>
+            </div>
+            </div>
+            </div>
+            <div class="col-lg-4">
+            <div class="single-benefit">
+            <div class="sb-icon">
+            <img src="img/icon-1.png" alt="" />
+            </div>
+            <div class="sb-text">
+            <h6>Secure Payment</h6>
+            <p>100% secure payment</p>
+            </div>
+            </div>
+            </div>
+            </div>*@
+        </div>
+    </div>
+</section>
+
+
+<!-- LOGO -->
+<p>
+    @*<div class="partner-logo" align="center">
+    <div class="container">
+    <div class="logo-carousel owl-carousel">
+    <div class="logo-item">
+    <div class="tablecell-inner">
+    <img src="img/LOGO-Bolta02.png" width="50px" />
+    </div>
+    </div>
+    @*<div class="logo-item">
+    <div class="tablecell-inner">
+    <img src="img/logo-2.png" alt="" />
+    </div>
+    </div>
+    <div class="logo-item">
+    <div class="tablecell-inner">
+    <img src="img/logo-3.png" alt="" />
+    </div>
+    </div>
+    <div class="logo-item">
+    <div class="tablecell-inner">
+    <img src="img/logo-4.png" alt="" />
+    </div>
+    </div>
+    <div class="logo-item">
+    <div class="tablecell-inner">
+    <img src="img/logo-5.png" alt="" />
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>*@
+</p>
+
+
+<!-- instagram-photo -->
+<div class="col-lg-12">
+    <div class="section-title"><h2 style="color: darkgray">Instagram</h2></div>
+</div>
+
+<div class="instagram-photo">
+    <div class="insta-item set-bg" data-setbg="img/IG/01.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">bolta</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/IG/02.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">bolta</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/IG/03.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">bolta</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/IG/04.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">bolta</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/IG/05.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">bolta</a></h5>
+        </div>
+    </div>
+    <div class="insta-item set-bg" data-setbg="img/IG/06.jpg">
+        <div class="inside-text">
+            <i class="ti-instagram"></i>
+            <h5><a href="#">bolta</a></h5>
+        </div>
+    </div>
+</div>
+
+
+
+<partial name="_Footer" />
+
+
+<!-- Counter Script -->
+<script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("2022-08-01").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hrs").innerHTML = hours;
+        document.getElementById("min").innerHTML = minutes;
+        document.getElementById("sec").innerHTML = seconds;
+
+        document.getElementById("counter").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("counter").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Naziv</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Cijena</th>
+        <th scope="col">Detalji</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var product in Model)
+    {
+        <tr>
+            <th scope="row">@counter</th>
+            <td>@product.Title</td>
+            <td>@product.Description</td>
+            <td>@product.Price</td>
+            <td><a href="@Url.Action("ItemView", "Home",new {id = product.Id})" class="btn btn-success">Detalji</a></td>
+        </tr>
+        counter++;
+    }
+    </tbody>
+</table>*@

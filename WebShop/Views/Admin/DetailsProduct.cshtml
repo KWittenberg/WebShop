@@ -1,0 +1,101 @@
+﻿@model WebShop.Models.ViewModel.ProductViewModel
+@{
+    ViewData["Title"] = "DetailsProduct";
+}
+<br />
+<br />
+
+<!-- Main content -->
+<div class="container mt-5">
+    <section class="content">
+        <!-- Default box -->
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="col-12">
+                    <img src="@Model.Image" class="img-fluid" alt="Product Image">
+                </div>
+            </div>
+            <div class="col-11 col-sm-6">
+                <h2 align="center" style="color: darkgray">@Model.Title</h2>
+                <h5 class="mt-2" align="center">@Model.Author</h5>
+                <hr />
+                <p>@Model.ShortDescription</p>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p align="left">Category: <b>@Model.ProductCategory.Title</b> @Model.BookCategory</p>
+                        <p align="left">Book Binding: <b>@Model.BookBinding</b></p>
+                        <p align="left">Still left: <b>@Model.Quantity</b></p>
+                        <p align="left">Created: <b>@Model.Created.ToShortDateString()</b></p>
+                    </div>
+                    <div>
+                        <div align="right">
+                            <a class="text-gray" href="https://www.linkedin.com/in/kresimirwittenberg"><i class="fab fa-linkedin-square"></i></a>
+                            <a class="text-gray" href="https://www.facebook.com/kresimirwittenberg"><i class="fab fa-facebook-square"></i></a>
+                            <a class="text-gray" href="https://www.instagram.com/kresimirwittenberg/"><i class="fab fa-instagram-square"></i></a>
+                            <a class="text-gray" href="https://github.com/KWittenberg"><i class="fab fa-github-square"></i></a>
+                            <a class="text-gray" href="https://www.behance.net/kwittenberg"><i class="fab fa-behance-square"></i></a>
+                            <a class="text-gray" href="https://twitter.com/WBolta"><i class="fab fa-twitter-square"></i></a>
+                            <a href="#" class="text-gray"><i class="fas fa-envelope-square"></i></a>
+                            <a href="#" class="text-gray"><i class="fas fa-rss-square"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <h2 align="center" class="mt-3 mb-0">@string.Format("{0:C}",Model.DiscountPrice)<sub style="color:grey"><s> @string.Format("{0:C}",Model.Price)</s></sub></h2>
+                <input type="text" readonly hidden value="@Model.Price" name="Price">
+                <br />
+                <div class="mt-5 d-grid gap-2">
+                    <div class="btn btn-default btn-lg btn-flat"><a asp-controller="Admin" asp-action="ProductAdministration">Back</a></div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">DESCRIPTION</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">ADDITIONAL INFORMATION</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <br />
+                <br />
+                <h2 align="center">@Model.Title</h2>
+                <br />
+                <br />
+                @Model.Description
+                <br />
+                <br />
+            </div>
+            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <br />
+                <br />
+                <div class="container-sm text-center" style="max-width: 500px;">
+                    <table class="table">
+                        <tbody>
+                            <tr><th scope="row">Category</th><td>@Model.BookCategory</td></tr>
+                            <tr><th scope="row">Binding</th><td>@Model.BookBinding</td></tr>
+                            <tr><th scope="row">Publisher</th><td>@Model.Publisher</td></tr>
+                            <tr><th scope="row">ISBN</th><td>@Model.Isbn</td></tr>
+                            <tr><th scope="row">Year Of Publication</th><td>@Model.YearOfPublication</td></tr>
+                            <tr><th scope="row">Number Of Pages</th><td>@Model.NumberOfPages</td></tr>
+                            <tr><th scope="row">Width</th><td>@Model.Width</td></tr>
+                            <tr><th scope="row">Height</th><td>@Model.Height</td></tr>
+                            <tr><th scope="row">Thickness</th><td>@Model.Thickness</td></tr>
+                            <tr><th scope="row">Weight</th><td>@Model.Weight</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <!-- /.card -->
+    </section>
+    <!-- /.content -->
+</div>
