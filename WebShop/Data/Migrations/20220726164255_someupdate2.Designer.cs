@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebShop.Data;
 
@@ -11,9 +12,10 @@ using WebShop.Data;
 namespace WebShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220726164255_someupdate2")]
+    partial class someupdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,9 +211,6 @@ namespace WebShop.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime?>("DOB")
                         .HasColumnType("datetime2");
 
@@ -243,6 +242,10 @@ namespace WebShop.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -250,6 +253,9 @@ namespace WebShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RememberMe")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")

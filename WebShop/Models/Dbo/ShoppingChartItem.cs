@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Models.Dbo;
 
-public class ShoppingCartItem : ShoppingCartItemBase, IEntityBase
+public class ShoppingCartItem : ShoppingCartItemBase, IEntity
 {
     public int Id { get; set; }
     public DateTime Created { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Models.Dbo;
 
-public class Product : ProductBase, IEntityBase
+public class Product : ProductBase, IEntity
 {
     public int Id { get; set; }
     public DateTime Created { get; set; }

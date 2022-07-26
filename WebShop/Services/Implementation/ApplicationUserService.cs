@@ -2,30 +2,61 @@
 
 public class ApplicationUserService : IApplicationUserService
 {
+    private readonly ApplicationDbContext db;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly RoleManager<IdentityRole> roleManager;
+    private SignInManager<ApplicationUser> signInManager;
+    private readonly AppConfig appSettings;
     private readonly IMapper mapper;
 
-    public ApplicationUserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
+    public ApplicationUserService(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
+        SignInManager<ApplicationUser> signInManager, IOptions<AppConfig> appSettings, IMapper mapper)
     {
+        this.db = db;
         this.userManager = userManager;
         this.roleManager = roleManager;
+        this.signInManager = signInManager;
+        this.appSettings = appSettings.Value;
         this.mapper = mapper;
     }
 
 
     /// <summary>
-    /// CreateApiUserAsync
+    /// GetUserAsync
     /// </summary>
     /// <param name="model"></param>
-    /// <param name="role"></param>
     /// <returns></returns>
-    public async Task<ApplicationUserViewModel?> CreateApiUserAsync(ApplicationUserBinding model, string role)
+    //public async Task<ApplicationUser?> GetUserAsync(ApplicationUserBinding model)
+    //{
+    //    // First check if user exist
+    //    var find = await userManager.FindByEmailAsync(model.Email);
+    //    if (find != null) { return null; }
+    //    var user = mapper.Map<ApplicationUser>(find);
+    //    return user;
+    //}
+
+
+
+    /// <summary>
+    /// GetUserAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel> GetUserAsync(string id)
     {
-        var result = await CreateUserAsync(model, role);
-        if (result == null) { return null; }
-        return mapper.Map<ApplicationUserViewModel>(result);
+        var dboUser = await db.ApplicationUser.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id);
+        return mapper.Map<ApplicationUserViewModel>(dboUser);
     }
+
+
+    //public async Task<ApplicationUserViewModel> GetUser(ClaimsPrincipal user)
+    //{
+    //    var userId = userManager.GetUserId(user);
+    //    return await GetUser(userId);
+
+    //}
+
+
 
     /// <summary>
     /// CreateUserAsync
@@ -34,20 +65,21 @@ public class ApplicationUserService : IApplicationUserService
     /// <param name="role"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<ApplicationUser?> CreateUserAsync(ApplicationUserBinding model, string role)
+    public async Task<ApplicationUser?> CreateUserAsync(UserBinding model, string role)
     {
-        // First check if user exist
         var find = await userManager.FindByEmailAsync(model.Email);
         if (find != null) { return null; }
-        var user = mapper.Map<ApplicationUser>(model);
-        //var adress = mapper.Map<Adress>(model.UserAdress);
-        //user.Adress = new List<Adress>() { adress };
+
+        var user = new ApplicationUser
+        {
+            Email = model.Email,
+            UserName = model.Email,
+        };
+
         var createdUser = await userManager.CreateAsync(user, model.Password);
         if (createdUser.Succeeded)
         {
-            // Add User In Role
             var userAddedToRole = await userManager.AddToRoleAsync(user, role);
-
             if (!userAddedToRole.Succeeded)
             {
                 throw new Exception("User Not Added In Role!!!");
@@ -56,15 +88,16 @@ public class ApplicationUserService : IApplicationUserService
         return user;
     }
 
-
-
-
-    public async Task<ApplicationUser?> GetUserAsync(ApplicationUserBinding model)
+    /// <summary>
+    /// CreateApiUserAsync
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="role"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel?> CreateApiUserAsync(UserBinding model, string role)
     {
-        // First check if user exist
-        var find = await userManager.FindByEmailAsync(model.Email);
-        if (find != null) { return null; }
-        var user = mapper.Map<ApplicationUser>(find);
-        return user;
+        var result = await CreateUserAsync(model, role);
+        if (result == null) { return null; }
+        return mapper.Map<ApplicationUserViewModel>(result);
     }
 }

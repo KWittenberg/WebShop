@@ -41,7 +41,7 @@ public class ApplicationUserController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(ApplicationUserBinding model)
+    public async Task<IActionResult> Register(UserBinding model)
     {
         var result = await userService.CreateUserAsync(model, Roles.User);
         if (result != null)
@@ -52,7 +52,7 @@ public class ApplicationUserController : Controller
         }
         return View();
     }
-
+    
     /// <summary>
     /// Login
     /// </summary>
@@ -64,11 +64,11 @@ public class ApplicationUserController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(ApplicationUserBinding model)
+    public async Task<IActionResult> Login(UserBinding model)
     {
         if (ModelState.IsValid)
         {
-            var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            var result = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
 
             if (result.Succeeded)
             {

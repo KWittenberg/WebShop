@@ -41,7 +41,6 @@ public class ProductCategoriesController : Controller
     {
         return View();
     }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Created,Title,Description")] ProductCategory productCategory)
@@ -72,7 +71,6 @@ public class ProductCategoriesController : Controller
         }
         return View(productCategory);
     }
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("Id,Created,Title,Description")] ProductCategory productCategory)
@@ -123,7 +121,6 @@ public class ProductCategoriesController : Controller
 
         return View(productCategory);
     }
-
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)

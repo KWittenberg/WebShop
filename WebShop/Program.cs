@@ -72,6 +72,6 @@ app.MapRazorPages();
 app.Services.GetService<IIdentityService>();
 
 //Seed database
-//AppDbInitializer.Seed(app);
+AppDbInitializer.Seed(app);
 
 app.Run();
