@@ -24,9 +24,31 @@ public class ApplicationUserController : Controller
     }
 
 
-    public IActionResult Index()
+    /// <summary>
+    /// Index
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var userList = this.db.ApplicationUser.ToList();
+        var userRole = this.db.UserRoles.ToList();
+        var roles = this.db.Roles.ToList();
+        var users = this.customerService.GetApplicationUsers();
+
+        foreach (var user in userList)
+        {
+            var role = userRole.FirstOrDefault(u => u.UserId == user.Id);
+            if (role == null)
+            {
+                user.Role = "None";
+            }
+            else
+            {
+                user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name;
+            }
+        }
+        return View(users.Result);
     }
 
 

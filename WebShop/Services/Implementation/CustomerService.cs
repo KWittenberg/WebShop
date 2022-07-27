@@ -48,7 +48,7 @@ public class CustomerService : ICustomerService
         await db.SaveChangesAsync();
         return mapper.Map<AddressViewModel>(dbo);
     }
-    
+
     /// <summary>
     /// Update Address
     /// </summary>
@@ -80,7 +80,7 @@ public class CustomerService : ICustomerService
         return mapper.Map<AddressViewModel>(dbo);
     }
 
-    
+
 
     /// <summary>
     /// Get ApplicationUser
@@ -99,11 +99,11 @@ public class CustomerService : ICustomerService
     /// <returns></returns>
     public async Task<List<ApplicationUserViewModel>> GetApplicationUsers()
     {
-        var dbo = await db.ApplicationUser.ToListAsync();
+        var dbo = await db.ApplicationUser.Include(x=>x.Address).ToListAsync();
         return dbo.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
     }
 
-
+    
 
 
     public async Task UpdateUserPhone(string userId, string phone)

@@ -16,11 +16,11 @@ public class ApplicationUser : IdentityUser, IEntityBase
     public ICollection<ShoppingCart> ShoppingCart { get; set; }
 
 
-    //// Add Role
-    //[NotMapped]
-    //public string RoleId { get; set; }
-    //[NotMapped]
-    //public string Role { get; set; }
-    //[NotMapped]
-    //public IEnumerable<SelectListItem> RoleList { get; set; }
+    // Add Role
+    [NotMapped]
+    public string RoleId { get; set; }
+    [NotMapped]
+    public string Role { get; set; }
+    [NotMapped]
+    public IEnumerable<SelectListItem> RoleList { get; set; }
 }

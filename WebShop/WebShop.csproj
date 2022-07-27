@@ -8,18 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\User\**" />
-    <Content Remove="Views\User\**" />
-    <EmbeddedResource Remove="Views\User\**" />
-    <None Remove="Views\User\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Views\ApplicationUser\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\ApplicationUser\Index.cshtml" />
+    <None Include="Views\User\Index.cshtml" />
     <None Include="Views\ApplicationUser\Login.cshtml" />
     <None Include="Views\ApplicationUser\Register.cshtml" />
   </ItemGroup>
