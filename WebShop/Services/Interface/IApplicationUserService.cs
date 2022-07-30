@@ -2,12 +2,18 @@
 
 public interface IApplicationUserService
 {
-    Task<ApplicationUserViewModel> GetUserAsync(string id);
-    
-    
-    Task<ApplicationUser?> CreateUserAsync(UserBinding model, string role);
-    
+    Task<List<ApplicationUserViewModel>> GetRolesAsync();
+    Task<ApplicationUserViewModel> GetRoleAsync(string id);
 
-    Task<ApplicationUserViewModel?> CreateApiUserAsync(UserBinding model, string role);
     
+    Task<ApplicationUser?> CreateApplicationUserAsync(ApplicationUserBinding model);
+    Task<ApplicationUserViewModel> UpdateApplicationUserAsync(ApplicationUserUpdateBinding model);
+    Task<ApplicationUserViewModel> DeleteApplicationUserAsync(ApplicationUserUpdateBinding model);
+
+
+
+    Task<ApplicationUser?> CreateUserAsync(UserBinding model, string role);
+
+    Task<ApplicationUserViewModel> GetUserAsync(string id);
+    Task<ApplicationUserViewModel?> CreateApiUserAsync(UserBinding model, string role);
 }

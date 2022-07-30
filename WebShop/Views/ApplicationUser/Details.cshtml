@@ -1,0 +1,32 @@
+﻿@model WebShop.Models.ViewModel.ApplicationUserViewModel
+@inject ICustomerService customerService
+@inject IApplicationUserService userService
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "ApplicationUser";
+    
+    var address = await customerService.GetAddress(@Model.Id);
+    int counter = 1;
+}
+<br />
+<br />
+<!-- Details Address -->
+<div class="container mt-5" align="center">
+    <div class="card text-bg-light mb-3" style="max-width: 30rem;">
+        <div class="card-header" align="left" style="color: #DFAD51; background-color: #3A3F44">
+            @Model.FirstName @Model.LastName<a type="button" class="btn-close float-end" asp-controller="ApplicationUser" asp-action="Index"></a>
+        </div>
+        <div class="card-body" style="background-color: #272B30">
+            <h5 class="card-title" align="left">@Model.Id</h5>
+            <h4 class="card-title" align="left">@Model.Role</h4>
+            <h4 class="card-title" align="left">@Model.PhoneNumber</h4>
+            <h5 class="card-title" align="left">@Model.Email</h5>
+            <h5 class="card-title" align="left">@Model.DOB</h5>
+            <hr/>
+            <h5 class="card-title" align="left">@if (address.Street != null) { @address.Street }</h5>
+            <h5 class="card-title" align="left">@if (address.PostCode != null) { @address.PostCode} @if (address.City != null) { @address.City}</h5>
+            <h5 class="card-title" align="left">@if (address.Country != null) { @address.Country }</h5>
+        </div>
+        <div class="card-footer" align="right">@Model.Created.ToShortDateString()</div>
+    </div>
+</div>

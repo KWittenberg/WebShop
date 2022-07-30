@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebShop.Models.ViewModel;
+using WebShop.Models.Binding;
 namespace WebShop.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -69,5 +70,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Order> Order { get; set; }
 
     // Add Order
-    public DbSet<WebShop.Models.ViewModel.ApplicationUserViewModel>? ApplicationUserViewModel { get; set; }
+    //public DbSet<WebShop.Models.ViewModel.ApplicationUserViewModel>? ApplicationUserViewModel { get; set; }
+
+    // Add Order
+    //public DbSet<WebShop.Models.Binding.ApplicationUserUpdateBinding>? ApplicationUserUpdateBinding { get; set; }
 }

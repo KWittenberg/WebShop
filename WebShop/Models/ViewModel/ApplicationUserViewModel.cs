@@ -11,13 +11,7 @@ public class ApplicationUserViewModel : ApplicationUserBase
 
 
     // Add Role
-    [NotMapped]
+    public Roles Roles { get; set; }
     public string RoleId { get; set; }
-    [NotMapped]
     public string Role { get; set; }
-    [NotMapped]
-    public IEnumerable<SelectListItem> RoleList { get; set; }
-
-
-    //public string ApplicationUserId { get; set; }
 }

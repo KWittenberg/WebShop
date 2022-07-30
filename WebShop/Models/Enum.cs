@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Models;
 
-public static class Roles
+public class Roles
 {
     //public const string SuperAdmin = "SuperAdmin";
     public const string Admin = "Admin";

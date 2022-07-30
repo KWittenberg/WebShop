@@ -16,10 +16,10 @@
                     <th style="width: 5%">Role</th>
                     <th style="width: 10%">Phone</th>
                     <th style="width: 15%">Email</th>
-                    <th style="width: 10%">Location</th>
-                    <th style="width: 10%">Total</th>
+                    @*<th style="width: 10%">Location</th>
+                    <th style="width: 10%">Total</th>*@
                     <th style="width: 10%">Created</th>
-                    <th style="width: 18%"><a asp-controller="ApplicationUser" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                    <th style="width: 10%"><a asp-controller="ApplicationUser" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,14 +31,14 @@
                             <td>@item.Role</td>
                             <td>@item.PhoneNumber</td>
                             <td>@item.Email</td>
-                            <td>Address</td>
-                            <td>@item.Id</td>
+                            @*<td>Address</td>
+                            <td>@item.Id</td>*@
                             <td>@item.Created.ToShortDateString()</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    <a asp-controller="Address" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
-                                    <a asp-controller="Address" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                    <a asp-controller="Address" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                    <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="ApplicationUser" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-controller="ApplicationUser" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -50,4 +50,4 @@
     </main>
 </div>
 
-@await Html.PartialAsync("_CreateItem", "Address")
+@await Html.PartialAsync("_CreateItem", "ApplicationUser")

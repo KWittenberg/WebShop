@@ -22,6 +22,29 @@ public class ApplicationUserService : IApplicationUserService
 
 
     /// <summary>
+    /// GetRolesAsync
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ApplicationUserViewModel>> GetRolesAsync()
+    {
+        var dbo = await db.Roles.ToListAsync();
+        return dbo.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
+    }
+    
+    /// <summary>
+    /// GetRoleAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel> GetRoleAsync(string id)
+    {
+        var role = await db.Roles.FindAsync(id);
+        return mapper.Map<ApplicationUserViewModel>(role);
+    }
+
+
+
+    /// <summary>
     /// GetUserAsync
     /// </summary>
     /// <param name="model"></param>
@@ -34,9 +57,7 @@ public class ApplicationUserService : IApplicationUserService
     //    var user = mapper.Map<ApplicationUser>(find);
     //    return user;
     //}
-
-
-
+    
     /// <summary>
     /// GetUserAsync
     /// </summary>
@@ -53,13 +74,108 @@ public class ApplicationUserService : IApplicationUserService
     //{
     //    var userId = userManager.GetUserId(user);
     //    return await GetUser(userId);
-
     //}
+
+
+    /// <summary>
+    /// CreateApplicationUserAsync
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="role"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<ApplicationUser?> CreateApplicationUserAsync(ApplicationUserBinding model)
+    {
+        var find = await userManager.FindByEmailAsync(model.Email);
+        if (find != null) { return null; }
+        
+        var user = new ApplicationUser
+        {
+            RoleId = model.RoleId,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            PhoneNumber = model.PhoneNumber,
+            Email = model.Email,
+            UserName = model.Email,
+            DOB = model.DOB
+            };
+
+        var createdUser = await userManager.CreateAsync(user, model.Password);
+        if (createdUser.Succeeded)
+        {
+            var role = await this.roleManager.FindByIdAsync(model.RoleId);
+            var userAddedToRole = await userManager.AddToRoleAsync(user, role.Name);
+            if (!userAddedToRole.Succeeded)
+            {
+                throw new Exception("User Not Added In Role!!!");
+            }
+        }
+        return user;
+    }
+
+
+    /// <summary>
+    /// UpdateApplicationUserAsync
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel> UpdateApplicationUserAsync(ApplicationUserUpdateBinding model)
+    {
+        var objFromDb = await this.userManager.FindByIdAsync(model.Id);
+        if (objFromDb == null) { return null; }
+
+        var userRole = await this.db.UserRoles.FirstOrDefaultAsync(u => u.UserId == objFromDb.Id);
+        if (userRole != null)
+        {
+            var previousRoleName = this.db.Roles.Where(u => u.Id == userRole.RoleId).Select(e => e.Name).FirstOrDefault();
+            // Removing the old role
+            await this.userManager.RemoveFromRoleAsync(objFromDb, previousRoleName);
+        }
+
+        //Add new role
+        await this.userManager.AddToRoleAsync(objFromDb, this.db.Roles.FirstOrDefault(u => u.Id == model.RoleId).Name);
+        objFromDb.Email = model.Email;
+        
+        // Change password
+        var user = await userManager.FindByIdAsync(model.Id);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        await userManager.ResetPasswordAsync(user, token, model.Password);
+        
+        var dbo = await db.ApplicationUser.FindAsync(model.Id);
+        mapper.Map(model, dbo);
+        await this.db.SaveChangesAsync();
+        return mapper.Map<ApplicationUserViewModel>(dbo);
+    }
+
+
+    /// <summary>
+    /// DeleteApplicationUserAsync
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel> DeleteApplicationUserAsync(ApplicationUserUpdateBinding model)
+    {
+        var roles = await db.Roles.FirstOrDefaultAsync(x => x.Id == model.RoleId);
+        var dbo = await db.ApplicationUser.FindAsync(model.Id);
+        mapper.Map(model, dbo);
+        //dbo.Roles = roles;
+        this.db.ApplicationUser.Remove(dbo);
+        await db.SaveChangesAsync();
+        return mapper.Map<ApplicationUserViewModel>(dbo);
+    }
+
+
+
+
+
+
+
+
 
 
 
     /// <summary>
-    /// CreateUserAsync
+    /// Create User Async only Email and Password
     /// </summary>
     /// <param name="model"></param>
     /// <param name="role"></param>
@@ -87,6 +203,11 @@ public class ApplicationUserService : IApplicationUserService
         }
         return user;
     }
+
+
+
+
+
 
     /// <summary>
     /// CreateApiUserAsync

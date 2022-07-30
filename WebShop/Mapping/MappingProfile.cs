@@ -4,9 +4,18 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+
+        
+        CreateMap<IdentityRole, ApplicationUserViewModel>();
+
         // ApplicationUser
         CreateMap<ApplicationUserBinding, ApplicationUser>();
+        CreateMap<ApplicationUserUpdateBinding, ApplicationUser>();
         CreateMap<ApplicationUser, ApplicationUserViewModel>();
+        CreateMap<ApplicationUserViewModel, ApplicationUserUpdateBinding>();
+        CreateMap<UserBinding, ApplicationUser>()
+            .ForMember(dst => dst.UserName, opts => opts.MapFrom(src => src.Email))
+            .ForMember(dst => dst.EmailConfirmed, opts => opts.MapFrom(src => true));
 
         // Address
         CreateMap<AddressBinding, Address>();

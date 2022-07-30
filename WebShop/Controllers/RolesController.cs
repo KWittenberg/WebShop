@@ -15,7 +15,7 @@ public class RolesController : Controller
         var roles = this.roleManager.Roles.ToList();
         return View(roles);
     }
-
+    
     /// <summary>
     /// Details
     /// </summary>

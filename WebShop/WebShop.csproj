@@ -8,8 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Views\User\Index.cshtml" />
+    <Content Remove="Views\ApplicationUser\xCreate.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\ApplicationUser\Login.cshtml" />
+    <None Include="Views\ApplicationUser\xCreate.cshtml" />
     <None Include="Views\ApplicationUser\Register.cshtml" />
   </ItemGroup>
 

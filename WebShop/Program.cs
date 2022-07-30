@@ -21,10 +21,11 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
 
 // Add Startup for UpdateShoppinCartStatus
 builder.Services.Configure<AppConfig>(builder.Configuration);
@@ -40,6 +41,18 @@ builder.Services.AddScoped<IProductService, ProductService>();
 // Add CustomerService
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
+
+// Custom Location for Login Page
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    //Location for your Custom Access Denied Page
+    //options.AccessDeniedPath = "Account/AccessDenied";
+
+    //Location for your Custom Login Page
+    options.LoginPath = "/ApplicationUser/Login";
+});
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

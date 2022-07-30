@@ -1,6 +1,6 @@
 ﻿namespace WebShop.Controllers;
 
-//[Authorize(Roles = Roles.Admin)]
+[Authorize(Roles = Roles.Admin)] //[Area("Admin")]
 public class ApplicationUserController : Controller
 {
     private readonly ApplicationDbContext db;
@@ -9,11 +9,11 @@ public class ApplicationUserController : Controller
     private readonly SignInManager<ApplicationUser> signInManager;
     private readonly UserManager<ApplicationUser> userManager;
     private readonly RoleManager<IdentityRole> roleManager;
-
+    private readonly IMapper mapper;
 
     public ApplicationUserController(ApplicationDbContext db, ICustomerService customerService,
         IApplicationUserService userService, SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
     {
         this.db = db;
         this.customerService = customerService;
@@ -21,6 +21,7 @@ public class ApplicationUserController : Controller
         this.signInManager = signInManager;
         this.userManager = userManager;
         this.roleManager = roleManager;
+        this.mapper = mapper;
     }
 
 
@@ -39,28 +40,117 @@ public class ApplicationUserController : Controller
         foreach (var user in userList)
         {
             var role = userRole.FirstOrDefault(u => u.UserId == user.Id);
-            if (role == null)
-            {
-                user.Role = "None";
-            }
-            else
-            {
-                user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name;
-            }
+            if (role == null) { user.Role = "None"; }
+            else { user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name; }
         }
         return View(users.Result);
     }
+
+    /// <summary>
+    /// Details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Details(string id)
+    {
+        var userList = this.db.ApplicationUser.ToList();
+        var userRole = this.db.UserRoles.ToList();
+        var roles = this.db.Roles.ToList();
+
+        foreach (var user in userList)
+        {
+            var role = userRole.FirstOrDefault(u => u.UserId == user.Id);
+            if (role == null) { user.Role = "None"; }
+            else { user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name; }
+        }
+        var dboUsers = await userService.GetUserAsync(id);
+        return View(dboUsers);
+    }
+
+
+    /// <summary>
+    /// Create
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Create()
+    {
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(ApplicationUserBinding model)
+    {
+        var result = await userService.CreateApplicationUserAsync(model);
+        if (result != null)
+        {
+            TempData["success"] = "ApplicationUser Register successfully";
+            return RedirectToAction("Index", "ApplicationUser");
+        }
+        return View();
+    }
+    
+    /// <summary>
+    /// Edit
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Edit(string id)
+    {
+        var user = await userService.GetUserAsync(id);
+        var model = mapper.Map<ApplicationUserUpdateBinding>(user);
+        return View(user);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(ApplicationUserUpdateBinding model)
+    {
+        await userService.UpdateApplicationUserAsync(model);
+        TempData["success"] = "ApplicationUser update successfully";
+        return RedirectToAction("Index", "ApplicationUser");
+    }
+    
+    /// <summary>
+    /// Delete
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var user = await userService.GetUserAsync(id);
+        var model = mapper.Map<ApplicationUserUpdateBinding>(user);
+        return View(user);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(ApplicationUserUpdateBinding model)
+    {
+        await userService.DeleteApplicationUserAsync(model);
+        TempData["success"] = "ApplicationUser Deleted successfully";
+        return RedirectToAction("Index", "ApplicationUser");
+    }
+
+
+
+
+
+
+
 
 
     /// <summary>
     /// Register
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult Register()
     {
         return View();
     }
+    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(UserBinding model)
@@ -74,16 +164,18 @@ public class ApplicationUserController : Controller
         }
         return View();
     }
-    
+
     /// <summary>
     /// Login
     /// </summary>
     /// <returns></returns>
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult Login()
     {
         return View();
     }
+    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(UserBinding model)
