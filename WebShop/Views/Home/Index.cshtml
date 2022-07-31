@@ -1,15 +1,13 @@
-﻿@using WebShop.Models.Dbo
+﻿@*@using WebShop.Models.Dbo
 @using Microsoft.AspNetCore.Identity
 @using WebShop.Models.ViewModel
 @model List<ProductViewModel>
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
+@inject UserManager<ApplicationUser> UserManager*@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "BoltaShop";
     int counter = 1;
 }
-
 
 @*<div class="text-center">
     <br />
@@ -34,77 +32,8 @@
 
 
 
-
-
-
-
-
-
-
-
 <!-- Hero section -->
-<section class="hero-section">
-    <div class="hero-items owl-carousel">
-        
-        <!-- Rudina -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-01-rudina.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <span>T. Wittenberg</span>
-                        <h1>Rudina</h1>
-                        <p>
-                            Rudina je bila centar ili bolje rečeno središte centralne Slavonije u kojoj se spaja sve ono najbolje toga vremena.
-                            'Rudina se rudila od crvenih fresaka.' - Akademik Matko Peić.
-                        </p>
-                        <a href="#" class="primary-btn">Shop Now</a>
-                    </div>
-                </div>
-                @*<div class="off-card">
-                    <h2><b>Sale</b><span>- 30%</span></h2>
-                </div>*@
-            </div>
-        </div>
-        
-        <!-- Puvarija -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-02-puvarija.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <span>T. Wittenberg</span>
-                        <h1>Puvarija</h1>
-                        <p>Prva cjelovita obrada sjeverno-zapadnog dijela Dilj-gore i naselja na diljskim padinama, od srednjeg vijeka do današnjih dana.</p>
-                        <a href="#" class="primary-btn">Shop Now</a>
-                    </div>
-                </div>
-               @* <div class="off-card">
-                    <h2><b>Sale</b><span>- 30%</span></h2>
-                </div>*@
-            </div>
-        </div>
-        
-        <!-- Almanah Gimnazije -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-03.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5 offset-sm-7">
-                        <span>T. Wittenberg</span>
-                        <h2 style="color: white">Almanah Gimnazije '48</h2>
-                        <p style="color: white">Iako se pišu monografije o samo onim osobama koje su, kako se to obično kaže ‘postigle’ nešto o životu, a onda svakako da su završile gimnaziju, ja sam se opredijelio da navedem sve učenike upisnike te školske godine 1948./49.</p>
-                        <a href="#" class="primary-btn float-right">Shop Now</a>
-                    </div>
-                </div>
-                <div class="off-card">
-                    <h2><b>Sale</b><span>- 25%</span></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<br />
-
-
+<partial name="_Hero" />
 
 <!-- Banner -->
 <p>
@@ -141,183 +70,8 @@
 </p>
 
 
-
-<section class="women-banner spad">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="filter-control">
-                    <div class="section-title"><h2 style="color: darkgray">Best Offer</h2></div>
-                    @*<ul>
-                    <li class="active">Clothings</li>
-                    <li>HandBag</li>
-                    <li>Shoes</li>
-                    <li>Accessories</li>
-                    </ul>*@
-                </div>
-
-                <div class="product-slider owl-carousel">
-
-                    <!-- 1996 Groblja Pozeske Doline -->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/1996 Groblja Pozeske Doline/1996 Groblja Pozeske Doline.jpg" alt="" />
-                            @*<div class="percentage"><i class="fa-solid fa-percent"></i></div>*@
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Groblja Pozeske Doline</h4></a>
-                            <div class="product-price">200.00 Kn@*<span>150.00 Kn</span>*@</div>
-                        </div>
-                    </div>
-
-                    <!-- 1997 Rudina -->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/1997 Rudina/1997 Rudina.jpg" alt="" />
-                            @*<div class="sale">Sale</div>*@
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Rudina</h4></a>
-                            <div class="product-price">300.00 Kn@*<span>250.00 Kn</span>*@</div>
-                        </div>
-                    </div>
-
-                    <!-- 1998 Puvarija -->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/1998 Puvarija/1998 Puvarija.jpg" alt="" />
-                            @*<div class="sale">Sale</div>*@
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Puvarija</h4></a>
-                            <div class="product-price">300.00 Kn@*<span>250.00 Kn</span>*@</div>
-                        </div>
-                    </div>
-
-                    <!-- 2002 Sesvetacki Kraj U Srcu Poljadije-->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije.jpg" alt="" />
-                            @*<div class="sale">Sale</div>*@
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Sesvetački Kraj U Srcu Poljadije</h4></a>
-                            <div class="product-price">300.00 Kn@*<span>250.00 Kn</span>*@</div>
-                        </div>
-                    </div>
-
-                    <!-- 2011 Brestovac -->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/2011 Brestovac/2011 Brestovac.jpg" />
-                            <div class="sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Brestovac</h4></a>
-                            <div class="product-price">250.00 Kn <span>300.00 Kn</span></div>
-                        </div>
-                    </div>
-
-                    <!-- 2012 Smotra -->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/2012 Smotra/2012 Smotra.jpg" />
-                            <div class="sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Smotra</h4></a>
-                            <div class="product-price">70.00 Kn <span>100.00 Kn</span></div>
-                        </div>
-                    </div>
-
-                    <!-- 2009 Almanah Gimnazije -->
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/2009 Almanah Gimnazije/2009 Almanah Gimnazije.jpg" />
-                            <div class="sale">Sale</div>
-                            <div class="icon">
-                                <i class="icon_heart_alt"></i>
-                            </div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>
-                                <li class="quick-view"><a href="#"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
-                                <li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h4 style="color: darkgray">Almanah Gimnazije</h4></a>
-                            <div class="product-price">150.00 Kn <span>200.00 Kn</span>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-
+<!-- Carousel -->
+<partial name="_CarouselOffer" />
 
 <!-- deal-of-week -->
 <section class="deal-of-week set-bg spad" data-setbg="img/DealOfTheMonth072022.jpg">
@@ -325,7 +79,7 @@
         <div class="col-lg-6 text-center">
             <div class="section-title">
                 <h2>Deal Of The Month</h2>
-                <p>LWebShopITED OFFER</p>
+                <p><b>LIMITED OFFER</b></p>
                 <div class="product-price">
                     400 Kn
                     <span>/ <s>600 Kn</s></span>
@@ -349,11 +103,14 @@
                     <p>Sec</p>
                 </div>
             </div>
-            <a href="#" class="primary-btn">Shop Now</a>
+            <a href="/Shop" class="primary-btn">Shop Now</a>
         </div>
     </div>
 </section>
 
+
+<!-- Carousel -->
+<partial name="_CarouselOffer" />
 
 <!-- man-banner -->
 <p>
@@ -472,13 +229,6 @@
     </div>
     </section>*@
 </p>
-
-
-
-
-
-
-
 
 
 <!-- From The Blog -->
@@ -634,51 +384,53 @@
 
 
 <!-- instagram-photo -->
-<div class="col-lg-12">
-    <div class="section-title"><h2 style="color: darkgray">Instagram</h2></div>
+<div>
+    <div class="col-lg-12">
+        <div class="section-title"><h2 style="color: darkgray">Instagram</h2></div>
+    </div>
+
+    <div class="instagram-photo">
+        <div class="insta-item set-bg" data-setbg="img/IG/01.jpg">
+            <div class="inside-text">
+                <i class="ti-instagram"></i>
+                <h5><a href="#">bolta</a></h5>
+            </div>
+        </div>
+        <div class="insta-item set-bg" data-setbg="img/IG/02.jpg">
+            <div class="inside-text">
+                <i class="ti-instagram"></i>
+                <h5><a href="#">bolta</a></h5>
+            </div>
+        </div>
+        <div class="insta-item set-bg" data-setbg="img/IG/03.jpg">
+            <div class="inside-text">
+                <i class="ti-instagram"></i>
+                <h5><a href="#">bolta</a></h5>
+            </div>
+        </div>
+        <div class="insta-item set-bg" data-setbg="img/IG/04.jpg">
+            <div class="inside-text">
+                <i class="ti-instagram"></i>
+                <h5><a href="#">bolta</a></h5>
+            </div>
+        </div>
+        <div class="insta-item set-bg" data-setbg="img/IG/05.jpg">
+            <div class="inside-text">
+                <i class="ti-instagram"></i>
+                <h5><a href="#">bolta</a></h5>
+            </div>
+        </div>
+        <div class="insta-item set-bg" data-setbg="img/IG/06.jpg">
+            <div class="inside-text">
+                <i class="ti-instagram"></i>
+                <h5><a href="#">bolta</a></h5>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="instagram-photo">
-    <div class="insta-item set-bg" data-setbg="img/IG/01.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">bolta</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/IG/02.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">bolta</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/IG/03.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">bolta</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/IG/04.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">bolta</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/IG/05.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">bolta</a></h5>
-        </div>
-    </div>
-    <div class="insta-item set-bg" data-setbg="img/IG/06.jpg">
-        <div class="inside-text">
-            <i class="ti-instagram"></i>
-            <h5><a href="#">bolta</a></h5>
-        </div>
-    </div>
-</div>
 
-
-
+<!-- Footer -->
 <partial name="_Footer" />
 
 
@@ -717,70 +469,3 @@
         }
     }, 1000);
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Naziv</th>
-        <th scope="col">Opis</th>
-        <th scope="col">Cijena</th>
-        <th scope="col">Detalji</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    @foreach (var product in Model)
-    {
-        <tr>
-            <th scope="row">@counter</th>
-            <td>@product.Title</td>
-            <td>@product.Description</td>
-            <td>@product.Price</td>
-            <td><a href="@Url.Action("ItemView", "Home",new {id = product.Id})" class="btn btn-success">Detalji</a></td>
-        </tr>
-        counter++;
-    }
-    </tbody>
-</table>*@
