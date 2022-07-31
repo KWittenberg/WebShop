@@ -197,4 +197,31 @@ public class ApplicationUserController : Controller
         }
         return View();
     }
+
+
+
+    /// <summary>
+    /// Edit User
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<IActionResult> EditUser(string Id)
+    {
+        var user = await userService.GetUserAsync(Id);
+        var model = mapper.Map<ApplicationUserUpdateBinding>(user);
+        return View(user);
+    }
+    [AllowAnonymous]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditUser(UserUpdateBinding model)
+    {
+        await userService.UpdateUserAsync(model);
+        TempData["success"] = "User update successfully";
+        return RedirectToAction("Index", "ApplicationUser");
+    }
+
+
 }

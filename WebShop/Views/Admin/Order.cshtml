@@ -24,51 +24,54 @@
 }
 
 <!-- BEGIN invoice -->
-<div class="invoice">
-    <!-- BEGIN invoice-company -->
-    <div class="invoice-company">
-        <span class="float-end hidden-print">
-            @*<a href="javascript:;" class="btn btn-sm btn-white mb-10px"><i class="fa fa-file-pdf t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>*@
-            <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white mb-10px"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
-        </span>
-        @*BoltaShop*@
-    </div>
-    <!-- END invoice-company -->
 
-    <br />
-    <br />
+<div class="container mt-5">
+    <div class="invoice">
+        <!-- BEGIN invoice-company -->
+        @*<div class="invoice-company">
+            <span class="float-end hidden-print">
+                <a href="javascript:;" class="btn btn-sm btn-white mb-10px"><i class="fa fa-file-pdf t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
+                <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white mb-10px"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
+            </span>
+            BoltaShop
+        </div>*@
+        <!-- END invoice-company -->
 
-    <!-- BEGIN invoice-header -->
-    <div class="row">
-        <div class="col">
-            <div class="col-md-7 offset-2">
-                <h2>Order: @documentId</h2>
+        <br />
+        <br />
+
+        <!-- BEGIN invoice-header -->
+        <div class="row">
+            <div class="col">
+                <div class="col-md-7 offset-2">
+                    <h3>Order: <b>@documentId</b></h3>
+                </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="col-md-7 offset-3">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">@Model.ShoppingCart.ApplicationUser.FirstName @Model.ShoppingCart.ApplicationUser.LastName</h5>
-                        <p class="card-text">@user.PhoneNumber</p>
-                        <p class="card-text">@address.Street</p>
-                        <p class="card-text">@address.PostCode @address.City</p>
-                        <p class="card-text">@address.Country</p>
+            <div class="col">
+                <div class="col-md-7 offset-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@Model.ShoppingCart.ApplicationUser.FirstName @Model.ShoppingCart.ApplicationUser.LastName</h5>
+                            <h4 class="card-text">@user.PhoneNumber</h4>
+                            <hr/>
+                            <h5 class="card-text">@address.Street</h5>
+                            <h5 class="card-text">@address.PostCode @address.City</h5>
+                            <h5 class="card-text">@address.Country</h5>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- END invoice-header -->
-    <!-- BEGIN invoice-content -->
-    <br />
-    <br />
-    <div class="invoice-content">
-        <!-- BEGIN table-responsive -->
-        <div class="table-responsive">
-            <div class="table-responsive-sm">
-                <table class="table table-striped">
-                    <thead>
+        <!-- END invoice-header -->
+        <!-- BEGIN invoice-content -->
+        <br />
+        <br />
+        <div class="invoice-content">
+            <!-- BEGIN table-responsive -->
+            <div class="table-responsive">
+                <div class="table-responsive-sm">
+                    <table class="table table-striped">
+                        <thead>
                         <tr>
                             <th style="width: 3%" class="center">#</th>
                             <th style="width: 15%">Image</th>
@@ -78,13 +81,13 @@
                             <th style="width: 10%">Quantity</th>
                             <th style="width: 10%">Total</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
                         {
                             <tr>
                                 <td class="center">@counter</td>
-                                <td class="left"><img src="/img/1997 Rudina/1997 Rudina 11.jpg" width="100px"></td>
+                                <td class="left"><img src="@item.Product.Image" width="100px"></td>
                                 <td class="left strong">@item.Product.Title</td>
                                 <td class="right">@item.Product.Title</td>
                                 <td class="right">@item.Price</td>
@@ -94,24 +97,24 @@
                             totalPrice += totalPrice + (@item.Quantity * @item.Price);
                             counter++;
                         }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- END table-responsive -->
-        <br />
-        <br />
-        <div class="row">
-            <div class="col">
-                <div class="invoice-note">
-                    <p><b>Paid </b> @Html.DisplayFor(model => model.Paid)</p>
-                    <p>* If you have any questions concerning this order, contact us.</p>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col">
-                <div class="col-md-10 offset-2">
-                    <table class="table table-clear">
-                        <tbody>
+            <!-- END table-responsive -->
+            <br />
+            <br />
+            <div class="row">
+                <div class="col">
+                    <div class="invoice-note">
+                        <p><b>Paid </b> @Html.DisplayFor(model => model.Paid)</p>
+                        <p>* If you have any questions concerning this order, contact us.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-md-10 offset-2">
+                        <table class="table table-clear">
+                            <tbody>
                             <tr>
                                 <td class="left"><strong>Total Product</strong></td>
                                 <td align="right">@string.Format("{0:C}",totalPrice)</td>
@@ -126,25 +129,30 @@
                                     <strong>@string.Format("{0:C}",totalPrice + 55)</strong>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- BEGIN invoice-footer -->
-        <br />
-        <br />
-        <div class="invoice-footer mt-5">
-            <p class="text-center mb-5px fw-bold">THANK YOU FOR YOUR PURCHASE</p>
-            <hr />
-            <p class="text-center">
-                <span class="me-10px"><i class="fa fa-fw fa-lg fa-globe"></i> boltashop.com</span>
-                <span class="me-10px"><i class="fa fa-fw fa-lg fa-phone-volume"></i> +385 98 870 888</span>
-                <span class="me-10px"><i class="fa fa-fw fa-lg fa-envelope"></i> kresimir.wittenberg@gmail.com</span>
-            </p>
+            <!-- BEGIN invoice-footer -->
+            <br />
+            <br />
+            <div class="invoice-footer mt-5">
+                <p class="text-center mb-5px fw-bold">THANK YOU FOR YOUR PURCHASE</p>
+                <hr />
+                <p class="text-center">
+                    <span class="me-10px"><i class="fa fa-fw fa-lg fa-globe"></i> boltashop.com</span>
+                    <span class="me-10px"><i class="fa fa-fw fa-lg fa-phone-volume"></i> +385 98 870 888</span>
+                    <span class="me-10px"><i class="fa fa-fw fa-lg fa-envelope"></i> kresimir.wittenberg@gmail.com</span>
+                </p>
+            </div>
+            <!-- END invoice-footer -->
         </div>
-        <!-- END invoice-footer -->
     </div>
 </div>
+<br />
+<br />
 <!-- END invoice -->
+
+@await Html.PartialAsync("_PrintItem", "Address")

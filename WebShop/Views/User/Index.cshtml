@@ -1,0 +1,72 @@
+﻿@model IEnumerable<WebShop.Models.Dbo.Address>
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "User";
+    var user = await UserManager.GetUserAsync(User);
+    int counter = 1;
+}
+<br />
+<br />
+<!-- User -->
+<div class="container mt-5" align="center">
+    <div class="card text-bg-light mb-3" style="max-width: 30rem;">
+        <div class="card-header" align="left" style="color: #DFAD51; background-color: #3A3F44"><b>@user.FirstName @user.LastName</b></div>
+        <div class="card-body" style="background-color: #272B30">
+            <h5 class="card-title" align="left"><b>Id:</b> @user.Id</h5>
+            <h4 class="card-title" align="left"><b>Phone:</b> @user.PhoneNumber</h4>
+            <h5 class="card-title" align="left"><b>Email:</b> @user.Email</h5>
+            <h5 class="card-title" align="left"><b>Date Of Birth:</b> @user.DOB</h5>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between">
+                <div>@user.Created.ToShortDateString()</div>
+                <div><a href="@Url.Action("EditUser", "User", new { id = user.Id })" class="btn btn-primary btn-sm">Edit</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Address -->
+<div class="container mt-5">
+    <main role="main" class="pb-3">
+        <h1>Address</h1>
+        <div class="card-body mt-3 p-0">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">#</th>
+                        <th style="width: 20%">User</th>
+                        <th>Street</th>
+                        <th>City</th>
+                        <th>PostCode</th>
+                        <th>Country</th>
+                        <th style="width: 11%"><a asp-controller="User" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td>@item.ApplicationUser.FirstName @item.ApplicationUser.LastName</td>
+                            <td>@item.Street</td>
+                            <td>@item.City</td>
+                            <td>@item.PostCode</td>
+                            <td>@item.Country</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="User" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-controller="User" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+@await Html.PartialAsync("_CreateItem", "User")

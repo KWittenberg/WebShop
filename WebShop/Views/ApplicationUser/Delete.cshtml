@@ -12,9 +12,7 @@
             <form method="post" asp-action="Delete">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="card-body">
-
                     <div class="form-group">
-                        <label asp-for="RoleId" class="control-label">&nbsp; &nbsp; Choose a role</label>
                         <select name="RoleId" disabled class="form-select" aria-label="Default select example">
                             @foreach (var item in userRoles)
                             {

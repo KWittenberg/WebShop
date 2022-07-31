@@ -148,6 +148,29 @@ public class ApplicationUserService : IApplicationUserService
     }
 
 
+
+
+    /// <summary>
+    /// UpdateUserAsync
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel> UpdateUserAsync(UserUpdateBinding model)
+    {
+        var objFromDb = await this.userManager.FindByIdAsync(model.Id);
+        if (objFromDb == null) { return null; }
+        
+        var dbo = await db.ApplicationUser.FindAsync(model.Id);
+        mapper.Map(model, dbo);
+        await this.db.SaveChangesAsync();
+        return mapper.Map<ApplicationUserViewModel>(dbo);
+    }
+
+
+
+
+
+
     /// <summary>
     /// DeleteApplicationUserAsync
     /// </summary>

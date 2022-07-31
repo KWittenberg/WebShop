@@ -13,6 +13,8 @@ public interface IApplicationUserService
 
 
     Task<ApplicationUser?> CreateUserAsync(UserBinding model, string role);
+    Task<ApplicationUserViewModel> UpdateUserAsync(UserUpdateBinding model);
+
 
     Task<ApplicationUserViewModel> GetUserAsync(string id);
     Task<ApplicationUserViewModel?> CreateApiUserAsync(UserBinding model, string role);

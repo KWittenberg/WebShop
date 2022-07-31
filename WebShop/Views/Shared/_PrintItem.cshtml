@@ -1,0 +1,29 @@
+﻿<div style="position: fixed; right: 50px; bottom: 50px;" class="text-white float-end hidden-print">
+    @*<a href="javascript:;" class="btn btn-sm btn-white mb-10px"><i class="fa fa-file-pdf t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>*@
+    <a href="" onclick="window.print()" class="primary-btn"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
+</div>
+
+
+
+
+
+
+@*
+
+
+@using Microsoft.AspNetCore.Identity
+@using WebShop.Models.Dbo
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@model string;
+
+@if (user != null)
+{
+    <div style="position: fixed; right: 50px; bottom: 50px;" class="text-white">
+        <a asp-controller="@Model" asp-action="Create" class="primary-btn">Add New</a>
+    </div>
+}
+*@

@@ -6,7 +6,7 @@ public class ApplicationUserViewModel : ApplicationUserBase
     public DateTime Created { get; set; }
 
     // Add Address
-    //public ICollection<Address> Address { get; set; }
+    public ICollection<Address> Address { get; set; }
 
 
 

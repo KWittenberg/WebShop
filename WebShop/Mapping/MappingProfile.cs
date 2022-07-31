@@ -7,11 +7,16 @@ public class MappingProfile : Profile
 
         
         CreateMap<IdentityRole, ApplicationUserViewModel>();
+        CreateMap<UserUpdateBinding, ApplicationUser>();
+        CreateMap<UserUpdateBinding, ApplicationUserViewModel>();
 
         // ApplicationUser
         CreateMap<ApplicationUserBinding, ApplicationUser>();
         CreateMap<ApplicationUserUpdateBinding, ApplicationUser>();
         CreateMap<ApplicationUser, ApplicationUserViewModel>();
+        CreateMap<ApplicationUser, ApplicationUserUpdateBinding>();
+
+
         CreateMap<ApplicationUserViewModel, ApplicationUserUpdateBinding>();
         CreateMap<UserBinding, ApplicationUser>()
             .ForMember(dst => dst.UserName, opts => opts.MapFrom(src => src.Email))
