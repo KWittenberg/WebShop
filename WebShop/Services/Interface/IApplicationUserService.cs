@@ -18,4 +18,9 @@ public interface IApplicationUserService
 
     Task<ApplicationUserViewModel> GetUserAsync(string id);
     Task<ApplicationUserViewModel?> CreateApiUserAsync(UserBinding model, string role);
+
+
+
+
+    Task<string> GetToken(TokenLoginBinding model);
 }

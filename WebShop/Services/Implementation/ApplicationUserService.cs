@@ -76,7 +76,7 @@ public class ApplicationUserService : IApplicationUserService
     //    return await GetUser(userId);
     //}
 
-
+    
     /// <summary>
     /// CreateApplicationUserAsync
     /// </summary>
@@ -112,8 +112,7 @@ public class ApplicationUserService : IApplicationUserService
         }
         return user;
     }
-
-
+    
     /// <summary>
     /// UpdateApplicationUserAsync
     /// </summary>
@@ -146,10 +145,7 @@ public class ApplicationUserService : IApplicationUserService
         await this.db.SaveChangesAsync();
         return mapper.Map<ApplicationUserViewModel>(dbo);
     }
-
-
-
-
+    
     /// <summary>
     /// UpdateUserAsync
     /// </summary>
@@ -165,12 +161,7 @@ public class ApplicationUserService : IApplicationUserService
         await this.db.SaveChangesAsync();
         return mapper.Map<ApplicationUserViewModel>(dbo);
     }
-
-
-
-
-
-
+    
     /// <summary>
     /// DeleteApplicationUserAsync
     /// </summary>
@@ -187,14 +178,7 @@ public class ApplicationUserService : IApplicationUserService
         return mapper.Map<ApplicationUserViewModel>(dbo);
     }
 
-
-
-
-
-
-
-
-
+    
 
 
     /// <summary>
@@ -226,14 +210,9 @@ public class ApplicationUserService : IApplicationUserService
         }
         return user;
     }
-
-
-
-
-
-
+    
     /// <summary>
-    /// CreateApiUserAsync
+    /// Create API User Async
     /// </summary>
     /// <param name="model"></param>
     /// <param name="role"></param>
@@ -243,5 +222,44 @@ public class ApplicationUserService : IApplicationUserService
         var result = await CreateUserAsync(model, role);
         if (result == null) { return null; }
         return mapper.Map<ApplicationUserViewModel>(result);
+    }
+
+
+
+
+    /// <summary>
+    /// GetToken
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<string> GetToken(TokenLoginBinding model)
+    {
+        var signInResult = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+        if (signInResult.Succeeded)
+        {
+            var user = await db.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName);
+            //var user = await userManager.getu(model.UserName);
+
+            if (user != null)
+            {
+                var role = await userManager.GetRolesAsync(user);
+                DateTime expires = DateTime.Now.AddMinutes(30);
+                var claims = new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Email, model.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, user.Id),
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Expiration, expires.ToString()),
+                    new Claim(ClaimTypes.Role, role.First()),
+                };
+
+                var keyBytes = Encoding.UTF8.GetBytes(appSettings.Identity.Key);
+                var theKey = new SymmetricSecurityKey(keyBytes);
+                var creds = new SigningCredentials(theKey, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(appSettings.AppUrl, appSettings.AppUrl, claims, expires: expires, signingCredentials: creds);
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+        }
+        return string.Empty;
     }
 }

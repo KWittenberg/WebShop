@@ -90,7 +90,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<List<ProductViewModel>> GetProductsAsync()
     {
-        var dbo = await db.Product.ToListAsync();
+        var dbo = await db.Product.Include(x => x.ProductCategory).ToListAsync();
         return dbo.Select(x => mapper.Map<ProductViewModel>(x)).ToList();
     }
 

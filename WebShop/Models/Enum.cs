@@ -8,6 +8,11 @@ public class Roles
     public const string Employee = "Employee";
 }
 
+public static class CorsPolicy
+{
+    public const string AllowAll = "AllowAllCors";
+}
+
 
 public enum ShoppingCartStatus
 {

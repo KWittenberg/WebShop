@@ -21,6 +21,19 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+//builder.Services.AddOpenApiDocument();
+
+// For View on Servers
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(CorsPolicy.AllowAll, builder => builder.WithOrigins("http://localhost:44367")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+        .SetIsOriginAllowed((host) => true));
+});
+
+
 
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
@@ -54,6 +67,23 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddControllersWithViews();
 
+
+// Add for Token
+string tokenIssuerAndAudience = builder.Configuration["AppUrl"];
+string tokenKey = builder.Configuration["Identity:Key"];
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = tokenIssuerAndAudience,
+        ValidAudience = tokenIssuerAndAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey))
+    };
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,6 +102,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Add Cors
+app.UseCors(CorsPolicy.AllowAll);
+
 
 app.UseAuthentication();
 app.UseAuthorization();
