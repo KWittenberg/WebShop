@@ -492,4 +492,39 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<ShoppingCartViewModel>(shoppingCart);
     }
+
+
+
+
+
+
+    /// <summary>
+    /// Change Available Status
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<ProductViewModel?> ChangeAvailableStatus(int Id, bool status)
+    {
+        var product = await db.Product.FindAsync(Id);
+        if (product == null) { return null; }
+        product.Available = status;
+        await db.SaveChangesAsync();
+        return mapper.Map<ProductViewModel>(product);
+    }
+    
+    /// <summary>
+    /// Change Discount Status
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<ProductViewModel?> ChangeDiscountStatus(int Id, bool status)
+    {
+        var product = await db.Product.FindAsync(Id);
+        if (product == null) { return null; }
+        product.Discount = status;
+        await db.SaveChangesAsync();
+        return mapper.Map<ProductViewModel>(product);
+    }
 }

@@ -12,10 +12,10 @@ public abstract class ProductBase
 
     
     // 02
-    public bool? Available { get; set; }
+    public bool Available { get; set; }
     public int? Quantity { get; set; }
     [Column(TypeName = "decimal(9, 2)")] public decimal? Price { get; set; }
-    public bool? Discount { get; set; }
+    public bool Discount { get; set; }
     [Column(TypeName = "decimal(9, 2)")] public decimal? DiscountPrice { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }

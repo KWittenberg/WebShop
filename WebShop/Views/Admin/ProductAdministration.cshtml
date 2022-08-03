@@ -15,21 +15,55 @@
                         <th style="width: 10%">Image</th>
                         <th style="width: 20%">Title</th>
                         <th>Description</th>
+                        <th>Available</th>
                         <th>Quantity</th>
+                        <th>Discount</th>
                         <th>Price</th>
-                        <th style="width: 12%"><a asp-controller="Admin" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                        <th style="width: 11%"><a asp-controller="Admin" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> Add New</a></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
+                        string redirectUrlAvailable = Url.Action("ChangeAvailableStatus", "Admin", new { id = item.Id, status = !item.Available });
+                        string redirectUrlDiscount = Url.Action("ChangeDiscountStatus", "Admin", new { id = item.Id, status = !item.Discount });
+
                         <tr>
                             <td>@counter</td>
                             <td><a href="@item.Image" class="popupImg"><img src="@item.Image" /></a></td>
                             <td>@item.Title</td>
                             <td>@item.ShortDescription</td>
+                            <td>
+                                @if (item.Available)
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlAvailable')" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlAvailable')">
+                                }
+                            </td>
                             <td>@item.Quantity</td>
-                            <td>@item.Price</td>
+                            <td>
+                                @if (item.Discount)
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlDiscount')" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlDiscount')">
+                                }
+                            </td>
+                            <td>
+                                @if (item.Discount == true)
+                                {
+                                    <div><b style="color:white">@item.DiscountPrice</b><sub><s> @item.Price</s></sub></div>
+                                }
+                                else
+                                {
+                                    <div><b style="color:white">@item.Price</b></div>
+                                }
+                            </td>
                             <td>
                                 <div class="btn-group btn-group-sm">
                                     <a asp-controller="Admin" asp-action="DetailsProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
@@ -47,3 +81,10 @@
 </div>
 
 @await Html.PartialAsync("_CreateItem", "Admin")
+
+<script>
+    function RedirectToUrl(url) {
+        console.log(url);
+        window.location.href = url;
+    }
+</script>

@@ -151,4 +151,31 @@ public class AdminController : Controller
         var order = await productService.SuspendOrder(id);
         return RedirectToAction("Orders");
     }
+
+
+
+
+    /// <summary>
+    /// Change Available Status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> ChangeAvailableStatus(int id, bool status)
+    {
+        var discount = await productService.ChangeAvailableStatus(id, status);
+        return RedirectToAction("ProductAdministration");
+    }
+    
+    /// <summary>
+    /// Change Discount Status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> ChangeDiscountStatus(int id, bool status)
+    {
+        var discount = await productService.ChangeDiscountStatus(id, status);
+        return RedirectToAction("ProductAdministration");
+    }
 }

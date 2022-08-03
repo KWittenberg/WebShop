@@ -9,6 +9,9 @@ public interface IProductService
     Task<ProductViewModel> AddProductAsync(ProductBinding model);
     Task<ProductViewModel> UpdateProductAsync(ProductUpdateBinding model);
     Task<ProductViewModel> DeleteProductAsync(ProductUpdateBinding model);
+    Task<ProductViewModel?> ChangeAvailableStatus(int Id, bool status);
+    Task<ProductViewModel?> ChangeDiscountStatus(int Id, bool status);
+
 
     // ProductCategoryViewModel
     Task<ProductCategoryViewModel> GetProductCategoryAsync(int id);
