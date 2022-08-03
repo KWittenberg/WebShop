@@ -2,6 +2,8 @@
 
 public class ApplicationUserBinding : ApplicationUserBase
 {
+    public string Password { get; set; }
+    
     // Add Role
     public Roles Roles { get; set; }
     public string RoleId { get; set; }

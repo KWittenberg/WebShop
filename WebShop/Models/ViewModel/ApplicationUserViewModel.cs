@@ -3,6 +3,7 @@
 public class ApplicationUserViewModel : ApplicationUserBase
 {
     public string Id { get; set; }
+    public string Password { get; set; }
     public DateTime Created { get; set; }
 
     // Add Address

@@ -47,11 +47,18 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.AddProductAsync(model));
     }
-    //[HttpPut]
-    //[Route("product")]
-    //[ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
-    //public async Task<IActionResult> UpdateProductAsync(ProductUpdateApiBinding model)
-    //{
-    //    return Ok(await productService.UpdateProductAsync(model));
-    //}
+    [HttpPut]
+    [Route("product")]
+    [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateProductAsync(ProductUpdateBinding model)
+    {
+        return Ok(await productService.UpdateProductAsync(model));
+    }
+    [HttpDelete]
+    [Route("product")]
+    [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
+    public async Task<IActionResult> DeleteProductAsync(ProductUpdateBinding model)
+    {
+        return Ok(await productService.DeleteProductAsync(model));
+    }
 }
