@@ -132,7 +132,36 @@ public class ApplicationUserController : Controller
         return RedirectToAction("Index", "ApplicationUser");
     }
 
+    
 
+    /// <summary>
+    /// LockUnlock
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public IActionResult LockUnlock(string userId)
+    {
+        var objFromDb = this.db.ApplicationUser.FirstOrDefault(u => u.Id == userId);
+        if (objFromDb == null) { return NotFound(); }
+        if (objFromDb.LockoutEnd != null && objFromDb.LockoutEnd > DateTime.Now)
+        {
+            //user is locked and will remain locked untill lockoutend time
+            //clicking on this action will unlock them
+            objFromDb.LockoutEnd = DateTime.Now;
+            TempData["success"] = "User unlocked successfully.";
+        }
+        else
+        {
+            //user is not locked, and we want to lock the user
+            objFromDb.LockoutEnd = DateTime.Now.AddYears(1000);
+            TempData["success"] = "User locked successfully.";
+        }
+        this.db.SaveChanges();
+        return RedirectToAction(nameof(Index));
+    }
+
+    
 
 
 
