@@ -28,18 +28,19 @@ namespace WebShop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -93,12 +94,13 @@ namespace WebShop.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Primary = table.Column<bool>(type: "bit", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,7 +109,8 @@ namespace WebShop.Migrations
                         name: "FK_Address_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -196,22 +199,24 @@ namespace WebShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingChart",
+                name: "ShoppingCart",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ShoppingCartStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingChart", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingCart", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingChart_AspNetUsers_ApplicationUserId",
+                        name: "FK_ShoppingCart_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,8 +229,26 @@ namespace WebShop.Migrations
                     ProductCategoryId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(9,2)", nullable: false)
+                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Available = table.Column<bool>(type: "bit", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(9,2)", nullable: true),
+                    Discount = table.Column<bool>(type: "bit", nullable: false),
+                    DiscountPrice = table.Column<decimal>(type: "decimal(9,2)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    YearOfPublication = table.Column<int>(type: "int", nullable: true),
+                    Publisher = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Isbn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookCategory = table.Column<int>(type: "int", nullable: true),
+                    BookBinding = table.Column<int>(type: "int", nullable: true),
+                    NumberOfPages = table.Column<int>(type: "int", nullable: true),
+                    Width = table.Column<int>(type: "int", nullable: true),
+                    Height = table.Column<int>(type: "int", nullable: true),
+                    Thickness = table.Column<int>(type: "int", nullable: true),
+                    Weight = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -239,31 +262,53 @@ namespace WebShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingChartItem",
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Paid = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_ShoppingCart_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCart",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItem",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ShoppingChartId = table.Column<int>(type: "int", nullable: true),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(9,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingChartItem", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingCartItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingChartItem_Product_ProductId",
+                        name: "FK_ShoppingCartItem_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoppingChartItem_ShoppingChart_ShoppingChartId",
-                        column: x => x.ShoppingChartId,
-                        principalTable: "ShoppingChart",
-                        principalColumn: "Id");
+                        name: "FK_ShoppingCartItem_ShoppingCart_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCart",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -311,24 +356,29 @@ namespace WebShop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_ShoppingCartId",
+                table: "Order",
+                column: "ShoppingCartId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Product_ProductCategoryId",
                 table: "Product",
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingChart_ApplicationUserId",
-                table: "ShoppingChart",
+                name: "IX_ShoppingCart_ApplicationUserId",
+                table: "ShoppingCart",
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingChartItem_ProductId",
-                table: "ShoppingChartItem",
+                name: "IX_ShoppingCartItem_ProductId",
+                table: "ShoppingCartItem",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingChartItem_ShoppingChartId",
-                table: "ShoppingChartItem",
-                column: "ShoppingChartId");
+                name: "IX_ShoppingCartItem_ShoppingCartId",
+                table: "ShoppingCartItem",
+                column: "ShoppingCartId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -352,7 +402,10 @@ namespace WebShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ShoppingChartItem");
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCartItem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -361,7 +414,7 @@ namespace WebShop.Migrations
                 name: "Product");
 
             migrationBuilder.DropTable(
-                name: "ShoppingChart");
+                name: "ShoppingCart");
 
             migrationBuilder.DropTable(
                 name: "ProductCategory");

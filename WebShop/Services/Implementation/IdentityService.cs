@@ -28,6 +28,7 @@ public class IdentityService : IIdentityService
                     {
                         new Address
                         {
+                            Primary = true,
                             Street = "J.J. Strossmayera 4.",
                             City = "Požega",
                             PostCode = "34000",
@@ -47,6 +48,7 @@ public class IdentityService : IIdentityService
                     {
                         new Address
                         {
+                            Primary = true,
                             Street = "Radnička 8.",
                             City = "Dervišaga",
                             PostCode = "34000",

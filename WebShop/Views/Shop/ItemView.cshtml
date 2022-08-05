@@ -60,7 +60,7 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     @*<i class="fa fa-star-o"></i>*@
-                                    <span>(5)</span>
+                                    @*<span>(5)</span>*@
                                 </div>
 
                                 <div class="pd-desc">
@@ -85,32 +85,57 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pd-desc"><h3>@string.Format("{0:C}",Model.DiscountPrice) <span> @string.Format("{0:C}",Model.Price)</span></h3></div>
-                                <input type="text" readonly hidden value="@Model.Price" name="Price">
+                                <div class="pd-desc">
+                                    @if (Model.Discount == true)
+                                    {
+                                        <h3>@string.Format("{0:C}", Model.DiscountPrice) <span> @string.Format("{0:C}", Model.Price)</span></h3>
+                                        <input type="text" readonly hidden value="@Model.DiscountPrice" name="Price">
+                                    }
+                                    else
+                                    {
+                                        <h3>@string.Format("{0:C}", Model.Price)</h3>
+                                        <input type="text" readonly hidden value="@Model.Price" name="Price">
+                                    }
+                                </div>
+
+
+
+                                @*@if (Model.Discount == true)
+                            {
+                            <input type="text" readonly hidden value="@Model.DiscountPrice" name="Price">
+                            }
+                            else
+                            {
+                            <input type="text" readonly hidden value="@Model.Price" name="Price">
+                            }*@
+
+                                @*<input type="text" readonly hidden value="@Model.Price" name="Price">*@
+
+
 
                                 <div class="mt-5 quantity">
                                     <div class="pro-qty"><input name="Quantity" type="text" value="1" style=""></div>
-                                    
-                                    <input type="submit" value="Add to Cart" class="site-btn place-btn">
+
+                                    <input type="submit" value="Add to Cart" class="site-btn place-btn"><a asp-controller="Shop" asp-action="Index" class="secondary-btn">Back</a>
                                     @*<a type="submit" name="Quantity" value="Add to Cart" asp-route-id="@Model.Id" asp-controller="Shop" asp-action="ShoppingCart" class="primary-btn pd-cart"><i class="fas fa-cart-plus fa-lg mr-2"></i> Add To Cart</a>*@
                                     @*<input type="submit" value="Add to Cart" class="btn btn-primary btn-lg">*@
-                                    </div>
-                                
-                                
-                                @*<div class="select-button">
-                                    <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                    <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
                                 </div>
-                                
-                                <div class="order-btn">
-                                    <button type="submit" class="site-btn place-btn">Place Order</button>
-                                </div>*@
-                                
-                                
-                                <div class="mt-5 d-grid gap-2">
-                                    <a class="btn btn-lg" asp-controller="Shop" asp-action="Index">Continue Shopping</a>
-                                </div>    
-                                
+
+
+                                @*<div class="select-button">
+                            <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                            <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+                            </div>
+
+                            <div class="order-btn">
+                            <button type="submit" class="site-btn place-btn">Place Order</button>
+                            </div>*@
+
+
+                                @*<div class="mt-5 d-grid gap-2">
+                            <a class="secondary-btn text-center" href="/Shop">Continue Shopping</a>
+                            </div>    *@
+
                             </div>
                         </div>
                     </div>
@@ -227,96 +252,6 @@
         </div>
     </section>
     <!-- Product Shop Section End -->
-    <!-- Related Products Section End -->
-    <div class="related-products spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>Related Products</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/1996 Groblja Pozeske Doline/1996 Groblja Pozeske Doline.jpg" alt="">
-                            <div class="sale">Sale</div>
-                            <div class="icon"><i class="icon_heart_alt"></i></div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h5>Groblja Pozeske Doline</h5></a>
-                            <div class="product-price">150.00 kn <span>200.00 kn</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/1997 Rudina/1997 Rudina.jpg" alt="">
-                            <div class="sale">Sale</div>
-                            <div class="icon"><i class="icon_heart_alt"></i></div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">T. Wittenberg</div>
-                            <a href="#"><h5>Rudina</h5></a>
-                            <div class="product-price">300.00 kn <span>250.00 kn</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/2004 Pjesme/2004 Pjesme.jpg" alt="">
-                            <div class="sale">Sale</div>
-                            <div class="icon"><i class="icon_heart_alt"></i></div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">V. Hip</div>
-                            <a href="#"><h5>Pjesme</h5></a>
-                            <div class="product-price">80.00 kn <span>50.00 kn</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="/img/2004 Putopisne Impresije/2004 Putopisne Impresije.jpg" alt="">
-                            <div class="sale">Sale</div>
-                            <div class="icon"><i class="icon_heart_alt"></i></div>
-                            <ul>
-                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="pi-text">
-                            <div class="catagory-name">B. Živković</div>
-                            <a href="#"><h5>Putopisne Impresije</h5></a>
-                            <div class="product-price">100.00 kn <span>80.00 kn</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Related Products Section End -->
 }
+<partial name="_RelatedProducts" />
 <partial name="_Footer" />

@@ -35,6 +35,22 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
+    /// Get Addresses
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
+    public async Task<List<ApplicationUserViewModel>> GetAddresses(string Id)
+    {
+        var dbo = await db.ApplicationUser
+            .Include(x=>x.Address)
+            .Where(x => x.Id == Id).ToListAsync();
+        return dbo.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
+    }
+
+
+
+
+    /// <summary>
     /// Add Address
     /// </summary>
     /// <param name="model"></param>

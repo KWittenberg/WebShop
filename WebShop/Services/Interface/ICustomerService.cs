@@ -3,6 +3,7 @@
 public interface ICustomerService
 {
     // AddressViewModel
+    Task<List<ApplicationUserViewModel>> GetAddresses(string Id);
     Task<AddressViewModel> GetAddress(string userId);
     Task<AddressViewModel> GetAddressInt(int id);
     Task<AddressViewModel> AddAddressAsync(AddressBinding model);

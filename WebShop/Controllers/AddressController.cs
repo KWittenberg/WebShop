@@ -21,9 +21,29 @@ public class AddressController : Controller
     public async Task<IActionResult> Index()
     {
         return this.db.Address != null ?
-                    View(await this.db.Address.Include(am => am.ApplicationUser).ToListAsync()) :
+                    View(await this.db.Address
+                        .Include(am => am.ApplicationUser)
+                        .OrderBy(x=>x.ApplicationUser)
+                        .ToListAsync()) :
                     Problem("Entity set 'ApplicationDbContext.Address'  is null.");
     }
+
+    /// <summary>
+    /// Change Primary Status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> ChangePrimaryStatus(int id, bool status)
+    {
+        var address = await db.Address.FindAsync(id);
+        if (address == null) { return null; }
+        address.Primary = status;
+        await db.SaveChangesAsync();
+        return RedirectToAction("Index", address);
+    }
+
+
 
     /// <summary>
     /// GET: Address/Details/1

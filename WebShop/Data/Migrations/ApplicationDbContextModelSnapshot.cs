@@ -186,6 +186,9 @@ namespace WebShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Primary")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Street")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -310,7 +313,7 @@ namespace WebShop.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Available")
+                    b.Property<bool>("Available")
                         .HasColumnType("bit");
 
                     b.Property<int?>("BookBinding")
@@ -325,7 +328,7 @@ namespace WebShop.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Discount")
+                    b.Property<bool>("Discount")
                         .HasColumnType("bit");
 
                     b.Property<decimal?>("DiscountPrice")

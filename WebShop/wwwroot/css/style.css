@@ -2394,7 +2394,7 @@ ol {
 }
 
     .tab-item ul li a.active {
-        color: #252525;
+        color: white;
     }
 
         .tab-item ul li a.active:before {
@@ -2406,7 +2406,7 @@ ol {
         left: 0;
         top: -1px;
         width: 100%;
-        height: 5px;
+        height: 10px;
         background: #e7ab3c;
         content: "";
         opacity: 0;
