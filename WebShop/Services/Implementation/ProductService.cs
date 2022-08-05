@@ -226,6 +226,7 @@ public class ProductService : IProductService
     public async Task<ShoppingCartViewModel> GetShoppingCartAsync(string userId)
     {
         var shoppingCart = await db.ShoppingCart
+            .Include(x=>x.ApplicationUser.Address)
             .Include(x => x.ShoppingCartItems)
             .ThenInclude(x => x.Product)
             .ThenInclude(x => x.ProductCategory)

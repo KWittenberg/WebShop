@@ -4,9 +4,9 @@ public class ShoppingCartViewModel : ShoppingCartBase
 {
     public int Id { get; set; }
     public List<ShoppingCartItemViewModel> ShoppingCartItems { get; set; }
-
     public ApplicationUserViewModel ApplicationUser { get; set; }
-    
+    public List<AddressViewModel> Address { get; set; }
+
     public decimal GetTotalPrice()
     {
         decimal totalPrice = 0;
