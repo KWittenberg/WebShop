@@ -6,9 +6,11 @@ Hi and welcome to my webshop app!
 
 2. Go to appsettings.json - change Server name, optional change Database name.
 
-3. Run the app.
+3. Go to Package Manager Console and update-database.
 
-4. You have have two already entered users:
+4. Run the app.
+
+5. You have have two already entered users:
 
 - Admin:   u: admin@gmail.com   p:admin@gmail.com
 - User:   u: user@gmail.com   p: user@gmail.com
