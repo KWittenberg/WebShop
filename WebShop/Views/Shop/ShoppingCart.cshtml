@@ -80,7 +80,7 @@
                             <tr>
                                 <th style="width: 3%" class="center">#</th>
                                 <th style="width: 10%">Image</th>
-                                <th style="width: 20%">Title</th>
+                                <th style="width: 25%">Title</th>
                                 <th class="center">Category</th>
                                 <th class="right">Price</th>
                                 <th class="right">Quantity</th>
@@ -150,26 +150,26 @@
                                 }
                             </tbody>
                         </table>
-                        
+
                         <div class="card-footer text-muted">
                             Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
                         </div>
-                        
+
                         @*<div class="col-md-10 offset-3">
-                            <!-- Default radio -->
-                            <div class="form-check">
-                                <input class="form-radio-input" name="status" value="False" type="radio" asp-for="LocalPickup" />
+                    <!-- Default radio -->
+                    <div class="form-check">
+                    <input class="form-radio-input" name="status" value="False" type="radio" asp-for="LocalPickup" />
 
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="false" />
-                                <label class="form-check-label" for="flexRadioDefault"> Local Pickup </label>
-                            </div>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="false" />
+                    <label class="form-check-label" for="flexRadioDefault"> Local Pickup </label>
+                    </div>
 
-                            <!-- Default checked radio -->
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" checked value="true" />
-                                <label class="form-check-label" for="flexRadioDefault"> Croatia </label>
-                            </div>
-                        </div>*@
+                    <!-- Default checked radio -->
+                    <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" checked value="true" />
+                    <label class="form-check-label" for="flexRadioDefault"> Croatia </label>
+                    </div>
+                    </div>*@
 
                         @*<div class="card">
                     <div class="card-header">SHIPPING DETAILS</div>
@@ -195,14 +195,25 @@
                                         <td class="left"><strong>Subtotal</strong></td>
                                         <td align="right">@string.Format("{0:C}",totalPrice)</td>
                                     </tr>
-                                    <tr>
-                                        <td class="left">Local pickup</td>
-                                        <td align="right">00,00 kn</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left">Shipping Croatia</td>
-                                        <td align="right">55,00 kn</td>
-                                    </tr>
+
+                                    @foreach (var item in Model.ApplicationUser.Address.Where(x=>x.Primary == true))
+                                    {
+                                        @if (item.Primary == true)
+                                        {
+                                            <tr>
+                                                <td class="left">Shipping Croatia</td>
+                                                <td align="right">55,00 kn</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td class="left">Local pickup</td>
+                                                <td align="right">00,00 kn</td>
+                                            </tr>
+                                        }
+                                    }
+
                                     <tr>
                                         <td class="left"><strong>Total</strong></td>
                                         <td align="right">
@@ -254,3 +265,10 @@
 <br />
 <br />
 <partial name="_Footer" />
+
+<script>
+    function RedirectToUrl(url) {
+        console.log(url);
+        window.location.href = url;
+    }
+</script>

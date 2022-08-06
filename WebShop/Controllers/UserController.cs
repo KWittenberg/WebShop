@@ -14,7 +14,29 @@ public class UserController : Controller
         this.mapper = mapper;
         this.userService = userService;
     }
+    
 
+    /// <summary>
+    /// Index
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Index(string id)
+    {
+        var userList = this.db.ApplicationUser.ToList();
+        var userRole = this.db.UserRoles.ToList();
+        var roles = this.db.Roles.ToList();
+
+        foreach (var user in userList)
+        {
+            var role = userRole.FirstOrDefault(u => u.UserId == user.Id);
+            if (role == null) { user.Role = "None"; }
+            else { user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name; }
+        }
+        var dboUsers = await userService.GetUserAsync(id);
+        return View(dboUsers);
+    }
 
     /// <summary>
     /// Edit User
@@ -37,27 +59,19 @@ public class UserController : Controller
         return RedirectToAction("Index", "User");
     }
 
-
-
-
-
-
-
-
-
-
+    
     /// <summary>
-    /// GET: Address
+    /// OLD GET: Address
     /// </summary>
     /// <returns></returns>
-    public async Task<IActionResult> Index(string Id)
-    {
-        return this.db.Address != null ?
-                    View(await this.db.Address.Include(am => am.ApplicationUser)
-                        .Where(x=>x.ApplicationUser.Id == Id)
-                        .ToListAsync()) :
-                    Problem("Entity set 'ApplicationDbContext.Address'  is null.");
-    }
+    //public async Task<IActionResult> Index(string Id)
+    //{
+    //    return this.db.Address != null ?
+    //                View(await this.db.Address.Include(am => am.ApplicationUser)
+    //                    .Where(x=>x.ApplicationUser.Id == Id)
+    //                    .ToListAsync()) :
+    //                Problem("Entity set 'ApplicationDbContext.Address'  is null.");
+    //}
 
     /// <summary>
     /// GET: Address/Details/1
@@ -132,5 +146,24 @@ public class UserController : Controller
         await customerService.DeleteAddressAsync(model);
         TempData["success"] = "Address deleted successfully";
         return RedirectToAction(nameof(Index));
+    }
+
+
+
+    /// <summary>
+    /// Change Primary Status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> ChangePrimaryStatus(int id, bool status)
+    {
+        var address = await db.Address.FindAsync(id);
+        if (address == null) { return null; }
+        address.Primary = status;
+        await db.SaveChangesAsync();
+        //return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
+        //return RedirectToAction("Index", User new { id = ApplicationUser.Id });
     }
 }

@@ -40,7 +40,8 @@ public class AddressController : Controller
         if (address == null) { return null; }
         address.Primary = status;
         await db.SaveChangesAsync();
-        return RedirectToAction("Index", address);
+        return RedirectToAction("Index");
+        //return RedirectToAction("Index", address);
     }
 
 

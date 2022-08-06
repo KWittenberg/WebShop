@@ -1,6 +1,5 @@
 ﻿@using WebShop.Services.Interface;
 @*@model WebShop.Models.ViewModel.AddressViewModel*@
-@model WebShop.Models.Dbo.Address
 @inject ICustomerService customerService
 @{
     ViewData["Title"] = "Details Address";
@@ -13,7 +12,7 @@
 <div class="container mt-5" align="center">
     <div class="card text-bg-light mb-3" style="max-width: 30rem;">
         <div class="card-header" align="left" style="background-color: #3A3F44">
-            @Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName.ToUpper()<a type="button" class="btn-close float-end" asp-controller="User" asp-action="Index"></a>
+            @Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName.ToUpper()<a type="button" class="btn-close float-end" asp-controller="User" asp-action="Index" asp-route-id="@Model.ApplicationUser.Id"></a>
         </div>
         <div class="card-body" style="background-color: #272B30">
             <h4 class="card-title" align="left">@Model.Street</h4>
