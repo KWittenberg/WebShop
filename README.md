@@ -1,5 +1,24 @@
 # WebShop made for Bolta by K. Wittenberg
 
+Hi and welcome to my webshop app!
+
+1. Open or download the Code in VisualStudio
+
+2. Go to appsettings.json - change Server name, optional change Database name.
+
+3. Run the app.
+
+4. You have have two already entered users:
+
+- Admin:   u: admin@gmail.com   p:admin@gmail.com
+- User:   u: user@gmail.com   p: user@gmail.com
+
+
+
+
+### For API use Swagger ###
+https://localhost:44367/swagger/index.html
+
 
 
 ### ShopAPI ###
@@ -89,3 +108,6 @@ pm.sendRequest({
 }
 
 - POST Product: https://localhost:44367/api/AdminApi/product
+- PUT Product: https://localhost:44367/api/AdminApi/product
+- EDIT Product: https://localhost:44367/api/AdminApi/product
+- DELETE Product: https://localhost:44367/api/AdminApi/product

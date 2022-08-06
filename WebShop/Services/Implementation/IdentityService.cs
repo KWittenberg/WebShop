@@ -18,44 +18,44 @@ public class IdentityService : IIdentityService
 
             CreateUserAsync(new ApplicationUser
             {
-                FirstName = "Krešimir",
-                LastName = "Wittenberg",
-                PhoneNumber = "098870888",
-                Email = "kejo@net.hr",
-                UserName = "kejo@net.hr",
-                DOB = new DateTime(1973, 10, 11),
+                FirstName = "Admin",
+                LastName = "Admin",
+                PhoneNumber = "098111222",
+                Email = "admin@gmail.com",
+                UserName = "admin@gmail.com",
+                DOB = new DateTime(2000, 10, 10),
                 Address = new List<Address>
                     {
                         new Address
                         {
                             Primary = true,
-                            Street = "J.J. Strossmayera 4.",
+                            Street = "J.J. Strossmayera 1.",
                             City = "Požega",
                             PostCode = "34000",
                             Country = "Croatia"
                         }
                     }
-            }, "Kejo2#Kejo", Roles.Admin).Wait();
+            }, "admin@gmail.com", Roles.Admin).Wait();
             CreateUserAsync(new ApplicationUser
             {
-                FirstName = "Lovro",
-                LastName = "Wittenberg",
-                PhoneNumber = "0989411120",
-                Email = "lovro.wittenberg@gmail.com",
-                UserName = "lovro.wittenberg@gmail.com",
+                FirstName = "User",
+                LastName = "User",
+                PhoneNumber = "098555777",
+                Email = "user@gmail.com",
+                UserName = "user@gmail.com",
                 DOB = new DateTime(2012, 09, 04),
                 Address = new List<Address>
                     {
                         new Address
                         {
                             Primary = true,
-                            Street = "Radnička 8.",
-                            City = "Dervišaga",
-                            PostCode = "34000",
+                            Street = "Miramarska 8.",
+                            City = "Zagreb",
+                            PostCode = "10000",
                             Country = "Croatia"
                         }
                     }
-            }, "Lovro2#Lovro", Roles.User).Wait();
+            }, "user@gmail.com", Roles.User).Wait();
         }
     }
     
