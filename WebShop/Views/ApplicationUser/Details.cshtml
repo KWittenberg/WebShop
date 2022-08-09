@@ -14,7 +14,14 @@
 <div class="container mt-5" align="center">
     <div class="card text-bg-light mb-3" style="max-width: 30rem;">
         <div class="card-header" align="left" style="color: #DFAD51; background-color: #3A3F44">
-            <div class="row"><h4 class="col" align="left" style="color: #DFAD51">@Model.FirstName @Model.LastName.ToUpper()</h4><h5 class="col" align="right"><a type="button" class="btn-close float-end" asp-controller="ApplicationUser" asp-action="Index"></a></h5></div>
+            <div class="row">
+                <h4 class="col" align="left" style="color: #DFAD51">
+                    @if (Model.FirstName != null && Model.LastName != null)
+                    {
+                        @Model.FirstName<text>&nbsp;</text>@Model.LastName.ToUpper()
+                    }
+                </h4><h5 class="col" align="right"><a type="button" class="btn-close float-end" asp-controller="ApplicationUser" asp-action="Index"></a></h5>
+            </div>
         </div>
         <div class="card-body" style="background-color: #272B30">
             <h3 style="color:white">@Model.Role</h3>
