@@ -137,9 +137,13 @@ public class ApplicationUserService : IApplicationUserService
         
         // Change password
         var user = await userManager.FindByIdAsync(model.Id);
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
-        await userManager.ResetPasswordAsync(user, token, model.Password);
-        
+        //var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        //await userManager.ResetPasswordAsync(user, token, model.Password);
+        userManager.RemovePasswordAsync(user);
+        userManager.AddPasswordAsync(user, model.Password);
+
+
+
         var dbo = await db.ApplicationUser.FindAsync(model.Id);
         mapper.Map(model, dbo);
         await this.db.SaveChangesAsync();

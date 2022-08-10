@@ -5,22 +5,23 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject ICustomerService customerService
 @{
+    int counter = 1;
     var user = await UserManager.GetUserAsync(User);
     //var address = await customerService.GetAddress(user.Id);
     var address = await customerService.GetAddress(@Model.ShoppingCart.ApplicationUser.Id);
 
     decimal totalPrice = 0;
+    decimal subTotalPrice = 0;
     decimal totalPriceWithVat = 0;
     string documentId = string.Empty;
 
     if (Model != null)
     {
-        //totalPrice = Model.GetTotalPrice();
+        subTotalPrice = Model.ShoppingCart.GetSubTotalPrice();
+        totalPrice = Model.ShoppingCart.GetTotalPrice();
         //totalPriceWithVat = Model.GetTotalPriceWithVAT();
         documentId = Model.Id + "-" + Model.Created.ToString("dd-MM-yyyy");
     }
-
-    int counter = 1;
 }
 
 <!-- BEGIN invoice -->
@@ -29,11 +30,11 @@
     <div class="invoice">
         <!-- BEGIN invoice-company -->
         @*<div class="invoice-company">
-            <span class="float-end hidden-print">
-                <a href="javascript:;" class="btn btn-sm btn-white mb-10px"><i class="fa fa-file-pdf t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
-                <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white mb-10px"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
-            </span>
-            BoltaShop
+        <span class="float-end hidden-print">
+        <a href="javascript:;" class="btn btn-sm btn-white mb-10px"><i class="fa fa-file-pdf t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
+        <a href="javascript:;" onclick="window.print()" class="btn btn-sm btn-white mb-10px"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
+        </span>
+        BoltaShop
         </div>*@
         <!-- END invoice-company -->
 
@@ -51,12 +52,39 @@
                 <div class="col-md-7 offset-3">
                     <div class="card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">@Model.ShoppingCart.ApplicationUser.FirstName @Model.ShoppingCart.ApplicationUser.LastName</h5>
+                            <h5 class="card-title">
+                                @if (Model.ShoppingCart.ApplicationUser.FirstName != null)
+                                {
+                                    @Model.ShoppingCart.ApplicationUser.FirstName
+                                }
+                                @if (Model.ShoppingCart.ApplicationUser.LastName != null)
+                                {
+                                    @Model.ShoppingCart.ApplicationUser.LastName
+                                }
+                            </h5>
                             <h4 class="card-text">@user.PhoneNumber</h4>
-                            <hr/>
-                            <h5 class="card-text">@address.Street</h5>
-                            <h5 class="card-text">@address.PostCode @address.City</h5>
-                            <h5 class="card-text">@address.Country</h5>
+                            <hr />
+                            <h5 class="card-text">
+                                @if (address.Street != null)
+                                {
+                                    @address.Street
+                                }
+                            </h5>
+                            <h5 class="card-text">
+                                @if (address.PostCode != null)
+                                {
+                                    @address.PostCode
+                                } @if (address.City != null)
+                                {
+                                    @address.City
+                                }
+                            </h5>
+                            <h5 class="card-text">
+                                @if (address.Country != null)
+                                {
+                                    @address.Country
+                                }
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -72,31 +100,30 @@
                 <div class="table-responsive-sm">
                     <table class="table table-striped">
                         <thead>
-                        <tr>
-                            <th style="width: 3%" class="center">#</th>
-                            <th style="width: 15%">Image</th>
-                            <th style="width: 30%">Title</th>
-                            <th class="center">Category</th>
-                            <th style="width: 10%">Price</th>
-                            <th style="width: 10%">Quantity</th>
-                            <th style="width: 10%">Total</th>
-                        </tr>
+                            <tr>
+                                <th style="width: 3%" class="center">#</th>
+                                <th style="width: 15%">Image</th>
+                                <th style="width: 30%">Title</th>
+                                <th class="center">Category</th>
+                                <th style="width: 10%">Price</th>
+                                <th style="width: 10%">Quantity</th>
+                                <th style="width: 10%">Total</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
-                        {
-                            <tr>
-                                <td class="center">@counter</td>
-                                <td class="left"><img src="@item.Product.Image" width="100px"></td>
-                                <td class="left strong">@item.Product.Title</td>
-                                <td class="right">@item.Product.Title</td>
-                                <td class="right">@item.Price</td>
-                                <td class="center">@item.Quantity</td>
-                                <td class="right">@((item.Quantity * item.Price).ToString("c"))</td>
-                            </tr>
-                            totalPrice += totalPrice + (@item.Quantity * @item.Price);
-                            counter++;
-                        }
+                            @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+                            {
+                                <tr>
+                                    <td class="center">@counter</td>
+                                    <td class="left"><img src="@item.Product.Image" width="100px"></td>
+                                    <td class="left strong">@item.Product.Title</td>
+                                    <td class="right">@item.Product.Title</td>
+                                    <td class="right">@item.Price</td>
+                                    <td class="center">@item.Quantity</td>
+                                    <td class="right">@((item.Quantity * item.Price).ToString("c"))</td>
+                                </tr>
+                                counter++;
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -115,20 +142,20 @@
                     <div class="col-md-10 offset-2">
                         <table class="table table-clear">
                             <tbody>
-                            <tr>
-                                <td class="left"><strong>Total Product</strong></td>
-                                <td align="right">@string.Format("{0:C}",totalPrice)</td>
-                            </tr>
-                            <tr>
-                                <td class="left"><strong>Shipping Croatia</strong></td>
-                                <td align="right">55,00 kn</td>
-                            </tr>
-                            <tr>
-                                <td class="left"><strong>Total</strong></td>
-                                <td align="right">
-                                    <strong>@string.Format("{0:C}",totalPrice + 55)</strong>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="left"><strong>Subtotal</strong></td>
+                                    <td align="right">@string.Format("{0:C}",subTotalPrice)</td>
+                                </tr>
+                                <tr>
+                                    <td class="left"><strong>Shipping Croatia</strong></td>
+                                    <td align="right">55,00 kn</td>
+                                </tr>
+                                <tr>
+                                    <td class="left"><strong>Total</strong></td>
+                                    <td align="right">
+                                        <strong>@string.Format("{0:C}",totalPrice)</strong>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -154,5 +181,4 @@
 <br />
 <br />
 <!-- END invoice -->
-
 @await Html.PartialAsync("_PrintItem", "Address")

@@ -3,13 +3,13 @@
 public class ShoppingCartViewModel : ShoppingCartBase
 {
     public int Id { get; set; }
-    public List<ShoppingCartItemViewModel> ShoppingCartItems { get; set; }
-    public ApplicationUserViewModel ApplicationUser { get; set; }
-    public List<AddressViewModel> Address { get; set; }
+    public List<ShoppingCartItemViewModel>? ShoppingCartItems { get; set; }
+    public ApplicationUserViewModel? ApplicationUser { get; set; }
+    public List<AddressViewModel>? Address { get; set; }
 
-    public decimal GetTotalPrice()
+    public decimal GetSubTotalPrice()
     {
-        decimal totalPrice = 0;
+        decimal subTotalPrice = 0;
 
         if (ShoppingCartItems == null)
         {
@@ -19,10 +19,20 @@ public class ShoppingCartViewModel : ShoppingCartBase
         {
             foreach (var item in ShoppingCartItems)
             {
-                totalPrice += item.Price * item.Quantity;
+                subTotalPrice += item.Price * item.Quantity;
             }
 
         }
+        return subTotalPrice;
+    }
+    public decimal GetTotalPrice()
+    {
+        decimal subTotalPrice = GetSubTotalPrice();
+        if (subTotalPrice == default)
+        {
+            return default;
+        }
+        var totalPrice = subTotalPrice + 55;
         return totalPrice;
     }
 

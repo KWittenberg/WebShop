@@ -10,12 +10,14 @@
     var user = await UserManager.GetUserAsync(User);
     var address = await customerService.GetAddress(user.Id);
 
+    decimal subTotalPrice = 0;
     decimal totalPrice = 0;
     decimal totalPriceWithVat = 0;
     string documentId = string.Empty;
 
     if (Model != null)
     {
+        subTotalPrice = Model.GetSubTotalPrice();
         totalPrice = Model.GetTotalPrice();
         //totalPriceWithVat = Model.GetTotalPriceWithVAT();
         documentId = Model.Id + "-" + Model.Created.ToString("dd-MM-yyyy");
@@ -193,7 +195,7 @@
                                 <tbody>
                                     <tr>
                                         <td class="left"><strong>Subtotal</strong></td>
-                                        <td align="right">@string.Format("{0:C}",totalPrice)</td>
+                                        <td align="right">@string.Format("{0:C}",subTotalPrice)</td>
                                     </tr>
 
                                     @foreach (var item in Model.ApplicationUser.Address.Where(x=>x.Primary == true))
@@ -217,7 +219,7 @@
                                     <tr>
                                         <td class="left"><strong>Total</strong></td>
                                         <td align="right">
-                                            <strong>@string.Format("{0:C}",totalPrice + 55)</strong>
+                                            <strong>@string.Format("{0:C}",totalPrice)</strong>
                                         </td>
                                     </tr>
                                 </tbody>
