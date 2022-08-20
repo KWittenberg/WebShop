@@ -2,6 +2,12 @@
 
 public interface IApplicationUserService
 {
+    Task<List<ApplicationUserViewModel>> GetApplicationUsersAsync();
+    Task<ApplicationUserViewModel> GetApplicationUserAsync(string id);
+    Task<string> GetApplicationUserRoleAsync(string id);
+    Task<List<ApplicationUserRoleViewModel>> GetApplicationUserRolesAsync();
+
+
     Task<List<ApplicationUserViewModel>> GetRolesAsync();
     Task<ApplicationUserViewModel> GetRoleAsync(string id);
 
@@ -11,7 +17,7 @@ public interface IApplicationUserService
     Task<ApplicationUserViewModel> DeleteApplicationUserAsync(ApplicationUserUpdateBinding model);
 
 
-
+    Task<ApplicationUser?> RegistrationAsync(UserBinding model, string role);
     Task<ApplicationUser?> CreateUserAsync(UserBinding model, string role);
     Task<ApplicationUserViewModel> UpdateUserAsync(UserUpdateBinding model);
 

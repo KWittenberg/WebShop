@@ -13,12 +13,13 @@
         var userRole = await UserManager.GetRolesAsync(user);
 
         @*<li class="nav-item"><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hi @foreach (var role in userRole){@role}!</a></li>*@
-        <li class="nav-item"><a class="nav-link text-dark" href="@Url.Action("Index", "User", new { Id = user.Id })">Hi @foreach (var role in userRole){@role}!</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="@Url.Action("Index", "User", new { Id = user.Id })">Hi @foreach (var role in userRole) {@role}!</a></li>
 
         <ul class="dropdown">
+            <li class="ht-right"><a class="nav-link" href="@Url.Action("Orders", "User", new { Id = user.Id })">Orders</a></li>
             <li class="ht-right">
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    <button type="submit" class="primary-btn">Logout</button>
                 </form>
             </li>
         </ul>
@@ -26,12 +27,11 @@
     else
     {
         @*<a class="login-panel" asp-area="Identity" asp-page="/Account/Login">Login</a>*@
-        <a class="nav-link" href="@Url.Action("Login", "ApplicationUser")">Login</a>
+        <a class="nav-link" href="@Url.Action("Login", "User")">Login</a>
 
         <ul class="dropdown">
             @*<li class="ht-right"><a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a></li>*@
-            <li class="ht-right"><a class="nav-link" href="@Url.Action("Register", "ApplicationUser")">Register</a></li>
+            <li class="ht-right"><a class="nav-link" href="@Url.Action("Registration", "User")">Registration</a></li>
         </ul>
     }
 </ul>
-

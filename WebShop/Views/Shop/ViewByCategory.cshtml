@@ -1,0 +1,55 @@
+﻿@using WebShop.Models.Dbo
+@using Microsoft.AspNetCore.Identity
+@using WebShop.Models.ViewModel
+@model List<ProductViewModel>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "BoltaShop";
+}
+<!-- BoltaShop -->
+<div class="mt-5 container">
+    <main role="main" class="pb-3">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @*@foreach (var product in Model)*@
+            @foreach (var product in Model.OrderBy(x => Guid.NewGuid()))
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@product.Image" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #DFAD51"><b>@product.Title</b></h5>
+                            <p class="card-text">@product.ShortDescription</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    @if (product.Discount == true)
+                                    {
+                                        <div>Price: <b style="color:white">@product.DiscountPrice</b> Kn <sub><s> @product.Price Kn</s></sub></div>
+                                    }
+                                    else
+                                    {
+                                        <div>Price: <b style="color:white">@product.Price</b> Kn</div>
+                                    }
+                                </div>
+                                <div>
+                                    @if (product.Quantity > 0)
+                                    {
+                                        <a href="@Url.Action("ItemView", "Shop", new { id = product.Id })" class="btn btn-primary btn-sm">Buy Now</a>
+                                    }
+                                    else
+                                    {
+                                        <span style="color: #DFAD51">Not available!</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </main>
+</div>
+
+<partial name="_Footer" />

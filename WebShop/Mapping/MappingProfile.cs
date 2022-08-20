@@ -7,6 +7,8 @@ public class MappingProfile : Profile
 
         
         CreateMap<IdentityRole, ApplicationUserViewModel>();
+        CreateMap<IdentityRole, ApplicationUserRoleViewModel>();
+
         CreateMap<UserUpdateBinding, ApplicationUser>();
         CreateMap<UserUpdateBinding, ApplicationUserViewModel>();
 

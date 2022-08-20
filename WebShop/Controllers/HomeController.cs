@@ -14,17 +14,27 @@ public class HomeController : Controller
         this.userManager = userManager;
     }
     
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View(productService.GetProductsAsync().Result);
+        var product = await this.productService.GetProductsAsync();
+        var filteredResult = product.Where(n => n.ProductCategoryId.Equals(1)).ToList();
+        return View("Index", filteredResult);
+        //return View(productService.GetProductsAsync().Result);
     }
 
-    
+    /// <summary>
+    /// Contact
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Contact()
     {
         return View();
     }
-    
+
+    /// <summary>
+    /// About
+    /// </summary>
+    /// <returns></returns>
     public IActionResult About()
     {
         return View();

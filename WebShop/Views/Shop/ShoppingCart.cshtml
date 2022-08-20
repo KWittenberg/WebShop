@@ -8,63 +8,28 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await UserManager.GetUserAsync(User);
-    var address = await customerService.GetAddress(user.Id);
+    var addresses = await customerService.GetAddresses(user.Id);
+    if (user.FirstName == null && user.LastName == null) { user.FirstName = "YOU MUST INPUT YOUR FistName AND LastName BEFORE BUYING !!!"; }
 
     decimal subTotalPrice = 0;
     decimal totalPrice = 0;
-    decimal totalPriceWithVat = 0;
     string documentId = string.Empty;
+    int counter = 1;
+    int counterAddress = 1;
 
     if (Model != null)
     {
         subTotalPrice = Model.GetSubTotalPrice();
         totalPrice = Model.GetTotalPrice();
-        //totalPriceWithVat = Model.GetTotalPriceWithVAT();
         documentId = Model.Id + "-" + Model.Created.ToString("dd-MM-yyyy");
-
     }
-
-    int counter = 1;
-    int counterAddress = 1;
 }
 
-@section Scripts{
-    <script>
-        function TrigerModal() {
-            console.log("modal aktiviran!");
-            $('#mojModal').modal('show');
-        }
-        function HideModal() {
-            $('#mojModal').modal('hide');
-        }
-    </script>
-}
 
-    <div class="container">
-        @if (Model != null)
+<div class="container">
+    @if (Model != null)
     {
-        @section modalSection{
-        <div class="modal" id="mojModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header"><h5 class="modal-title">Storniranje</h5></div>
-                    <div class="modal-body"><p>Stvarno obrisat?</p></div>
-
-                    <div class="modal-footer">
-                        @Html.ActionLink("Potvrdi", "SuspendShoppingCart", new {  id=Model.Id  },new {@class= "btn btn-danger"})
-                        @*             <button type="button" class="btn btn-primary">Save changes</button>*@
-                        <button type="button" class="btn btn-secondary" onclick="HideModal()">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
         string documentStatus = Model.ShoppingCartStatus.ToString();
-
-
-
-
         <!-- Shopping Cart -->
         <div class="container mt-5">
             <main role="main" class="pb-3">
@@ -115,80 +80,59 @@
 
                 <div class="row">
                     <div class="col mt-3">
-                        <h4 align="left">Shipping to:</h4>
-                        <table class="mt-3 table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%">#</th>
-                                    <th>Primary</th>
-                                    <th>Street</th>
-                                    <th>City</th>
-                                    <th>PostCode</th>
-                                    <th>Country</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ApplicationUser.Address)
-                                {
-                                    string redirectUrlPrimary = Url.Action("ChangePrimaryStatus", "Address", new { id = item.Id, status = !item.Primary });
+                        @if (Model.ApplicationUser.Address.Count >= 2)
+                        {
+                            <h4 align="left">Shipping to:</h4>
+                            <table class="mt-3 table table-striped table-hover">
+                                <thead>
                                     <tr>
-                                        <td>@counterAddress</td>
-                                        <td>
-                                            @if (item.Primary)
-                                            {
-                                                <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')" checked>
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')">
-                                            }
-                                        </td>
-                                        <td>@item.Street</td>
-                                        <td>@item.City</td>
-                                        <td>@item.PostCode</td>
-                                        <td>@item.Country</td>
+                                        <th style="width: 5%">#</th>
+                                        <th>Primary</th>
+                                        <th>Street</th>
+                                        <th>City</th>
+                                        <th>PostCode</th>
+                                        <th>Country</th>
                                     </tr>
-                                    counterAddress++;
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ApplicationUser.Address)
+                                    {
+                                        string redirectUrlPrimary = Url.Action("ChangePrimaryStatus", "Address", new { id = item.Id, status = !item.Primary });
+                                        <tr>
+                                            <td>@counterAddress</td>
+                                            <td>
+                                                @if (item.Primary)
+                                                {
+                                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')">
+                                                }
+                                            </td>
+                                            <td>@item.Street</td>
+                                            <td>@item.City</td>
+                                            <td>@item.PostCode</td>
+                                            <td>@item.Country</td>
+                                        </tr>
+                                        counterAddress++;
+                                    }
+                                </tbody>
+                            </table>
 
-                        <div class="card-footer text-muted">
-                            Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
-                        </div>
-
-                        @*<div class="col-md-10 offset-3">
-                    <!-- Default radio -->
-                    <div class="form-check">
-                    <input class="form-radio-input" name="status" value="False" type="radio" asp-for="LocalPickup" />
-
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" value="false" />
-                    <label class="form-check-label" for="flexRadioDefault"> Local Pickup </label>
+                            <div class="card-footer text-muted">
+                                Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
+                            </div>
+                        }
+                        else
+                        {
+                            <h4 align="center">You have chosen to pick up the order yourself!</h4>
+                            <hr />
+                            <h4 align="center">Please enter your address for delivery!</h4>
+                        }
                     </div>
 
-                    <!-- Default checked radio -->
-                    <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault" checked value="true" />
-                    <label class="form-check-label" for="flexRadioDefault"> Croatia </label>
-                    </div>
-                    </div>*@
 
-                        @*<div class="card">
-                    <div class="card-header">SHIPPING DETAILS</div>
-                    <div class="card-body text-center">
-                    <h5 class="card-title">@user.FirstName @user.LastName</h5>
-                    <p class="card-text">@user.PhoneNumber</p>
-                    <p class="card-text">@address.Street</p>
-                    <p class="card-text">@address.PostCode @address.City</p>
-                    <p class="card-text">@address.Country</p>
-                    </div>
-                    <div class="card-footer text-muted">
-                    Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
-                    </div>
-                    </div>*@
-
-
-                    </div>
                     <div class="col">
                         <div class="col-md-10 offset-2">
                             <table class="table table-clear">
@@ -198,20 +142,27 @@
                                         <td align="right">@string.Format("{0:C}",subTotalPrice)</td>
                                     </tr>
 
-                                    @foreach (var item in Model.ApplicationUser.Address.Where(x=>x.Primary == true))
+
+
+                                    @if (Model.ApplicationUser.Address.Count < 2)
+                                    {
+                                        <tr>
+                                            <td class="left">Local pickup</td>
+                                            <td align="right">00,00 kn</td>
+                                        </tr>
+                                    }
+
+
+
+
+
+                                    @foreach (var item in Model.ApplicationUser.Address)
                                     {
                                         @if (item.Primary == true)
                                         {
                                             <tr>
                                                 <td class="left">Shipping Croatia</td>
                                                 <td align="right">55,00 kn</td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <td class="left">Local pickup</td>
-                                                <td align="right">00,00 kn</td>
                                             </tr>
                                         }
                                     }
@@ -226,10 +177,6 @@
                             </table>
                         </div>
 
-
-                        @*<button type="button" class="btn btn-danger" onclick="TrigerModal()">Storno</button>*@
-                        @*@Html.ActionLink("Storno", "SuspendShoppingCart", new {  id=Model.Id  },new {@class= "btn btn-danger"})*@
-
                         <div class="mt-5 mb-5" align="right">
 
                             @if (Model != null)
@@ -238,7 +185,10 @@
                                 {
                                     <input type="text" name="ShoppingCartId" value="@Model.Id" hidden>
                                     <a asp-controller="Shop" asp-action="Index" class="secondary-btn">Continue Shopping</a>
-                                    <input type="submit" class="primary-btn" value="Buy Now">
+                                    if (Model.ApplicationUser.FirstName != null && Model.ApplicationUser.LastName != null)
+                                    {
+                                        <input type="submit" class="primary-btn" value="Buy Now">
+                                    }
                                 }
                             }
                         </div>
@@ -267,10 +217,3 @@
 <br />
 <br />
 <partial name="_Footer" />
-
-<script>
-    function RedirectToUrl(url) {
-        console.log(url);
-        window.location.href = url;
-    }
-</script>

@@ -1,4 +1,4 @@
-﻿@model WebShop.Models.Binding.UserBinding
+﻿@model WebShop.Models.Binding.LoginUserBinding
 @{
     ViewData["Title"] = "Login";
 }
@@ -20,16 +20,7 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
-                <p>If you do not have a profile created, now is the time to create one and get additional benefits!</p>
-                <a asp-controller="ApplicationUser" asp-action="Register" >REGISTRATION</a>
-                
-                @*<div>
-                    <div class="checkbox">
-                        <label>&nbsp; &nbsp; &nbsp;</label>
-                        <input class="form-check-input" asp-for="RememberMe" />
-                        <label>&nbsp; Remember Me</label>
-                    </div>
-                </div>*@
+                <p><a href="/User/Registration">REGISTRATION</a>&nbsp;&nbsp; If you do not have a profile created, now is the time to create one and get additional benefits!</p>
                 <div align="right">
                     <button type="submit" class="mt-3 primary-btn">Login</button><a asp-controller="Home" asp-action="Index" class="mt-3 secondary-btn">Back</a>
                 </div>

@@ -2,7 +2,7 @@
 @inject IApplicationUserService userService
 @{
     ViewData["Title"] = "Delete";
-    var userRoles = await userService.GetRolesAsync();
+    var userRoles = await userService.GetApplicationUserRolesAsync();
 }
 <!-- Create -->
 <div class="container mt-5">
@@ -16,13 +16,13 @@
                         <select name="RoleId" disabled class="form-select" aria-label="Default select example">
                             @foreach (var item in userRoles)
                             {
-                                if (item.Id == Model.Id)
+                                if (item.Name == Model.Role)
                                 {
-                                    <option selected value="@item.Id">@item.Id</option>
+                                    <option selected value="@item.Id">@item.Name</option>
                                 }
                                 else
                                 {
-                                    <option value="@item.Id">@item.Id</option>
+                                    <option value="@item.Id">@item.Name</option>
                                 }
                             }
                         </select>

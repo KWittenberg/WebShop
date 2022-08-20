@@ -197,7 +197,7 @@ namespace WebShop.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("WebShop.Models.Dbo.ApplicationUser", b =>
@@ -299,7 +299,7 @@ namespace WebShop.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("WebShop.Models.Dbo.Product", b =>
@@ -388,7 +388,7 @@ namespace WebShop.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("WebShop.Models.Dbo.ProductCategory", b =>
@@ -411,7 +411,7 @@ namespace WebShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategory");
+                    b.ToTable("ProductCategory", (string)null);
                 });
 
             modelBuilder.Entity("WebShop.Models.Dbo.ShoppingCart", b =>
@@ -436,7 +436,7 @@ namespace WebShop.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCart", (string)null);
                 });
 
             modelBuilder.Entity("WebShop.Models.Dbo.ShoppingCartItem", b =>
@@ -468,7 +468,7 @@ namespace WebShop.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("ShoppingCartItem");
+                    b.ToTable("ShoppingCartItem", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -51,10 +51,10 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<ProductViewModel> DeleteProductAsync(ProductUpdateBinding model)
     {
-        var category = await db.ProductCategory.FirstOrDefaultAsync(x => x.Id == model.ProductCategoryId);
+        //var category = await db.ProductCategory.FirstOrDefaultAsync(x => x.Id == model.ProductCategoryId);
         var dbo = await db.Product.FindAsync(model.Id);
-        mapper.Map(model, dbo);
-        dbo.ProductCategory = category;
+        //mapper.Map(model, dbo);
+        //dbo.ProductCategory = category;
         db.Product.Remove(dbo);
         await db.SaveChangesAsync();
         return mapper.Map<ProductViewModel>(dbo);
@@ -271,6 +271,7 @@ public class ProductService : IProductService
         var order = await db.Order
             .Include(x => x.ShoppingCart)
             .ThenInclude(x => x.ApplicationUser)
+            .ThenInclude(x => x.Address)
             .Include(x => x.ShoppingCart)
             .ThenInclude(x => x.ShoppingCartItems)
             .ThenInclude(x => x.Product)
@@ -295,6 +296,25 @@ public class ProductService : IProductService
 
         return orders.Select(x => mapper.Map<OrderViewModel>(x)).ToList();
     }
+
+    /// <summary>
+    /// GetOrdersByUserAsync
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<OrderViewModel>> GetOrdersByUserAsync(string id)
+    {
+        var orders = await db.Order
+            .Include(x => x.ShoppingCart)
+            .ThenInclude(x => x.ApplicationUser)
+            .Include(x => x.ShoppingCart)
+            .ThenInclude(x => x.ShoppingCartItems)
+            .ThenInclude(x => x.Product)
+            .ToListAsync();
+
+        var userOrders = orders.FindAll(x => x.ShoppingCart.ApplicationUser.Id == id);
+        return userOrders.Select(x => mapper.Map<OrderViewModel>(x)).ToList();
+    }
+
 
     /// <summary>
     /// Add Order

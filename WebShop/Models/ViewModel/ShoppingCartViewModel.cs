@@ -28,11 +28,17 @@ public class ShoppingCartViewModel : ShoppingCartBase
     public decimal GetTotalPrice()
     {
         decimal subTotalPrice = GetSubTotalPrice();
+        decimal totalPrice= subTotalPrice;
+
         if (subTotalPrice == default)
         {
             return default;
         }
-        var totalPrice = subTotalPrice + 55;
+
+        if (ApplicationUser.Address.Count >= 2)
+        {
+            totalPrice = subTotalPrice + 55;
+        }
         return totalPrice;
     }
 

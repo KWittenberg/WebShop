@@ -22,6 +22,31 @@ public class ApplicationUserService : IApplicationUserService
 
 
     /// <summary>
+    /// GetApplicationUserRolesAsync
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ApplicationUserRoleViewModel>> GetApplicationUserRolesAsync()
+    {
+        var roles = await db.Roles.ToListAsync();
+        if (!roles.Any()) { return new List<ApplicationUserRoleViewModel>(); }
+        return roles.Select(x => mapper.Map<ApplicationUserRoleViewModel>(x)).ToList();
+    }
+
+    /// <summary>
+    /// GetApplicationUserRoleAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<string> GetApplicationUserRoleAsync(string id)
+    {
+        var dboApplicationUser = await db.ApplicationUser.FindAsync(id);
+        if (dboApplicationUser == null) { return String.Empty; }
+        var role = await userManager.GetRolesAsync(dboApplicationUser);
+        return role.First();
+    }
+
+
+    /// <summary>
     /// GetRolesAsync
     /// </summary>
     /// <returns></returns>
@@ -30,7 +55,7 @@ public class ApplicationUserService : IApplicationUserService
         var dbo = await db.Roles.ToListAsync();
         return dbo.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
     }
-    
+
     /// <summary>
     /// GetRoleAsync
     /// </summary>
@@ -49,15 +74,43 @@ public class ApplicationUserService : IApplicationUserService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    //public async Task<ApplicationUser?> GetUserAsync(ApplicationUserBinding model)
-    //{
-    //    // First check if user exist
-    //    var find = await userManager.FindByEmailAsync(model.Email);
-    //    if (find != null) { return null; }
-    //    var user = mapper.Map<ApplicationUser>(find);
-    //    return user;
-    //}
-    
+    public async Task<ApplicationUser?> GetUserAsync(ApplicationUserBinding model)
+    {
+        // First check if user exist
+        var find = await userManager.FindByEmailAsync(model.Email);
+        if (find != null) { return null; }
+        var user = mapper.Map<ApplicationUser>(find);
+        return user;
+    }
+
+    /// <summary>
+    /// GetApplicationUsersAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<List<ApplicationUserViewModel>> GetApplicationUsersAsync()
+    {
+        var dboUsers = db.ApplicationUser.Include(x => x.Address).ToList();
+        var response = dboUsers.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
+        response.ForEach(x => x.Role = GetApplicationUserRoleAsync(x.Id).Result);
+        return response;
+    }
+
+    /// <summary>
+    /// GetApplicationUserAsync
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<ApplicationUserViewModel> GetApplicationUserAsync(string id)
+    {
+        var dboUser = await db.ApplicationUser.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id);
+        if (dboUser == null) { return null; }
+        var response = mapper.Map<ApplicationUserViewModel>(dboUser);
+        response.Role = await GetApplicationUserRoleAsync(id);
+        return response;
+    }
+
+
     /// <summary>
     /// GetUserAsync
     /// </summary>
@@ -76,7 +129,7 @@ public class ApplicationUserService : IApplicationUserService
     //    return await GetUser(userId);
     //}
 
-    
+
     /// <summary>
     /// CreateApplicationUserAsync
     /// </summary>
@@ -88,7 +141,7 @@ public class ApplicationUserService : IApplicationUserService
     {
         var find = await userManager.FindByEmailAsync(model.Email);
         if (find != null) { return null; }
-        
+
         var user = new ApplicationUser
         {
             RoleId = model.RoleId,
@@ -98,7 +151,7 @@ public class ApplicationUserService : IApplicationUserService
             Email = model.Email,
             UserName = model.Email,
             DOB = model.DOB
-            };
+        };
 
         var createdUser = await userManager.CreateAsync(user, model.Password);
         if (createdUser.Succeeded)
@@ -112,7 +165,7 @@ public class ApplicationUserService : IApplicationUserService
         }
         return user;
     }
-    
+
     /// <summary>
     /// UpdateApplicationUserAsync
     /// </summary>
@@ -120,36 +173,58 @@ public class ApplicationUserService : IApplicationUserService
     /// <returns></returns>
     public async Task<ApplicationUserViewModel> UpdateApplicationUserAsync(ApplicationUserUpdateBinding model)
     {
-        var objFromDb = await this.userManager.FindByIdAsync(model.Id);
-        if (objFromDb == null) { return null; }
+        var dboUser = await db.ApplicationUser.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == model.Id);
+        var role = await db.Roles.FindAsync(model.RoleId);
+        if (dboUser == null || role == null) { return null; }
 
-        var userRole = await this.db.UserRoles.FirstOrDefaultAsync(u => u.UserId == objFromDb.Id);
-        if (userRole != null)
-        {
-            var previousRoleName = this.db.Roles.Where(u => u.Id == userRole.RoleId).Select(e => e.Name).FirstOrDefault();
-            // Removing the old role
-            await this.userManager.RemoveFromRoleAsync(objFromDb, previousRoleName);
-        }
+        await DeleteAllUserRoles(dboUser);
+        await userManager.AddToRoleAsync(dboUser, role.Name);
 
-        //Add new role
-        await this.userManager.AddToRoleAsync(objFromDb, this.db.Roles.FirstOrDefault(u => u.Id == model.RoleId).Name);
-        objFromDb.Email = model.Email;
-        
-        // Change password
-        var user = await userManager.FindByIdAsync(model.Id);
-        //var token = await userManager.GeneratePasswordResetTokenAsync(user);
-        //await userManager.ResetPasswordAsync(user, token, model.Password);
-        userManager.RemovePasswordAsync(user);
-        userManager.AddPasswordAsync(user, model.Password);
+        dboUser.FirstName = model.FirstName;
+        dboUser.LastName = model.LastName;
+        dboUser.PhoneNumber = model.PhoneNumber;
+        dboUser.Email = model.Email;
+        dboUser.DOB = model.DOB;
+        await db.SaveChangesAsync();
+        userManager.RemovePasswordAsync(dboUser);
+        userManager.AddPasswordAsync(dboUser, model.Password);
+
+        var response = mapper.Map<ApplicationUserViewModel>(dboUser);
+        return response;
 
 
 
-        var dbo = await db.ApplicationUser.FindAsync(model.Id);
-        mapper.Map(model, dbo);
-        await this.db.SaveChangesAsync();
-        return mapper.Map<ApplicationUserViewModel>(dbo);
+
+        //var objFromDb = await this.userManager.FindByIdAsync(model.Id);
+        //if (objFromDb == null) { return null; }
+
+        //var userRole = await this.db.UserRoles.FirstOrDefaultAsync(u => u.UserId == objFromDb.Id);
+        //if (userRole != null)
+        //{
+        //    var previousRoleName = this.db.Roles.Where(u => u.Id == userRole.RoleId).Select(e => e.Name).FirstOrDefault();
+        //    // Removing the old role
+        //    await this.userManager.RemoveFromRoleAsync(objFromDb, previousRoleName);
+        //}
+
+        ////Add new role
+        //await this.userManager.AddToRoleAsync(objFromDb, this.db.Roles.FirstOrDefault(u => u.Id == model.RoleId).Name);
+        //objFromDb.Email = model.Email;
+
+        //// Change password
+        //var user = await userManager.FindByIdAsync(model.Id);
+        ////var token = await userManager.GeneratePasswordResetTokenAsync(user);
+        ////await userManager.ResetPasswordAsync(user, token, model.Password);
+        //userManager.RemovePasswordAsync(user);
+        //userManager.AddPasswordAsync(user, model.Password);
+
+
+
+        //var dbo = await db.ApplicationUser.FindAsync(model.Id);
+        //mapper.Map(model, dbo);
+        //await this.db.SaveChangesAsync();
+        //return mapper.Map<ApplicationUserViewModel>(dbo);
     }
-    
+
     /// <summary>
     /// UpdateUserAsync
     /// </summary>
@@ -157,15 +232,18 @@ public class ApplicationUserService : IApplicationUserService
     /// <returns></returns>
     public async Task<ApplicationUserViewModel> UpdateUserAsync(UserUpdateBinding model)
     {
-        var objFromDb = await this.userManager.FindByIdAsync(model.Id);
-        if (objFromDb == null) { return null; }
-        
-        var dbo = await db.ApplicationUser.FindAsync(model.Id);
-        mapper.Map(model, dbo);
-        await this.db.SaveChangesAsync();
-        return mapper.Map<ApplicationUserViewModel>(dbo);
+        var dboUser = await db.ApplicationUser.FirstOrDefaultAsync(x => x.Id == model.Id);
+        if (dboUser == null) { return null; }
+
+        dboUser.FirstName = model.FirstName;
+        dboUser.LastName = model.LastName;
+        dboUser.PhoneNumber = model.PhoneNumber;
+        dboUser.DOB = model.DOB;
+        await db.SaveChangesAsync();
+
+        return mapper.Map<ApplicationUserViewModel>(dboUser);
     }
-    
+
     /// <summary>
     /// DeleteApplicationUserAsync
     /// </summary>
@@ -182,8 +260,66 @@ public class ApplicationUserService : IApplicationUserService
         return mapper.Map<ApplicationUserViewModel>(dbo);
     }
 
-    
+    /// <summary>
+    /// DeleteAllUserRoles
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    private async Task DeleteAllUserRoles(ApplicationUser user)
+    {
+        var userRoles = await userManager.GetRolesAsync(user);
+        foreach (var item in userRoles)
+        {
+            await userManager.RemoveFromRoleAsync(user, item);
+        }
+    }
 
+
+
+    /// <summary>
+    /// Registration User with Address
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="role"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<ApplicationUser?> RegistrationAsync(UserBinding model, string role)
+    {
+        var find = await userManager.FindByEmailAsync(model.Email);
+        if (find != null) { return null; }
+
+        var user = new ApplicationUser
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            PhoneNumber = model.PhoneNumber,
+            Email = model.Email,
+            UserName = model.Email,
+            DOB = model.DOB,
+            Address = new List<Address>
+            {
+                new Address
+                {
+                    Primary = true,
+                    Street = model.Street,
+                    PostCode = model.PostCode,
+                    City = model.City,
+                    Country = model.Country
+                }
+            }
+        };
+
+        var createdUser = await userManager.CreateAsync(user, model.Password);
+        if (createdUser.Succeeded)
+        {
+            var userAddedToRole = await userManager.AddToRoleAsync(user, role);
+            if (!userAddedToRole.Succeeded)
+            {
+                throw new Exception("User Not Added In Role!!!");
+            }
+        }
+        return user;
+    }
 
     /// <summary>
     /// Create User Async only Email and Password
@@ -214,7 +350,7 @@ public class ApplicationUserService : IApplicationUserService
         }
         return user;
     }
-    
+
     /// <summary>
     /// Create API User Async
     /// </summary>

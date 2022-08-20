@@ -8,11 +8,11 @@ public class ApplicationUserViewModel : ApplicationUserBase
 
     // Add Address
     //public ICollection<Address> Address { get; set; }
-    public List<AddressViewModel> Address { get; set; }
+    public List<AddressViewModel>? Address { get; set; }
 
 
     // Add Role
-    public Roles Roles { get; set; }
+    //public Roles Roles { get; set; }
     public string RoleId { get; set; }
     public string Role { get; set; }
 }

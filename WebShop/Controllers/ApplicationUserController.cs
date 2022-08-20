@@ -32,18 +32,21 @@ public class ApplicationUserController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var userList = this.db.ApplicationUser.ToList();
-        var userRole = this.db.UserRoles.ToList();
-        var roles = this.db.Roles.ToList();
-        var users = this.customerService.GetApplicationUsers();
+        //var userList = this.db.ApplicationUser.ToList();
+        //var userRole = this.db.UserRoles.ToList();
+        //var roles = this.db.Roles.ToList();
+        //var users = this.customerService.GetApplicationUsers();
 
-        foreach (var user in userList)
-        {
-            var role = userRole.FirstOrDefault(u => u.UserId == user.Id);
-            if (role == null) { user.Role = "None"; }
-            else { user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name; }
-        }
-        return View(users.Result);
+        //foreach (var user in userList)
+        //{
+        //    var role = userRole.FirstOrDefault(u => u.UserId == user.Id);
+        //    if (role == null) { user.Role = "None"; }
+        //    else { user.Role = roles.FirstOrDefault(u => u.Id == role.RoleId).Name; }
+        //}
+        //return View(users.Result);
+
+        var applicationUsers = await userService.GetApplicationUsersAsync();
+        return View(applicationUsers);
     }
 
     /// <summary>
@@ -99,8 +102,7 @@ public class ApplicationUserController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(string id)
     {
-        var user = await userService.GetUserAsync(id);
-        var model = mapper.Map<ApplicationUserUpdateBinding>(user);
+        var user = await userService.GetApplicationUserAsync(id);
         return View(user);
     }
     [HttpPost]
@@ -119,8 +121,7 @@ public class ApplicationUserController : Controller
     [HttpGet]
     public async Task<IActionResult> Delete(string id)
     {
-        var user = await userService.GetUserAsync(id);
-        var model = mapper.Map<ApplicationUserUpdateBinding>(user);
+        var user = await userService.GetApplicationUserAsync(id);
         return View(user);
     }
     [HttpPost]

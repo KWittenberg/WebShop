@@ -1,7 +1,7 @@
 ﻿@model WebShop.Models.ViewModel.ApplicationUserViewModel
 @inject IApplicationUserService userService
 @{
-    var userRoles = await userService.GetRolesAsync();
+    var userRoles = await userService.GetApplicationUserRolesAsync();
     ViewData["Title"] = "Edit";
 }
 <!-- Edit -->
@@ -14,16 +14,16 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label asp-for="RoleId" class="control-label">&nbsp; &nbsp; Choose a role</label>
-                        <select name="RoleId" class="form-select" aria-label="Default select example">
+                        <select name="RoleId" class="form-control">
                             @foreach (var item in userRoles)
                             {
-                                if (item.Id == Model.RoleId)
+                                if (item.Name == Model.Role)
                                 {
-                                    <option selected value="@item.Id">@item.Id</option>
+                                    <option selected value="@item.Id">@item.Name</option>
                                 }
                                 else
                                 {
-                                    <option value="@item.Id">@item.Id</option>
+                                    <option value="@item.Id">@item.Name</option>
                                 }
                             }
                         </select>
@@ -49,7 +49,8 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input asp-for="DOB" type="date" class="form-control mt-3" placeholder=" Date Of Birth">
+                        <label asp-for="DOB" class="control-label">&nbsp; &nbsp; Date Of Birth</label>
+                        <input asp-for="DOB" type="date" class="form-control" placeholder=" Date Of Birth">
                         <span asp-validation-for="DOB" class="text-danger"></span>
                     </div>
                 </div>

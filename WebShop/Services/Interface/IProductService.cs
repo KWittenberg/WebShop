@@ -30,6 +30,7 @@ public interface IProductService
     // OrderViewModel
     Task<OrderViewModel> GetOrderAsync(int id);
     Task<List<OrderViewModel>> GetOrdersAsync();
+    Task<List<OrderViewModel>> GetOrdersByUserAsync(string id);
     Task<OrderViewModel> AddOrder(OrderBinding model);
     Task<OrderViewModel> SuspendOrder(int id);
 

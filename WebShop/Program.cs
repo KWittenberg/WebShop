@@ -62,7 +62,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     //options.AccessDeniedPath = "Account/AccessDenied";
 
     //Location for your Custom Login Page
-    options.LoginPath = "/ApplicationUser/Login";
+    options.LoginPath = "/User/Login";
 });
 
 builder.Services.AddControllersWithViews();
@@ -85,6 +85,10 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 
 
 var app = builder.Build();
+
+//Register Syncfusion license
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

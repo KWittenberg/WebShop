@@ -1,11 +1,8 @@
-﻿@using WebShop.Services.Interface;
-@model WebShop.Models.ViewModel.ApplicationUserViewModel
+﻿@model WebShop.Models.ViewModel.ApplicationUserViewModel
 @{
     ViewData["Title"] = "Edit User";
 }
-
 <!-- Edit User -->
-
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-6 offset-lg-3">
@@ -26,20 +23,11 @@
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input asp-for="Email" type="text" class="form-control mt-3" placeholder=" Email">
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                   @* <div class="form-group">
-                        <input asp-for="Password" type="text" class="form-control mt-3" placeholder=" Password">
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>*@
-                    <div class="form-group">
-                        <input asp-for="DOB" type="date" class="form-control mt-3" placeholder=" Date Of Birth">
+                        <label asp-for="DOB" class="control-label">&nbsp; &nbsp; Date Of Birth</label>
+                        <input asp-for="DOB" type="date" class="form-control" placeholder=" Date Of Birth">
                         <span asp-validation-for="DOB" class="text-danger"></span>
                     </div>
                 </div>
-
-
                 <div class="container" align="right">
                     <button type="submit" class="mt-3 mb-5 primary-btn">Update</button><a asp-controller="User" asp-action="Index" asp-route-id="@Model.Id" class="mt-3 mb-5 secondary-btn">Back</a>
                 </div>
@@ -48,8 +36,8 @@
     </div>
 </div>
 
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     }

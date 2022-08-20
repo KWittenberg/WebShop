@@ -115,16 +115,18 @@
                                 <i class="ti-menu"></i>
                                 <span>Admin</span>
                                 <ul class="depart-hover">
-                                    <li><a class="nav-link" asp-controller="ProductCategories" asp-action="Index">Category</a></li>
+                                    <a class="dropdown-item" asp-controller="ProductCategories" asp-action="Index"><i class="fa-solid fa-file" style="color:dimgray"></i>&nbsp; Category</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ProductAdministration">Product</a>
+                                    <a class="dropdown-item" asp-controller="FileManager" asp-action="Index"><i class="fa-solid fa-database" style="color:dimgray"></i>&nbsp; FileManager</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-controller="ApplicationUser" asp-action="Index">ApplicationUser</a>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ProductAdministration"><i class="fa-solid fa-barcode" style="color:dimgray"></i>&nbsp; Product</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="ApplicationUser" asp-action="Index"><i class="fa-solid fa-user" style="color:dimgray"></i>&nbsp; ApplicationUser</a>
                                     @*<a class="dropdown-item" asp-controller="User" asp-action="Index">User</a>*@
-                                    <a class="dropdown-item" asp-controller="Roles" asp-action="Index">Role</a>
-                                    <a class="dropdown-item" asp-controller="Address" asp-action="Index">Address</a>
+                                    <a class="dropdown-item" asp-controller="Roles" asp-action="Index"><i class="fa-solid fa-dice-d20" style="color:dimgray"></i>&nbsp; Role</a>
+                                    <a class="dropdown-item" asp-controller="Address" asp-action="Index"><i class="fa-solid fa-address-book" style="color:dimgray"></i>&nbsp; Address</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Orders">Orders</a>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Orders"><i class="fa-solid fa-file-invoice-dollar" style="color:dimgray"></i>&nbsp; Orders</a>
                                 </ul>
                             </div>
                             break;
@@ -142,6 +144,7 @@
                         <ul class="dropdown">
                             <li><a asp-area="" asp-controller="Shop" asp-action="Index">CardView</a></li>
                             <li><a asp-area="" asp-controller="Shop" asp-action="ListView">ListView</a></li>
+                            <li><a asp-area="" asp-controller="Shop" asp-action="ViewByCategory">View By Category</a></li>
                         </ul>
                     </li>
                     <li><a class="nav-link" href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-plus"></i> Cart</a></li>

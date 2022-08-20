@@ -30,6 +30,18 @@ public class ShopController : Controller
     }
 
     /// <summary>
+    /// ViewByCategory
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> ViewByCategory(int Id)
+    {
+        var product = await this.productService.GetProductsAsync();
+        var filteredResult = product.Where(n => n.ProductCategoryId.Equals(2)).ToList();
+        return View("Index", filteredResult);
+    }
+
+    /// <summary>
     /// ItemView
     /// </summary>
     /// <param name="id"></param>
@@ -50,9 +62,6 @@ public class ShopController : Controller
         return RedirectToAction("Index");
     }
 
-
-
-
     /// <summary>
     /// Get: Search Filter
     /// </summary>
@@ -69,10 +78,6 @@ public class ShopController : Controller
         }
         return View("Index", product);
     }
-
-
-
-
 
 
 
@@ -98,7 +103,7 @@ public class ShopController : Controller
         return RedirectToAction("Index");
     }
 
-    
+
     /// <summary>
     /// SuspendShoppingCartItem
     /// </summary>
