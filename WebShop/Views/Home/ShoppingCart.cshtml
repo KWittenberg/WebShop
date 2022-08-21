@@ -6,7 +6,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject ICustomerService customerService
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await UserManager.GetUserAsync(User);
     var address = await customerService.GetAddress(user.Id);
     int counter = 1;

@@ -4,13 +4,18 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        // Hero
+        CreateMap<HeroBinding, Hero>();
+        CreateMap<Hero, HeroViewModel>();
+        CreateMap<HeroViewModel, HeroBinding>();
 
-        
+
         CreateMap<IdentityRole, ApplicationUserViewModel>();
         CreateMap<IdentityRole, ApplicationUserRoleViewModel>();
 
         CreateMap<UserUpdateBinding, ApplicationUser>();
         CreateMap<UserUpdateBinding, ApplicationUserViewModel>();
+
 
         // ApplicationUser
         CreateMap<ApplicationUserBinding, ApplicationUser>();

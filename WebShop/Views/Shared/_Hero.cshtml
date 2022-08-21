@@ -1,68 +1,38 @@
-﻿<!-- Hero section -->
+﻿@inject IProductService productService
+@{
+    var heroAll = await productService.GetHerosAsync();
+    var hero = heroAll.Where(x => x.Publish == true);
+    int counter = 1;
+}
+
+<!-- Hero section -->
 <section class="hero-section">
     <div class="hero-items owl-carousel">
-
-        <!-- Rudina -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-01-rudina.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <span>T. Wittenberg</span>
-                        <h1>Rudina</h1>
-                        <p>
-                            Rudina je bila centar ili bolje rečeno središte centralne Slavonije u kojoj se spaja sve ono najbolje toga vremena.
-                            'Rudina se rudila od crvenih fresaka.' - Akademik Matko Peić.
-                        </p>
-                        <a href="/Shop" class="primary-btn">Shop Now</a>
+        @foreach (var item in hero.OrderBy(x => Guid.NewGuid()))
+        {
+            <div class="single-hero-items set-bg" data-setbg="@item.ImageUrl">
+                <div class="container">
+                    <div class="row">
+                        <div class="@item.Align">
+                            <span>@item.Subtitle</span>
+                            @if (item.Title.Length >= 10)
+                            {
+                                <h2 style="color: @item.ColorTitle">@item.Title</h2>
+                            }
+                            else
+                            {
+                                <h1 style="color: @item.ColorTitle">@item.Title</h1>
+                            }
+                            <p style="color: @item.ColorDescription">@item.Description</p>
+                            <a href="@item.ProductUrl" class="primary-btn">Shop Now</a>
+                        </div>
                     </div>
+                    @if (@item.EventName != null)
+                    {
+                        <div class="off-card"><h2><b>@item.EventName</b><span>@item.EventText</span></h2></div>
+                    }
                 </div>
-                @*<div class="off-card"><h2><b>Sale</b><span>- 30%</span></h2></div>*@
             </div>
-        </div>
-
-        <!-- Almanah Gimnazije -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-03.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5 offset-sm-7">
-                        <span>T. Wittenberg</span>
-                        <h2 style="color: white">Almanah Gimnazije '48</h2>
-                        <p style="color: white">Iako se pišu monografije o samo onim osobama koje su, kako se to obično kaže ‘postigle’ nešto o životu, a onda svakako da su završile gimnaziju, ja sam se opredijelio da navedem sve učenike upisnike te školske godine 1948./49.</p>
-                        <a href="/Shop" class="primary-btn float-right">Shop Now</a>
-                    </div>
-                </div>
-                @*<div class="off-card"><h2><b>Sale</b><span>- 25%</span></h2></div>*@
-            </div>
-        </div>
-
-        <!-- Puvarija -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-02-puvarija.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <span>T. Wittenberg</span>
-                        <h1>Puvarija</h1>
-                        <p>Prva cjelovita obrada sjeverno-zapadnog dijela Dilj-gore i naselja na diljskim padinama, od srednjeg vijeka do današnjih dana.</p>
-                        <a href="/Shop" class="primary-btn">Shop Now</a>
-                    </div>
-                </div>
-                @*<div class="off-card"><h2><b>Sale</b><span>- 30%</span></h2></div>*@
-            </div>
-        </div>
-
-        <!-- Vetovo -->
-        <div class="single-hero-items set-bg" data-setbg="img/hero-04-vetovo.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5 offset-sm-7">
-                        <span>T. Wittenberg</span>
-                        <h1 style="color: white">Vetovo</h1>
-                        <p style="color: white">Stiješnjena između tri centra: Kutjeva, Kaptola i Jakšića, župa ili bolje rečeno područje župe Vetovo, već stoljećima odolijeva kao svojevrstan ‘kuglager’ u nastalom trenju.</p>
-                        <a href="/Shop" class="primary-btn float-right">Shop Now</a>
-                    </div>
-                </div>
-                @*<div class="off-card"><h2><b>Sale</b><span>- 25%</span></h2></div>*@
-            </div>
-        </div>
+        }
     </div>
 </section>

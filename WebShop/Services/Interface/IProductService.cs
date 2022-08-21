@@ -2,6 +2,14 @@
 
 public interface IProductService
 {
+    // HeroViewModel
+    Task<List<HeroViewModel>> GetHerosAsync();
+    Task<HeroViewModel> GetHeroAsync(int id);
+    Task<HeroViewModel> AddHeroAsync(HeroBinding model);
+    Task<HeroViewModel> UpdateHeroAsync(HeroBinding model);
+    Task<HeroViewModel> DeleteHeroAsync(HeroBinding model);
+
+
     // ProductViewModel
     Task<ProductViewModel> GetProductAsync(int id);
     Task<ProductViewModel> GetProductByNameAsync(string name);

@@ -42,7 +42,7 @@
                         <li class="cart-icon">
                             <a href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-shopping" style="color:darkgray"></i><span>@counter</span></a>
                             <!-- ShoppingCartHover -->
-                            @*<partial name="_CartHover" />*@
+                            <partial name="_CartHover" />
 
                             <!-- Cart hover -->
                             @*<div class="cart-hover">
@@ -61,7 +61,7 @@
                                                     </td>
                                                     <td class="si-close">
                                                         <p>@((item.Quantity * item.Price).ToString("c"))</p>
-                                                        @*<i class="ti-close"></i>
+                                                        <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
                                             }
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="select-total"><span>total:</span><h5>@string.Format("{0:C}",subTotalPrice)</h5></div>
                                 <div class="select-button">
-                                    @*<a class="primary-btn view-card" href="@Url.Action("ShoppingCart", "Shop")">VIEW CARD</a>
+                                    <a class="primary-btn view-card" href="@Url.Action("ShoppingCart", "Shop")">VIEW CARD</a>
                                     <a href="@Url.Action("ShoppingCart", "Shop")" class="primary-btn checkout-btn">BUY NOW</a>
                                 </div>
                             </div>*@
@@ -120,6 +120,8 @@
                                     <a class="dropdown-item" asp-controller="FileManager" asp-action="Index"><i class="fa-solid fa-database" style="color:dimgray"></i>&nbsp; FileManager</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="ProductAdministration"><i class="fa-solid fa-barcode" style="color:dimgray"></i>&nbsp; Product</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Hero" asp-action="Index"><i class="fa-brands fa-chromecast" style="color:dimgray"></i>&nbsp; Hero</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="ApplicationUser" asp-action="Index"><i class="fa-solid fa-user" style="color:dimgray"></i>&nbsp; ApplicationUser</a>
                                     @*<a class="dropdown-item" asp-controller="User" asp-action="Index">User</a>*@

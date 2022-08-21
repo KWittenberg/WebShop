@@ -146,13 +146,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script>$(document).ready(function () { $('.popupImg').magnificPopup({ type: 'image' }); });</script>
 
-    <script>
+<script>
         $(document).ready(function () {
             var output = document.getElementById('ImagePreview');
             output.src = $("#Image").val();
         })
 
         $("#Image").on("change", function () {
+            var output = document.getElementById('ImagePreview');
+            output.src = $(this).val();
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ImagePreview');
+            output.src = $("#ImageUrl").val();
+        })
+
+        $("#ImageUrl").on("change", function () {
             var output = document.getElementById('ImagePreview');
             output.src = $(this).val();
         })

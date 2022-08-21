@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebShop.Models.ViewModel.HeroViewModel>
+@{
+    ViewData["Title"] = "Hero";
+    int counter = 1;
+}
+<!-- Hero -->
+<div class="container mt-5">
+    <main role="main" class="pb-3">
+        <h1>Hero</h1>
+        <div class="card-body mt-3 p-0">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">#</th>
+                        <th style="width: 5%">Publish</th>
+                        <th style="width: 20%">Image</th>
+                        <th style="width: 20%">Title</th>
+                        <th style ="width: 10%">Event Name</th>
+                        <th style="width: 10%">Event Text</th>
+                        <th style="width: 11%"><a asp-controller="Hero" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        string redirectUrlPrimary = Url.Action("ChangePublishStatus", "Hero", new { id = item.Id, status = !item.Publish });
+                        <tr>
+                            <td>@counter</td>
+                            <td>
+                                @if (item.Publish)
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')">
+                                }
+                            </td>
+                            <td><a href="@item.ImageUrl" class="popupImg"><img src="@item.ImageUrl" /></a></td>
+                            <td>@item.Title</td>
+                            <td>@item.EventName</td>
+                            <td>@item.EventText</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="Hero" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="Hero" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-controller="Hero" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Hero")
+
+<script>
+    function RedirectToUrl(url) {
+        console.log(url);
+        window.location.href = url;
+    }
+</script>

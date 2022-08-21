@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebShop.Models.ViewModel;
-using WebShop.Models.Binding;
-namespace WebShop.Data;
+﻿namespace WebShop.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
@@ -58,6 +55,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     // Add Address
     public DbSet<Address> Address { get; set; }
 
+    // Add Hero
+    public DbSet<Hero> Hero { get; set; }
+    
     // Add Product
     public DbSet<Product> Product { get; set; }
     public DbSet<ProductCategory> ProductCategory { get; set; }
@@ -68,10 +68,4 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     // Add Order
     public DbSet<Order> Order { get; set; }
-
-    // Add Order
-    //public DbSet<WebShop.Models.ViewModel.ApplicationUserViewModel>? ApplicationUserViewModel { get; set; }
-
-    // Add Order
-    //public DbSet<WebShop.Models.Binding.ApplicationUserUpdateBinding>? ApplicationUserUpdateBinding { get; set; }
 }

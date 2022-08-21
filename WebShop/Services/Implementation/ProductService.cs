@@ -13,6 +13,86 @@ public class ProductService : IProductService
         this.appConfig = appConfig.Value;
     }
 
+
+    /// <summary>
+    /// Get Heros
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<HeroViewModel>> GetHerosAsync()
+    {
+        var dbo = await db.Hero.ToListAsync();
+        return dbo.Select(x => mapper.Map<HeroViewModel>(x)).ToList();
+    }
+
+    /// <summary>
+    /// Get Hero
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<HeroViewModel> GetHeroAsync(int id)
+    {
+        var dbo = await db.Hero.FindAsync(id);
+        return mapper.Map<HeroViewModel>(dbo);
+    }
+
+    /// <summary>
+    /// Change Publish Status
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<HeroViewModel?> ChangePublishStatus(int Id, bool status)
+    {
+        var hero = await db.Hero.FindAsync(Id);
+        if (hero == null) { return null; }
+        hero.Publish = status;
+        await db.SaveChangesAsync();
+        return mapper.Map<HeroViewModel>(hero);
+    }
+
+    /// <summary>
+    /// Add Hero
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<HeroViewModel> AddHeroAsync(HeroBinding model)
+    {
+        var dbo = mapper.Map<Hero>(model);
+        db.Hero.Add(dbo);
+        await db.SaveChangesAsync();
+        return mapper.Map<HeroViewModel>(dbo);
+    }
+    
+    /// <summary>
+    /// Update Hero
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<HeroViewModel> UpdateHeroAsync(HeroBinding model)
+    {
+        var dbo = await db.Hero.FindAsync(model.Id);
+        mapper.Map(model, dbo);
+        await db.SaveChangesAsync();
+        return mapper.Map<HeroViewModel>(dbo);
+    }
+
+    /// <summary>
+    /// Delete Hero
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<HeroViewModel> DeleteHeroAsync(HeroBinding model)
+    {
+        var dbo = await db.Hero.FindAsync(model.Id);
+        db.Hero.Remove(dbo);
+        await db.SaveChangesAsync();
+        return mapper.Map<HeroViewModel>(dbo);
+    }
+
+
+
+
+
     /// <summary>
     /// Add Product
     /// </summary>
