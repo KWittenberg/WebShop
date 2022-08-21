@@ -1,4 +1,6 @@
-﻿namespace WebShop.Services.Implementation;
+﻿using WebShop.Models.Dbo;
+
+namespace WebShop.Services.Implementation;
 
 public class ProductService : IProductService
 {
@@ -62,7 +64,7 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<HeroViewModel>(dbo);
     }
-    
+
     /// <summary>
     /// Update Hero
     /// </summary>
@@ -306,7 +308,7 @@ public class ProductService : IProductService
     public async Task<ShoppingCartViewModel> GetShoppingCartAsync(string userId)
     {
         var shoppingCart = await db.ShoppingCart
-            .Include(x=>x.ApplicationUser.Address)
+            .Include(x => x.ApplicationUser.Address)
             .Include(x => x.ShoppingCartItems)
             .ThenInclude(x => x.Product)
             .ThenInclude(x => x.ProductCategory)
@@ -613,7 +615,7 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<ProductViewModel>(product);
     }
-    
+
     /// <summary>
     /// Change Discount Status
     /// </summary>
@@ -628,4 +630,5 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<ProductViewModel>(product);
     }
+
 }

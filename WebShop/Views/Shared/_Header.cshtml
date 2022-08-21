@@ -1,15 +1,19 @@
-﻿@*@model WebShop.Models.ViewModel.ShoppingCartViewModel*@
-@inject UserManager<ApplicationUser> UserManager
+﻿@inject UserManager<ApplicationUser> UserManager
+@inject IProductService productService
 @{
     int counter = 0;
-    decimal subTotalPrice = 0;
-    decimal totalPrice = 0;
-    //subTotalPrice = Model.GetSubTotalPrice();
-    //totalPrice = Model.GetTotalPrice();
+    decimal subTotalPrice = default;
+    decimal totalPrice = default;
 
     var user = await UserManager.GetUserAsync(User);
 
-    //foreach (var item in Model.ShoppingCartItems) { counter++; }
+    var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
+    if (shoppingCart != null)
+    {
+        subTotalPrice = shoppingCart.GetSubTotalPrice();
+        totalPrice = shoppingCart.GetTotalPrice();
+        foreach (var item in shoppingCart.ShoppingCartItems) { counter++; }
+    }
 }
 
 <header class="header-section">
@@ -42,38 +46,50 @@
                         <li class="cart-icon">
                             <a href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-shopping" style="color:darkgray"></i><span>@counter</span></a>
                             <!-- ShoppingCartHover -->
-                            <partial name="_CartHover" />
+                            @*<partial name="_CartHover" />*@
 
                             <!-- Cart hover -->
-                            @*<div class="cart-hover">
-                                <div class="select-items">
-                                    <table>
-                                        <tbody>
-                                            @foreach (var item in Model.ShoppingCartItems)
-                                            {
-                                                <tr>
-                                                    <td class="si-pic"><img src="@item.Product.Image" width="100"></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <h6>@item.Product.Title</h6>
-                                                            <p>@item.Price.ToString("c") x @item.Quantity</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <p>@((item.Quantity * item.Price).ToString("c"))</p>
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="select-total"><span>total:</span><h5>@string.Format("{0:C}",subTotalPrice)</h5></div>
-                                <div class="select-button">
-                                    <a class="primary-btn view-card" href="@Url.Action("ShoppingCart", "Shop")">VIEW CARD</a>
-                                    <a href="@Url.Action("ShoppingCart", "Shop")" class="primary-btn checkout-btn">BUY NOW</a>
-                                </div>
-                            </div>*@
+                            <div class="cart-hover">
+                                @if (shoppingCart != null)
+                                {
+                                    <div class="select-items">
+                                        <table>
+                                            <tbody>
+
+                                                @foreach (var item in shoppingCart.ShoppingCartItems)
+                                                {
+                                                    <tr>
+                                                        <td class="si-pic"><img src="@item.Product.Image" width="100"></td>
+                                                        <td class="si-text">
+                                                            <div class="product-selected">
+                                                                <h6>@item.Product.Title</h6>
+                                                                <p>@item.Price.ToString("c") x @item.Quantity</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class="si-close">
+                                                            <p>@((item.Quantity * item.Price).ToString("c"))</p>
+                                                            @*<i class="ti-close"></i>*@
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="select-total"><span>total:</span><h5>@string.Format("{0:C}",subTotalPrice)</h5></div>
+                                    <div class="select-button">
+                                        <a class="primary-btn view-card" href="@Url.Action("ShoppingCart", "Shop")">VIEW CARD</a>
+                                        <a href="@Url.Action("ShoppingCart", "Shop")" class="primary-btn checkout-btn">BUY NOW</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="select-items mt-5 mb-5" align="center">
+                                        <i class="fa-solid fa-cart-shopping fa-5x" style="color: #DFAD51"></i>
+                                        <h3 class="mt-5">No product in the cart !</h3>
+                                    </div>
+                                }
+                            </div>
                         </li>
                         <li class="cart-price text-white-50">@string.Format("{0:C}",subTotalPrice)</li>
                     </ul>
