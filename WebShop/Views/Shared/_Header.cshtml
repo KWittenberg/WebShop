@@ -68,7 +68,7 @@
                                                         </td>
                                                         <td class="si-close">
                                                             <p>@((item.Quantity * item.Price).ToString("c"))</p>
-                                                            @*<i class="ti-close"></i>*@
+                                                            <i class="ti-close"></i>
                                                         </td>
                                                     </tr>
                                                 }
@@ -131,6 +131,8 @@
                                 <i class="ti-menu"></i>
                                 <span>Admin</span>
                                 <ul class="depart-hover">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Dashboard"><i class="fa-solid fa-chart-line" style="color:dimgray" ></i>&nbsp; Dashboard </a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="ProductCategories" asp-action="Index"><i class="fa-solid fa-file" style="color:dimgray"></i>&nbsp; Category</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="FileManager" asp-action="Index"><i class="fa-solid fa-database" style="color:dimgray"></i>&nbsp; FileManager</a>
@@ -165,7 +167,7 @@
                             <li><a asp-area="" asp-controller="Shop" asp-action="ViewByCategory">View By Category</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link" href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-plus"></i> Cart</a></li>
+                    @*<li><a class="nav-link" href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-plus"></i> Cart</a></li>*@
                     <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
 

@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <input asp-for="ProductUrl" disabled type="text" class="form-control mt-3" placeholder=" ProductUrl">
-                </div>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group mt-3" align="center">
@@ -68,7 +68,16 @@
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ImagePreview');
+            output.src = $("#ImageUrl").val();
+        })
+
+        $("#ImageUrl").on("change", function () {
+            var output = document.getElementById('ImagePreview');
+            output.src = $(this).val();
+        })
+    </script>
     }

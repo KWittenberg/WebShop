@@ -1,15 +1,15 @@
 ﻿@model WebShop.Models.ViewModel.ShoppingCartViewModel
-@using Microsoft.AspNetCore.Identity
+@*@using Microsoft.AspNetCore.Identity
 @using WebShop.Models.Dbo
-@using WebShop.Services.Interface
-@inject SignInManager<ApplicationUser> SignInManager
+@using WebShop.Services.Interface*@
+@*@inject SignInManager<ApplicationUser> SignInManager*@
 @inject UserManager<ApplicationUser> UserManager
-@inject ICustomerService customerService
+@*@inject ICustomerService customerService*@
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await UserManager.GetUserAsync(User);
-    var addresses = await customerService.GetAddresses(user.Id);
-    if (user.FirstName == null && user.LastName == null) { user.FirstName = "YOU MUST INPUT YOUR FistName AND LastName BEFORE BUYING !!!"; }
+    //var addresses = await customerService.GetAddresses(user.Id);
+    //if (user.FirstName == null && user.LastName == null) { user.FirstName = "YOU MUST INPUT YOUR FistName AND LastName BEFORE BUYING !!!"; }
 
     decimal subTotalPrice = 0;
     decimal totalPrice = 0;
@@ -35,7 +35,7 @@
                 <h1 align="left">Shopping Cart</h1>
             </main>
         </div>
-        <div class="mt-3 card">
+        <div class="mt-3 mb-5 card">
             <div class="card-header">
                 <div class="row"><h5 class="col" align="left" style="color:white">@documentId - @user.FirstName @user.LastName</h5><h5 class="col" align="right">Status: <strong> @documentStatus</strong></h5></div>
             </div>
@@ -44,13 +44,13 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th style="width: 3%" class="center">#</th>
+                                <th style="width: 3%" align="center">#</th>
                                 <th style="width: 10%">Image</th>
                                 <th style="width: 25%">Title</th>
-                                <th class="center">Category</th>
-                                <th class="right">Price</th>
-                                <th class="right">Quantity</th>
-                                <th class="right">Total</th>
+                                <th align="left">Category</th>
+                                <th align="left">Price</th>
+                                <th align="center">Quantity</th>
+                                <th style="width: 10%">Total</th>
                                 <th style="width: 3%"></th>
                             </tr>
                         </thead>
@@ -58,13 +58,13 @@
                             @foreach (var item in Model.ShoppingCartItems)
                             {
                                 <tr>
-                                    <td class="center">@counter</td>
-                                    <td class="left"><img src="@item.Product.Image" width="100px"></td>
-                                    <td class="left strong">@item.Product.Title</td>
-                                    <td class="right">@item.Product.ProductCategory.Title</td>
-                                    <td class="right">@item.Price</td>
-                                    <td class="center">@item.Quantity</td>
-                                    <td class="right">@((item.Quantity * item.Price).ToString("c"))</td>
+                                    <td align="center">@counter</td>
+                                    <td align="left"><img src="@item.Product.Image" width="100px"></td>
+                                    <td align="left">@item.Product.Title</td>
+                                    <td align="left">@item.Product.ProductCategory.Title</td>
+                                    <td align="left">@item.Price.ToString("c")</td>
+                                    <td align="left">@item.Quantity</td>
+                                    <td align="left">@((item.Quantity * item.Price).ToString("c"))</td>
                                     <td>
                                         <a asp-action="SuspendShoppingCartItem" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
                                         @*@Html.ActionLink("X", "SuspendShoppingCartItem", new { id = item.Id }, new { @class = "btn btn-secondary btn-sm" })*@
@@ -76,10 +76,10 @@
                     </table>
                 </div>
 
-
+                <!-- Adresses -->
                 <div class="row">
                     <div class="col mt-3">
-                        @if (Model.ApplicationUser.Address.Count >= 1)
+                        @if (Model.Option != "LocalPickup")
                         {
                             <h4 align="left">Shipping to:</h4>
                             <table class="mt-3 table table-striped table-hover">
@@ -119,65 +119,94 @@
                                 </tbody>
                             </table>
 
+                            <!-- Estimate Arrival Date -->
                             <div class="card-footer text-muted">
                                 Estimate Arrival Date: @DateTime.Now.AddDays(7).ToShortDateString() - @DateTime.Now.AddDays(14).ToShortDateString()
                             </div>
                         }
-                        else
-                        {
-                            <h4 align="center">You have chosen to pick up the order yourself!</h4>
-                            <hr />
-                            <h4 align="center">Please enter your address for delivery!</h4>
-                        }
+                        <hr />
+                        <div class="offset-1">
+                            <div>
+                                <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <label class="form-check-label" for="flexCheckChecked"> I have read and agree to the website terms and conditions *</label>
+                            </div>
+                        </div>
                     </div>
 
-
+                    <!-- Empty Shopping Cart -->
                     <div class="col">
                         <div class="col-md-10 offset-2">
-                            <table class="table table-clear">
+
+                            @*<div class="offset-1">
+                        <form method="post" id="myForm">
+                        <input type="radio" name="Option" id="Option1" value="LocalPickup" checked="@(Model.Option == "LocalPickup")" />
+                        <label for="Option1">Local Pickup</label><br />
+                        <input type="radio" name="Option" id="Option2" value="ChashOnDelivery" checked="@(Model.Option == "ChashOnDelivery")" />
+                        <label for="Option2">Chash On Delivery</label><br />
+                        <input type="radio" name="Option" id="Option3" value="PayPal" checked="@(Model.Option == "PayPal")" />
+                        <label for="Option3">PayPal</label>
+                        </form>
+                        </div>*@
+
+                            <form id='f1'>
+                                <div class="mt-3 btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="Option" id="Option1" onclick="Form()" value="LocalPickup" autocomplete="off" checked="@(Model.Option == "LocalPickup")">
+                                    <label class="btn btn-outline-secondary btn-sm" for="Option1">Local Pickup</label>
+
+                                    <input type="radio" class="btn-check" name="Option" id="Option2" onclick="Form()" value="ChashOnDelivery" autocomplete="off" checked="@(Model.Option == "ChashOnDelivery")">
+                                    <label class="btn btn-outline-secondary btn-sm" for="Option2">Chash On Delivery</label>
+
+                                    <input type="radio" class="btn-check" name="Option" id="Option3" onclick="Form()" value="PayPal" autocomplete="off" checked="@(Model.Option == "PayPal")">
+                                    <label class="btn btn-outline-secondary btn-sm" for="Option3">PayPal</label>
+                                </div>
+                            </form>
+
+
+                            <div class="col-md-4">
+
+                                <div id='result' style="position: absolute;">
+                                </div>
+                            </div>
+
+                            
+
+
+
+
+                            <table class="mt-4 table table-clear">
                                 <tbody>
                                     <tr>
                                         <td class="left"><strong>Subtotal</strong></td>
                                         <td align="right">@string.Format("{0:C}",subTotalPrice)</td>
                                     </tr>
 
-
-
-                                    @foreach (var item in Model.ApplicationUser.Address)
+                                    @if (Model.Option == "LocalPickup")
                                     {
-                                        @if (item.Primary != true)
-                                        {
-                                            <tr>
-                                                <td class="left">Local pickup</td>
-                                                <td align="right">00,00 kn</td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            <tr>
-                                                <td class="left">Shipping Croatia</td>
-                                                <td align="right">55,00 kn</td>
-                                            </tr>
-                                        }
+                                        <tr>
+                                            <td>Local pickup</td>
+                                            <td align="right">00,00 kn</td>
+                                        </tr>
+                                    }
+                                    @if (Model.Option == "ChashOnDelivery")
+                                    {
+                                        <tr>
+                                            <td class="left">Shipping Croatia</td>
+                                            <td align="right">55,00 kn</td>
+                                        </tr>
+                                    }
+                                    @if (Model.Option == "PayPal")
+                                    {
+                                        <tr>
+                                            <td class="left">Shipping Croatia</td>
+                                            <td align="right">55,00 kn</td>
+                                        </tr>
                                     }
 
-
-
-
-
-                                    @*@foreach (var item in Model.ApplicationUser.Address)
-                                    {
-                                        @if (item.Primary == true)
-                                        {
-                                            <tr>
-                                                <td class="left">Shipping Croatia</td>
-                                                <td align="right">55,00 kn</td>
-                                            </tr>
-                                        }
-                                    }*@
-
                                     <tr>
-                                        <td class="left"><strong>Total</strong></td>
+                                        <td><strong>Total</strong></td>
                                         <td align="right">
                                             <strong>@string.Format("{0:C}",totalPrice)</strong>
                                         </td>
@@ -187,18 +216,11 @@
                         </div>
 
                         <div class="mt-5 mb-5" align="right">
-
-                            @if (Model != null)
+                            @using (Html.BeginForm())
                             {
-                                using (Html.BeginForm())
-                                {
-                                    <input type="text" name="ShoppingCartId" value="@Model.Id" hidden>
-                                    <a asp-controller="Shop" asp-action="Index" class="secondary-btn">Continue Shopping</a>
-                                    if (Model.ApplicationUser.FirstName != null && Model.ApplicationUser.LastName != null)
-                                    {
-                                        <input type="submit" class="primary-btn" value="Buy Now">
-                                    }
-                                }
+                                <input type="text" name="ShoppingCartId" value="@Model.Id" hidden>
+                                <a asp-controller="Shop" asp-action="Index" class="secondary-btn">Continue Shopping</a>
+                                <input type="submit" class="primary-btn" value="Buy Now">
                             }
                         </div>
                     </div>
@@ -208,6 +230,7 @@
     }
     else
     {
+        <!-- Empty Shopping Cart -->
         <div class="container mt-5 mb-5">
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
@@ -225,3 +248,35 @@
     }
 </div>
 <partial name="_Footer" />
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("input:radio[name=Option]").click(function () {
+                $("#result").css("background-color", "yellow"); // change the color of the background
+                $('#result').html($(this).val());
+            })
+
+        })
+    </script>
+    <script type="text/javascript">
+        function Form() {
+            var selectvalue = $('input[name=Option]:checked', '#f1').val();
+            if (selectvalue == "LocalPickup") {
+        @Model.Option == selectvalue;
+                return true;
+            }
+            else if (selectvalue == "ChashOnDelivery") {
+        @Model.Option == selectvalue;
+                return true;
+            }
+            else if (selectvalue == "PayPal") {
+        @Model.Option == selectvalue;
+                return true;
+            }
+            return false;
+    </script>
+    }

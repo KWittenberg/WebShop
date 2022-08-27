@@ -1,0 +1,77 @@
+﻿@model WebShop.Models.Dbo.ProductCategory
+@{
+    Layout = "_LayoutADMIN";
+    var title = "Create a new category";
+    ViewData["PageTitle"] = Model.Id == 0 ? "Create a new category" : "Edit category";
+
+    @if (Model.Id != 0)
+    {
+        title = "Edit Category";
+    }
+}
+@section Scripts {
+    @*<script src="~/js/admin/highlight.min.js"></script>
+    <script src="~/js/admin/render.highlight.js"></script>*@
+}
+
+    <!-- BEGIN breadcrumb -->
+    <ol class="breadcrumb float-xl-end">
+        <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+        <li class="breadcrumb-item"><a href="~/ProductCategories">Category</a></li>
+        <li class="breadcrumb-item active">Add Or Edit</li>
+    </ol>
+    <!-- END breadcrumb -->
+    <!-- BEGIN page-header -->
+    <h1 class="page-header">Category @*<small>header small text goes here...</small>*@</h1>
+    <!-- END page-header -->
+    <!-- BEGIN col-6 -->
+    <div class="mt-5 col-xl-6 offset-xl-3">
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="form-stuff-3">
+            <!-- BEGIN panel-heading -->
+            <div class="panel-heading">
+                <h4 class="panel-title">@title <span class="badge bg-success ms-1">NEW</span></h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <!-- END panel-heading -->
+            <!-- BEGIN panel-body -->
+            <form method="post" asp-action="AddOrEdit">
+                <div class="panel-body">
+
+                    <div class="mt-4">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input asp-for="Title" type="text" class="form-control fs-15px" id="floatingInput" placeholder="Category">
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">Category</label>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input asp-for="Description" type="text" class="form-control fs-15px" id="floatingInput" placeholder="Description">
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px">Description</label>
+                        </div>
+                    </div>
+                    <!-- Create & Update -->
+                    <div align="right" class="mt-3">
+                    @if (Model.Id != 0)
+                    {
+                    //update
+                        <input type="submit" class="btn btn-primary" value="Update" />
+                    }
+                    else
+                    {
+                    //create
+                        <input type="submit" class="btn btn-primary" value="Create" />
+                    }
+                    <a asp-controller="ProductCategories" asp-action="Index" class="btn btn-default active">Back</a>
+                </div>
+                </div>
+        </form>
+    </div>
+    <!-- END panel -->
+</div>
+<!-- END col-6 -->

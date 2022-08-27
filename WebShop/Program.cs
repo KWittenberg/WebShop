@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -67,6 +69,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddControllersWithViews();
 
+// Add for Sweet Alert
+builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+builder.Services.AddSession();
+
 
 // Add for Token
 string tokenIssuerAndAudience = builder.Configuration["AppUrl"];
@@ -114,6 +120,10 @@ app.UseReDoc();
 #endregion
 
 app.UseRouting();
+
+// Add for Sweet Alert
+app.UseSession();
+
 
 // Add Cors
 app.UseCors(CorsPolicy.AllowAll);

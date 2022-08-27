@@ -11,6 +11,18 @@ public class AdminController : Controller
         this.mapper = mapper;
     }
 
+
+    /// <summary>
+    /// Dashboard
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Dashboard()
+    {
+        return View();
+    }
+
+
     /// <summary>
     /// ProductAdministration
     /// </summary>

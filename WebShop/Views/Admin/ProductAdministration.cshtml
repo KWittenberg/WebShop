@@ -82,9 +82,19 @@
 
 @await Html.PartialAsync("_CreateItem", "Admin")
 
-<script>
-    function RedirectToUrl(url) {
-        console.log(url);
-        window.location.href = url;
+
+
+
+@section Scripts {
+    
+    <script>
+        function RedirectToUrl(url) {
+            console.log(url);
+            window.location.href = url;
+        }
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</script>
+}

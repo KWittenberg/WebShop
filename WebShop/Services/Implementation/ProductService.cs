@@ -415,7 +415,7 @@ public class ProductService : IProductService
 
         var dbo = new Order
         {
-            Paid = true,
+            //Paid = true,
             ShoppingCart = shoppingCart
 
         };

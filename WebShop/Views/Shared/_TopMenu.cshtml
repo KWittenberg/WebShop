@@ -1,0 +1,174 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+	var menuController = ViewContext.RouteData.Values["controller"].ToString();
+	var menuAction = ViewContext.RouteData.Values["action"].ToString();
+	var sidebarMenu = Configuration.GetSection("sidebarMenu").GetChildren().ToArray();
+}
+
+<!-- BEGIN #top-menu -->
+<div id="top-menu" class="app-top-menu">
+	<!-- BEGIN menu -->
+	<div class="menu">
+		@foreach (var menu in sidebarMenu) {
+			var menuChildren = menu.GetSection("children").GetChildren().ToArray();
+			var menuActiveLvl1 = "";
+			var menuActiveLvl2 = "";
+			var menuActiveLvl3 = "";
+
+			@if (menuChildren.Length > 0) {
+				@foreach (var submenu in menuChildren) {
+					var menuChildrenLvl1 = submenu.GetSection("children").GetChildren().ToArray();
+					@if (menuChildrenLvl1.Length > 0) {
+						@foreach (var submenu2 in menuChildrenLvl1) {
+							var menuChildrenLvl2 = submenu2.GetSection("children").GetChildren().ToArray();
+							@if (menuChildrenLvl2.Length > 0) {
+								@foreach (var submenu3 in menuChildrenLvl2) {
+									menuActiveLvl3 = (menuAction == submenu3["action"]) ? "active" : menuActiveLvl3;
+								}
+							} else {
+								menuActiveLvl2 = (menuAction == submenu2["action"]) ? "active" : menuActiveLvl2;
+							}
+						}
+					} else {
+						menuActiveLvl1 = (menuAction == submenu["action"]) ? "active" : menuActiveLvl1;
+					}
+				}
+			}
+			
+			<div class="menu-item @((menuController == @menu["controller"] || (menuActiveLvl1 == "active" || menuActiveLvl2 == "active" || menuActiveLvl3 == "active")) ? "active" : "") @(menuChildren.Length > 0 ? "has-sub" : "")">
+				@if (menuChildren.Length == 0 && menu["action"] != null && menu["controller"] != null) {
+					<a class="menu-link" asp-controller="@menu["controller"]" asp-action="@menu["action"]">
+						@if (menu["icon"] != null) { <div class="menu-icon"><i class="@menu["icon"]"></i></div> }
+						@if (menu["img"] != null) { <div class="menu-icon-img"><img src="@menu["img"]" alt="" /></div> }
+						<div class="menu-text">
+							@menu["text"]
+							@if (menu["label"] != null) { <span class="menu-label">@menu["label"]</span> }
+						</div>
+						@if (menu["badge"] != null) { <div class="menu-badge">@menu["badge"]</div> }
+					</a>
+				} else {
+					<a href="javascript:;" class="menu-link">
+						@if (menu["icon"] != null) { <div class="menu-icon"><i class="@menu["icon"]"></i></div> }
+						@if (menu["img"] != null) { <div class="menu-icon-img"><img src="~@menu["img"]" alt="" /></div> }
+						<div class="menu-text">
+							@menu["text"]
+							@if (menu["label"] != null) { <span class="menu-label">@menu["label"]</span>}
+						</div>
+						@if (menuChildren.Length > 0) { <div class="menu-caret"></div> }
+					</a>
+				}
+				@if (menuChildren.Length > 0) {
+					<div class="menu-submenu">
+						@foreach (var submenu in menuChildren) {
+							var menuChildrenLvl1 = submenu.GetSection("children").GetChildren().ToArray();
+							
+							menuActiveLvl2 = "";
+							menuActiveLvl3 = "";
+							
+							@if (menuChildrenLvl1.Length > 0) {
+								@foreach (var submenu2 in menuChildrenLvl1) {
+									var menuChildrenLvl2 = submenu2.GetSection("children").GetChildren().ToArray();
+									@if (menuChildrenLvl2.Length > 0) {
+										@foreach (var submenu3 in menuChildrenLvl2) {
+											menuActiveLvl3 = (menuAction == submenu3["action"]) ? "active" : menuActiveLvl3;
+										}
+									} else {
+										menuActiveLvl2 = (menuAction == submenu2["action"]) ? "active" : menuActiveLvl2;
+									}
+								}
+							} else {
+								menuActiveLvl2 = (menuAction == submenu["action"]) ? "active" : menuActiveLvl2;
+							}
+							
+							<div class="menu-item @((menuAction == @submenu["action"] || (menuActiveLvl2 == "active" || menuActiveLvl3 == "active")) ? "active" : "") @(menuChildrenLvl1.Length > 0 ? "has-sub" : "")">
+								@if (menuChildrenLvl1.Length == 0 && submenu["action"] != null && submenu["controller"] != null) {
+									<a class="menu-link" asp-controller="@submenu["controller"]" asp-action="@submenu["action"]">
+										<div class="menu-text">
+											@submenu["text"]
+											@if (submenu["highlight"] != null) { <i class="fa fa-paper-plane text-primary"></i> }
+										</div>
+									</a>
+								} else {
+									<a class="menu-link" href="javascript:;">
+										<div class="menu-text">
+											@submenu["text"]
+											@if (submenu["highlight"] != null) { <i class="fa fa-paper-plane text-primary"></i> }
+										</div>
+										@if (menuChildrenLvl1.Length > 0) { <div class="menu-caret"></div>	}
+									</a>
+								}
+								@if (menuChildrenLvl1.Length > 0) {
+									<div class="menu-submenu">
+										@foreach (var submenu2 in menuChildrenLvl1) {
+											var menuChildrenLvl2 = submenu2.GetSection("children").GetChildren().ToArray();
+											menuActiveLvl3 = "";
+											
+											@if (menuChildrenLvl2.Length > 0) {
+												@foreach (var submenu3 in menuChildrenLvl2) {
+													menuActiveLvl3 = (menuAction == submenu3["action"]) ? "active" : menuActiveLvl3;
+												}
+											}
+											<div class="menu-item @((menuAction == @submenu2["action"] || menuActiveLvl3 == "active") ? "active" : "") @(menuChildrenLvl2.Length > 0 ? "has-sub" : "")">
+												@if (menuChildrenLvl2.Length == 0 && submenu2["action"] != null && submenu2["controller"] != null) {
+													<a class="menu-link" asp-controller="@submenu2["controller"]" asp-action="@submenu2["action"]">
+														<div class="menu-text">
+															@submenu2["text"]
+															@if (submenu2["highlight"] != null) { <i class="fa fa-paper-plane text-primary"></i> }
+														</div>
+													</a>
+												} else {
+													<a class="menu-link" href="javascript:;">
+														<div class="menu-text">
+															@submenu2["text"]
+															@if (submenu2["highlight"] != null) { <i class="fa fa-paper-plane text-primary"></i> }
+														</div>
+														@if (menuChildrenLvl2.Length > 0) { <div class="menu-caret"></div> }
+													</a>
+													
+													@if (menuChildrenLvl2.Length > 0) {
+														<div class="menu-submenu">
+															@foreach (var submenu3 in menuChildrenLvl2) {
+																<div class="menu-item @(menuAction == @submenu3["action"] ? "active" : "") @(menuChildrenLvl2.Length > 0 ? "has-sub" : "")">
+																	@if (menuChildrenLvl2.Length == 0 && submenu2["action"] != null && submenu3["controller"] != null) {
+																		<a class="menu-link" asp-controller="@submenu3["controller"]" asp-action="@submenu3["action"]">
+																			<div class="menu-text">
+																				@submenu3["text"]
+																				@if (submenu3["highlight"] != null) {
+																					<i class="fa fa-paper-plane text-primary"></i>
+																				}
+																			</div>
+																		</a>
+																	} else {
+																		<a class="menu-link" href="javascript:;">
+																			<div class="menu-text">
+																				@submenu3["text"]
+																				@if (submenu3["highlight"] != null) { <i class="fa fa-paper-plane text-primary"></i> }
+																			</div>
+																		</a>
+																	}
+																</div>
+															}
+														</div>
+													}
+												}
+											</div>
+										}
+									</div>
+								}
+							</div>
+						}
+					</div>
+				}
+			</div>
+		}
+		<div class="menu-item menu-control menu-control-start">
+			<a href="javascript:;" class="menu-link" data-toggle="app-top-menu-prev"><i class="fa fa-angle-left"></i></a>
+		</div>
+		<div class="menu-item menu-control menu-control-end">
+			<a href="javascript:;" class="menu-link" data-toggle="app-top-menu-next"><i class="fa fa-angle-right"></i></a>
+		</div>
+	</div>
+	<!-- END menu -->
+</div>
+<!-- END #top-menu -->

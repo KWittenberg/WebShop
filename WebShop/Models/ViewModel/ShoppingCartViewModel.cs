@@ -28,14 +28,21 @@ public class ShoppingCartViewModel : ShoppingCartBase
     public decimal GetTotalPrice()
     {
         decimal subTotalPrice = GetSubTotalPrice();
-        decimal totalPrice= subTotalPrice;
+        decimal totalPrice = subTotalPrice;
 
         if (subTotalPrice == default)
         {
             return default;
         }
-
-        if (ApplicationUser.Address.Count >= 2)
+        if (Option == "LocalPickup")
+        {
+            totalPrice = subTotalPrice;
+        }
+        if (Option == "ChashOnDelivery")
+        {
+            totalPrice = subTotalPrice + 55;
+        }
+        if (Option == "PayPal")
         {
             totalPrice = subTotalPrice + 55;
         }
@@ -55,4 +62,9 @@ public class ShoppingCartViewModel : ShoppingCartBase
 
     public ShoppingCartStatus ShoppingCartStatus { get; set; }
     public DateTime Created { get; set; }
+
+
+
+
+    public string Option { get; set; } = "LocalPickup";
 }

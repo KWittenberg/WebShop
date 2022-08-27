@@ -1,0 +1,263 @@
+﻿<!-- BEGIN #header -->
+<div id="header" class="app-header @(ViewData["AppHeaderInverse"] != null ? "app-header-inverse" : "")">
+	<!-- BEGIN navbar-header -->
+	<div class="navbar-header">
+		@if (ViewData["AppSidebarTwo"] != null) {
+		<button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-end-mobile">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		}
+		<a href="/" class="navbar-brand"><span class="navbar-logo"></span> <b>Bolta</b> Shop</a>
+		@if (ViewData["AppHeaderMegaMenu"] != null && ViewData["AppSidebarTwo"] == null) {
+			<button type="button" class="navbar-mobile-toggler" data-bs-toggle="collapse" data-bs-target="#top-navbar">
+				<span class="fa-stack fa-lg">
+					<i class="far fa-square fa-stack-2x"></i>
+					<i class="fa fa-cog fa-stack-1x mt-1px"></i>
+				</span>
+			</button>
+		}
+		@if (ViewData["AppTopMenu"] != null && ViewData["AppSidebarTwo"] == null) {
+			<button type="button" class="navbar-mobile-toggler" data-toggle="app-top-menu-mobile">
+				<span class="fa-stack fa-lg">
+					<i class="far fa-square fa-stack-2x"></i>
+					<i class="fa fa-cog fa-stack-1x mt-1px"></i>
+				</span>
+			</button>
+		}
+		@if (ViewData["AppTopMenu"] != null && ViewData["AppSidebarNone"] != null) {
+			<button type="button" class="navbar-mobile-toggler" data-toggle="app-top-menu-mobile">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		}
+		@if (ViewData["AppSidebarNone"] == null) {
+			<button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		}
+	</div>
+	<!-- END navbar-header -->
+	@if (ViewData["AppHeaderMegaMenu"] != null) {
+		<!-- BEGIN navbar-collapse -->
+		<div class="collapse d-md-block me-auto" id="top-navbar">
+			<div class="navbar-nav">
+				<div class="navbar-item dropdown dropdown-lg">
+					<a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+						<i class="fa fa-th-large fa-fw me-1"></i> 
+						<span class="d-lg-inline d-md-none">Mega</span>
+						<b class="caret ms-1"></b>
+					</a>
+					<div class="dropdown-menu dropdown-menu-lg">
+						<div class="row">
+							<div class="col-lg-4 col-md-4">
+								<div class="h5 fw-bolder mb-2">UI Kits</div>
+								<div class="row mb-3">
+									<div class="col-lg-6">
+										<ul class="nav d-block fw-bold">
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> FontAwesome</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Ionicons</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Simple Line Icons</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Typography</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Media Object</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Widget Boxes</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Tabs & Accordions</a></li>
+										</ul>
+									</div>
+									<div class="col-lg-6">
+										<ul class="nav d-block fw-bold">
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Unlimited Nav Tabs</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Modal & Notification</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Buttons</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-4">
+								<div class="h5 mb-2">Page Options <span class="badge bg-pink ms-2">11</span></div>
+								<div class="row">
+									<div class="col-lg-6">
+										<ul class="nav d-block fw-bold">
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Blank Page</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Footer <span class="badge bg-success py-1">NEW</span></a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page without Sidebar</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Right Sidebar</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Minified Sidebar</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Two Sidebar</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Line Icons</a></li>
+										</ul>
+									</div>
+									<div class="col-lg-6">
+										<ul class="nav d-block fw-bold">
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Full Height Content</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Mega Menu</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Light Sidebar</a></li>
+											<li><a href="javascript:;" class="text-ellipsis text-dark text-decoration-none"><i class="fa fa-chevron-right fa-fw text-gray-500"></i> Page with Large Sidebar</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-4">
+								<div class="h5 mb-2">Paragraph</div>
+								<p>
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis libero purus, fermentum at libero convallis, auctor dignissim mauris. Nunc laoreet pellentesque turpis sodales ornare. Nunc vestibulum nunc lorem, at sodales velit malesuada congue. Nam est tortor, tincidunt sit amet eros vitae, aliquam finibus mauris.
+								</p>
+								<p>
+									Fusce ac ligula laoreet ante dapibus mattis. Nam auctor vulputate aliquam. Suspendisse efficitur, felis sed elementum eleifend, ipsum tellus sodales nisi, ut condimentum nisi sem in nibh. Phasellus suscipit vulputate purus at venenatis. Quisque luctus tincidunt tempor.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="navbar-item">
+					<a href="javascript:;" class="navbar-link d-flex align-items-center">
+						<i class="fa fa-gem fa-fw me-1"></i>
+						<span class="d-lg-inline d-md-none">Client</span>
+					</a>
+				</div>
+				<div class="navbar-item dropdown">
+					<a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+						<i class="fa fa-database fa-fw me-1"></i>
+						<span class="d-lg-inline d-md-none">New</span>
+						 <b class="caret ms-1"></b>
+					</a>
+					<div class="dropdown-menu">
+						<a href="javascript:;" class="dropdown-item">Action</a>
+						<a href="javascript:;" class="dropdown-item">Another action</a>
+						<a href="javascript:;" class="dropdown-item">Something else here</a>
+						<div class="dropdown-divider"></div>
+						<a href="javascript:;" class="dropdown-item">Separated link</a>
+						<div class="dropdown-divider"></div>
+						<a href="javascript:;" class="dropdown-item">One more separated link</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END navbar-collapse -->
+	}
+	
+	<!-- BEGIN header-nav -->
+	<div class="navbar-nav">
+		<div class="navbar-item navbar-form">
+			<form action="" method="POST" name="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Enter keyword" />
+					<button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+				</div>
+			</form>
+		</div>
+		<div class="navbar-item dropdown">
+			<a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon">
+				<i class="fa fa-bell"></i>
+				<span class="badge">5</span>
+			</a>
+			<div class="dropdown-menu media-list dropdown-menu-end">
+				<div class="dropdown-header">NOTIFICATIONS (5)</div>
+				<a href="javascript:;" class="dropdown-item media">
+					<div class="media-left">
+						<i class="fa fa-bug media-object bg-gray-500"></i>
+					</div>
+					<div class="media-body">
+						<h6 class="media-heading">Server Error Reports <i class="fa fa-exclamation-circle text-danger"></i></h6>
+						<div class="text-muted fs-10px">3 minutes ago</div>
+					</div>
+				</a>
+				<a href="javascript:;" class="dropdown-item media">
+					<div class="media-left">
+						<img src="/img/user/user-1.jpg" class="media-object" alt="" />
+						<i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
+					</div>
+					<div class="media-body">
+						<h6 class="media-heading">John Smith</h6>
+						<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
+						<div class="text-muted fs-10px">25 minutes ago</div>
+					</div>
+				</a>
+				<a href="javascript:;" class="dropdown-item media">
+					<div class="media-left">
+						<img src="/img/user/user-2.jpg" class="media-object" alt="" />
+						<i class="fab fa-facebook-messenger text-blue media-object-icon"></i>
+					</div>
+					<div class="media-body">
+						<h6 class="media-heading">Olivia</h6>
+						<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>
+						<div class="text-muted fs-10px">35 minutes ago</div>
+					</div>
+				</a>
+				<a href="javascript:;" class="dropdown-item media">
+					<div class="media-left">
+						<i class="fa fa-plus media-object bg-gray-500"></i>
+					</div>
+					<div class="media-body">
+						<h6 class="media-heading"> New User Registered</h6>
+						<div class="text-muted fs-10px">1 hour ago</div>
+					</div>
+				</a>
+				<a href="javascript:;" class="dropdown-item media">
+					<div class="media-left">
+						<i class="fa fa-envelope media-object bg-gray-500"></i>
+						<i class="fab fa-google text-warning media-object-icon fs-14px"></i>
+					</div>
+					<div class="media-body">
+						<h6 class="media-heading"> New Email From John</h6>
+						<div class="text-muted fs-10px">2 hour ago</div>
+					</div>
+				</a>
+				<div class="dropdown-footer text-center">
+					<a href="javascript:;" class="text-decoration-none">View more</a>
+				</div>
+			</div>
+		</div>
+		@if (ViewData["AppHeaderLanguageBar"] != null) {
+			<div class="navbar-item dropdown">
+				<a href="#" class="navbar-link dropdown-toggle" data-bs-toggle="dropdown">
+					<span class="flag-icon flag-icon-us" title="us"></span>
+					<span class="d-none d-sm-inline ms-1">EN</span> <b class="caret"></b>
+				</a>
+				<div class="dropdown-menu dropdown-menu-end">
+					<a href="javascript:;" class="dropdown-item"><span class="flag-icon flag-icon-us me-2" title="us"></span> English</a>
+					<a href="javascript:;" class="dropdown-item"><span class="flag-icon flag-icon-cn me-2" title="cn"></span> Chinese</a>
+					<a href="javascript:;" class="dropdown-item"><span class="flag-icon flag-icon-jp me-2" title="jp"></span> Japanese</a>
+					<a href="javascript:;" class="dropdown-item"><span class="flag-icon flag-icon-be me-2" title="be"></span> Belgium</a>
+					<div class="dropdown-divider"></div>
+					<a href="javascript:;" class="dropdown-item text-center">more options</a>
+				</div>
+			</div>
+		}
+		<div class="navbar-item navbar-user dropdown">
+			<a href="#" class="navbar-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+				<img src="~/img/logo-Bolta-icon.png" alt="" /> 
+				<span>
+					<span class="d-none d-md-inline">ADMIN</span>
+					<b class="caret"></b>
+				</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-end me-1">
+				<a href="javascript:;" class="dropdown-item">Edit Profile</a>
+				<a href="javascript:;" class="dropdown-item d-flex align-items-center">
+					Inbox
+					<span class="badge bg-danger rounded-pill ms-auto pb-4px">2</span>
+				</a>
+				<a href="javascript:;" class="dropdown-item">Calendar</a>
+				<a href="javascript:;" class="dropdown-item">Setting</a>
+				<div class="dropdown-divider"></div>
+				<a href="javascript:;" class="dropdown-item">Log Out</a>
+			</div>
+		</div>
+		@if (ViewData["AppSidebarTwo"] != null) {
+			<div class="navbar-divider d-none d-md-block"></div>
+			<div class="navbar-item d-none d-md-block">
+				<a href="javascript:;" data-toggle="app-sidebar-end" class="navbar-link icon">
+					<i class="fa fa-th"></i>
+				</a>
+			</div>
+		}
+	</div>
+	<!-- END header-nav -->
+	<!-- end header-nav -->
+</div>
+<!-- END #header -->
