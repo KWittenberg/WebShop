@@ -162,8 +162,22 @@ public class ApplicationUserController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    
 
+    /// <summary>
+    /// Change Primary Status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> ChangePrimaryStatus(int id, bool status, string userid)
+    {
+        var address = await db.Address.FindAsync(id);
+        if (address == null) { return null; }
+        address.Primary = status;
+        await db.SaveChangesAsync();
+        //return RedirectToAction("Index");
+        return RedirectToAction("Index", "ApplicationUser");
+    }
 
 
 

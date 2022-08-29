@@ -1,23 +1,24 @@
 ﻿@{
     Layout = "_LayoutADMIN";
-    ViewData["Title"] = "Dashboard V2";
+    ViewData["Title"] = "Dashboard";
 }
 @section Styles {
-    <link href="~/lib/jvectormap-next/jquery-jvectormap.css" rel="stylesheet" />
-    <link href="~/lib/simple-calendar/dist/simple-calendar.css" rel="stylesheet" />
-    <link href="~/lib/gritter/css/jquery.gritter.css" rel="stylesheet" />
-    <link href="~/lib/nvd3/build/nv.d3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/admin/jvectormap-next/jquery-jvectormap.css" />
+    <link rel="stylesheet" href="~/lib/admin/simple-calendar/dist/simple-calendar.css" />
+    <link rel="stylesheet" href="~/lib/admin/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" href="~/lib/admin/nvd3/build/nv.d3.css" />
 }
     @section Scripts {
-    <script src="~/lib/d3/d3.min.js"></script>
-    <script src="~/lib/nvd3/build/nv.d3.min.js"></script>
-    <script src="~/lib/jvectormap-next/jquery-jvectormap.min.js"></script>
-    <script src="~/lib/jvectormap-next/jquery-jvectormap-world-mill.js"></script>
-    <script src="~/lib/simple-calendar/dist/jquery.simple-calendar.min.js"></script>
-    <script src="~/lib/gritter/js/jquery.gritter.js"></script>
-    <script src="~/js/demo/dashboard-v2.js"></script>
+    <script src="~/lib/admin/d3/d3.min.js"></script>
+    <script src="~/lib/admin/nvd3/build/nv.d3.min.js"></script>
+    <script src="~/lib/admin/jvectormap-next/jquery-jvectormap.min.js"></script>
+    <script src="~/lib/admin/jvectormap-next/jquery-jvectormap-world-mill.js"></script>
+    <script src="~/lib/admin/simple-calendar/dist/jquery.simple-calendar.min.js"></script>
+    <script src="~/lib/admin/gritter/js/jquery.gritter.js"></script>
+    <script src="~/js/admin/dashboard-v2.js"></script>
 }
 
+    
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
@@ -26,7 +27,7 @@
     </ol>
     <!-- END breadcrumb -->
     <!-- BEGIN page-header -->
-    <h1 class="page-header">Dashboard v2 <small>header small text goes here...</small></h1>
+    <h1 class="page-header">BoltaShop <small>Dashboard</small></h1>
     <!-- END page-header -->
     <!-- BEGIN row -->
     <div class="row">
@@ -76,20 +77,39 @@
         </div>
         <!-- END col-3 -->
         <!-- BEGIN col-3 -->
+        @*<div class="col-xl-3 col-md-6">
+    <div class="widget widget-stats bg-gray-900">
+    <div class="stats-icon stats-icon-lg"><i class="fa fa-comment-alt fa-fw"></i></div>
+    <div class="stats-content">
+    <div class="stats-title">NEW COMMENTS</div>
+    <div class="stats-number">3,988</div>
+    <div class="stats-progress progress">
+    <div class="progress-bar" style="width: 54.9%;"></div>
+    </div>
+    <div class="stats-desc">Better than last week (54.9%)</div>
+    </div>
+    </div>
+    </div>*@
+        <!-- END col-3 -->
+        <!-- BEGIN col-3 -->
         <div class="col-xl-3 col-md-6">
-            <div class="widget widget-stats bg-gray-900">
-                <div class="stats-icon stats-icon-lg"><i class="fa fa-comment-alt fa-fw"></i></div>
+            <div class="widget widget-stats bg-orange mb-7px">
+                <div class="stats-icon stats-icon-lg"><i class="fa fa-file-alt fa-fw"></i></div>
                 <div class="stats-content">
-                    <div class="stats-title">NEW COMMENTS</div>
-                    <div class="stats-number">3,988</div>
+                    <div class="stats-title">PENDING INVOICE</div>
+                    <div class="stats-number">20</div>
                     <div class="stats-progress progress">
-                        <div class="progress-bar" style="width: 54.9%;"></div>
+                        <div class="progress-bar" style="width: 23.5%;"></div>
                     </div>
-                    <div class="stats-desc">Better than last week (54.9%)</div>
+                    <div class="stats-desc">More than last week (23.5%)</div>
                 </div>
             </div>
         </div>
         <!-- END col-3 -->
+
+
+
+
     </div>
     <!-- END row -->
     <!-- BEGIN row -->

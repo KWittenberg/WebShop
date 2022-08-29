@@ -149,7 +149,7 @@ public class AdminController : Controller
     public async Task<IActionResult> Orders()
     {
         var orders = await productService.GetOrdersAsync();
-        return View(orders);
+        return View(orders.OrderByDescending(x=>x.Created));
     }
 
     /// <summary>

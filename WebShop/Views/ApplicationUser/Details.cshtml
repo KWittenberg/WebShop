@@ -4,102 +4,130 @@
 @inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "ApplicationUser";
-
-    //var addresses = await customerService.GetAddresses(@Model.Id);
+    Layout = "_LayoutADMIN";
     int counter = 1;
 }
-<br />
-<br />
-<!-- Details ApplicationUser -->
-<div class="container mt-5" align="center">
-    <div class="card text-bg-light mb-3" style="max-width: 30rem;">
-        <div class="card-header" align="left" style="color: #DFAD51; background-color: #3A3F44">
-            <div class="row">
-                <h4 class="col" align="left" style="color: #DFAD51">
-                    @if (Model.FirstName != null && Model.LastName != null)
-                    {
-                        @Model.FirstName<text>&nbsp;</text>@Model.LastName.ToUpper()
-                    }
-                </h4><h5 class="col" align="right"><a type="button" class="btn-close float-end" asp-controller="ApplicationUser" asp-action="Index"></a></h5>
-            </div>
-        </div>
-        <div class="card-body" style="background-color: #272B30">
-            <h3 style="color:white">@Model.Role</h3>
-            <h5 style="color:darkgrey">@Model.Id</h5>
-            <hr />
-            <div class="row"><h4 class="col" align="left">Phone</h4><h4 class="col" align="right">@Model.PhoneNumber</h4></div>
-            <hr />
-            <div class="row"><h5 class="col" align="left">Email</h5><h5 class="col" align="right">@Model.Email</h5></div>
-            <hr />
-            <div class="row"><h5 class="col" align="left">Date Of Birth</h5><h5 class="col" align="right">@Model.DOB</h5></div>
-        </div>
-        <div class="card-footer">
-            <div class="row"><h5 class="col" align="left">Created</h5><h5 class="col" align="right">@Model.Created.ToShortDateString()</h5></div>
-        </div>
+
+
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item active">ApplicationUser</li>
+        </ol>
+        <h1 class="page-header mb-0">ApplicationUser</h1>
     </div>
 </div>
 
-
-<!-- Address -->
-<div class="container mt-5">
-    <main role="main" class="pb-3">
-        <h2 align="left">Addresses</h2>
-        <div class="card-body mt-3 p-0">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 5%">#</th>
-                        <th style="width: 20%">User</th>
-                        <th>Primary</th>
-                        <th>Street</th>
-                        <th>City</th>
-                        <th>PostCode</th>
-                        <th>Country</th>
-                        <th style="width: 11%"><a asp-controller="Address" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> Add New</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Address)
-                    {
-                        string redirectUrlPrimary = Url.Action("ChangePrimaryStatus", "Address", new { id = item.Id, status = !item.Primary });
-                        <tr>
-                            <td>@counter</td>
-                            <td>@item.ApplicationUser.FirstName @item.ApplicationUser.LastName</td>
-                            <td>
-                                @if (item.Primary)
-                                {
-                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')" checked>
-                                }
-                                else
-                                {
-                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')">
-                                }
-                            </td>
-                            <td>@item.Street</td>
-                            <td>@item.City</td>
-                            <td>@item.PostCode</td>
-                            <td>@item.Country</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a asp-controller="Address" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
-                                    <a asp-controller="Address" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                    <a asp-controller="Address" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        counter++;
-                    }
-                </tbody>
-            </table>
+<!-- BEGIN row -->
+<div class="mt-5 row mb-3">
+    <!-- BEGIN col-4 -->
+    <div class="col-xl-2">
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="ui-widget-5">
+            <div class="panel-body">
+                <div class="card border-0">
+                    <img class="card-img-top" src="~/img/user/user.png" alt="user">
+                    </div>
+            </div>
         </div>
-    </main>
-</div>
-
-@await Html.PartialAsync("_CreateItem", "Address")
-
-<script>
-    function RedirectToUrl(url) {
-        console.log(url);
-        window.location.href = url;
-    }
-</script>
+        <!-- END panel -->
+    </div>
+    <!-- END col-4 -->
+    <!-- BEGIN col-4 -->
+    <div class="col-xl-4">
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="ui-widget-5">
+            <div class="panel-heading">
+                <h4 class="panel-title">@Model.FirstName @Model.LastName.ToUpper() <span class="badge bg-success ms-1">@Model.Role</span> </h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row"><h4 class="col" align="left">Id</h4><h6 class="col" align="right">@Model.Id</h6></div>
+                <hr />
+                <div class="row"><h4 class="col" align="left">Phone</h4><h4 class="col" align="right">@Model.PhoneNumber</h4></div>
+                <hr />
+                <div class="row"><h5 class="col" align="left">Email</h5><h5 class="col" align="right">@Model.Email</h5></div>
+                <hr />
+                <div class="row"><h5 class="col" align="left">Date Of Birth</h5><h5 class="col" align="right">@Model.DOB.ToShortDateString()</h5></div>
+            </div>
+            <div class="card-footer">
+                <div class="row"><h5 class="col" align="left">Created</h5><h5 class="col" align="right">@Model.Created.ToShortDateString()</h5></div>
+            </div>
+            </div>
+        <!-- END panel -->
+    </div>
+    <!-- END col-6 -->
+    <!-- BEGIN col-6 -->
+    <div class="col-xl-6">
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="ui-widget-5">
+            <div class="panel-heading">
+                <h4 class="panel-title">Adresses <span class="badge bg-success ms-1">NEW</span> </h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <!-- BEGIN table -->
+                <div class="table-responsive mb-3">
+                    <table class="table table-hover table-panel text-nowrap align-middle mb-0">
+                        <thead>
+                        <tr>
+                            <th style="width: 5%">#</th>
+                                <th style="width: 5%">Primary</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>PostCode</th>
+                            <th>Country</th>
+                            <th style="width: 11%"><a asp-controller="Address" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> Add New</a></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Address)
+                        {
+                            string redirectUrlPrimary = Url.Action("ChangePrimaryStatus", "ApplicationUser", new { id = item.Id, status = !item.Primary, userid = Model.Id });
+                            <tr>
+                                <td>@counter</td>
+                                <td>
+                                    @if (item.Primary)
+                                    {
+                                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')" checked>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')">
+                                    }
+                                </td>
+                                <td>@item.Street</td>
+                                <td>@item.City</td>
+                                <td>@item.PostCode</td>
+                                <td>@item.Country</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="Address" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-controller="Address" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END table -->
+            </div>
+        </div>
+        <!-- END panel -->
+    </div>
+    <!-- END col-6 -->
+    </div>
+<!-- END row -->

@@ -23,7 +23,7 @@ public class AddressController : Controller
         return this.db.Address != null ?
                     View(await this.db.Address
                         .Include(am => am.ApplicationUser)
-                        .OrderBy(x=>x.ApplicationUser)
+                        .OrderBy(x => x.ApplicationUser)
                         .ToListAsync()) :
                     Problem("Entity set 'ApplicationDbContext.Address'  is null.");
     }
@@ -40,8 +40,8 @@ public class AddressController : Controller
         if (address == null) { return null; }
         address.Primary = status;
         await db.SaveChangesAsync();
-        return RedirectToAction("Index");
-        //return RedirectToAction("Index", address);
+        //return RedirectToAction("Index");
+        return RedirectToAction("Index", address);
     }
 
 
@@ -100,7 +100,7 @@ public class AddressController : Controller
         TempData["success"] = "Address update successfully";
         return RedirectToAction(nameof(Index));
     }
-    
+
     /// <summary>
     /// Address/Delete
     /// </summary>

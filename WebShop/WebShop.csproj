@@ -15,6 +15,22 @@
     <None Include="Views\ApplicationUser\Login.cshtml" />
     <None Include="Views\ApplicationUser\xCreate.cshtml" />
     <None Include="Views\ApplicationUser\Register.cshtml" />
+    <None Include="wwwroot\lib\admin\d3\d3.min.js" />
+    <None Include="wwwroot\lib\admin\gritter\js\jquery.gritter.js" />
+    <None Include="wwwroot\lib\admin\gritter\js\jquery.gritter.min.js" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\jquery-jvectormap-world-mill.js" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\jquery-jvectormap.js" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\jquery-jvectormap.min.js" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\jquery-jvectormap.min.map" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\LICENSE-AGPL" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\LICENSE-COMMERCIAL" />
+    <None Include="wwwroot\lib\admin\jvectormap-next\README.md" />
+    <None Include="wwwroot\lib\admin\nvd3\build\nv.d3.js" />
+    <None Include="wwwroot\lib\admin\nvd3\build\nv.d3.js.map" />
+    <None Include="wwwroot\lib\admin\nvd3\build\nv.d3.min.css.map" />
+    <None Include="wwwroot\lib\admin\nvd3\build\nv.d3.min.js" />
+    <None Include="wwwroot\lib\admin\nvd3\build\nv.d3.min.js.map" />
+    <None Include="wwwroot\lib\admin\simple-calendar\dist\jquery.simple-calendar.min.js" />
   </ItemGroup>
 
   <ItemGroup>

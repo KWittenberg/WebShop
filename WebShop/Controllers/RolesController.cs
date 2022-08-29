@@ -10,32 +10,23 @@ public class RolesController : Controller
         this.roleManager = roleManager;
     }
 
+    /// <summary>
+    /// Roles
+    /// </summary>
+    /// <returns></returns>
     public IActionResult Index()
     {
-        var roles = this.roleManager.Roles.ToList();
+        var roles = this.roleManager.Roles.OrderBy(x=>x.Name).ToList();
         return View(roles);
     }
-    
-    /// <summary>
-    /// Details
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public async Task<IActionResult> Details(string? id)
-    {
-        var role = await this.roleManager.FindByIdAsync(id);
-        if (role == null) { return NotFound(); }
-        return View(role);
-    }
-
 
     /// <summary>
-    /// Upsert
+    /// AddOrEdit
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    public IActionResult Upsert(string id)
+    public IActionResult AddOrEdit(string id)
     {
         if (String.IsNullOrEmpty(id))
         {
@@ -50,7 +41,7 @@ public class RolesController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Upsert(IdentityRole roleObj)
+    public async Task<IActionResult> AddOrEdit(IdentityRole roleObj)
     {
         if (await this.roleManager.RoleExistsAsync(roleObj.Name))
         {
@@ -112,11 +103,6 @@ public class RolesController : Controller
             return RedirectToAction(nameof(Index));
         }
         var userRolesForThisRole = this.roleManager.Roles.Where(u => u.Id == id).Count();
-        //if (userRolesForThisRole > 0)
-        //{
-        //    TempData["error"] = "Cannot delete this role, since there are users assigned to this role.";
-        //    return RedirectToAction(nameof(Index));
-        //}
         await this.roleManager.DeleteAsync(objFromDb);
         TempData["success"] = "Role deleted successfully.";
         return RedirectToAction(nameof(Index));

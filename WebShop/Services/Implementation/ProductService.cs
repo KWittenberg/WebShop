@@ -630,5 +630,4 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<ProductViewModel>(product);
     }
-
 }

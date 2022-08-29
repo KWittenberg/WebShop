@@ -1,24 +1,23 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿@model IEnumerable<WebShop.Models.Dbo.ProductCategory>
 @{
-    ViewData["Title"] = "Roles";
+    ViewData["Title"] = "Category";
     Layout = "_LayoutADMIN";
     int counter = 1;
 }
 
-<!-- Roles -->
 <!-- BEGIN breadcrumb -->
 <ol class="breadcrumb float-xl-end">
     <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
     @*<li class="breadcrumb-item"><a href="javascript:;">Category</a></li>*@
-    <li class="breadcrumb-item active">Roles</li>
+    <li class="breadcrumb-item active">Category</li>
 </ol>
 <!-- BEGIN page-header -->
-<h1 class="page-header">Roles @*<small>header small text goes here...</small>*@</h1>
+<h1 class="page-header">Category @*<small>header small text goes here...</small>*@</h1>
 <div class="mt-5 col-xl-12">
     <!-- BEGIN panel -->
     <div class="panel panel-inverse" data-sortable-id="table-basic-7">
         <div class="panel-heading">
-            <h4 class="panel-title">Roles <span class="badge bg-success ms-5px">ADMIN</span></h4>
+            <h4 class="panel-title">Category <span class="badge bg-success ms-5px">NEW LOOK</span></h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -30,13 +29,13 @@
         <div class="panel-body">
             <!-- BEGIN table-responsive -->
             <div class="table-responsive">
-                <table class="table table-hover mb-0 align-middle">
+                <table class="table table-striped mb-0 align-middle">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th style="width: 40%">Id</th>
-                            <th>Name</th>
-                            <th style="width: 10%"><a asp-controller="Roles" asp-action="AddOrEdit" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th style="width: 10%"><a asp-controller="ProductCategory" asp-action="AddOrEdit" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,13 +43,13 @@
                         {
                             <tr>
                                 <td>@counter</td>
-                                <td>@item.Id</td>
-                                <td>@item.Name</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
                                 <td nowrap>
                                     <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Roles" asp-action="AddOrEdit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                        <form asp-controller="Roles" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>
-                                    </div>
+                                        <a asp-controller="ProductCategory" asp-action="AddOrEdit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <form asp-controller="ProductCategory" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>
+                                        <form class="delete" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></button></form>                                    </div>
                                 </td>
                             </tr>
                             counter++;

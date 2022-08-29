@@ -18,7 +18,7 @@
                     <a href="javascript:;" class="menu-profile-link" data-toggle="app-sidebar-profile" data-target="#appSidebarProfileMenu">
                         <div class="menu-profile-cover with-shadow"></div>
                         <div class="menu-profile-image">
-                            <img src="~/img/logo-Bolta-icon.png" alt="" />
+                            <img src="~/img/user/admin2.png" alt="admin" />
                         </div>
                         <div class="menu-profile-info">
                             <div class="d-flex align-items-center">
@@ -302,17 +302,53 @@
                     <div class="menu-text">Dashboard</div>
                 </a>
             </div>
-
+            <hr />
             <div class="menu-item">
-                <a class="menu-link" asp-controller="ProductCategories" asp-action="Index">
+                <a class="menu-link" asp-controller="ProductCategory" asp-action="Index">
                     <div class="menu-icon"><i class="fa-solid fa-file"></i></div>
                     <div class="menu-text">Category</div>
                 </a>
             </div>
-
-
-
-
+            <div class="menu-item">
+                <a class="menu-link" asp-controller="Admin" asp-action="ProductAdministration">
+                    <div class="menu-icon"><i class="fa-solid fa-barcode"></i></div>
+                    <div class="menu-text">Product</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a class="menu-link" asp-controller="Hero" asp-action="Index">
+                    <div class="menu-icon"><i class="fa-brands fa-chromecast"></i></div>
+                    <div class="menu-text">Hero</div>
+                </a>
+            </div>
+            <hr />
+            <div class="menu-item">
+                <a class="menu-link" asp-controller="Admin" asp-action="Orders">
+                    <div class="menu-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <div class="menu-text">Orders</div>
+                </a>
+            </div>
+            <hr />
+            <div class="menu-item">
+                <a class="menu-link" asp-controller="FileManager" asp-action="Index">
+                    <div class="menu-icon"><i class="fa-solid fa-database"></i></div>
+                    <div class="menu-text">File Manager</div>
+                </a>
+            </div>
+            <hr />
+            <div class="menu-item">
+                <a class="menu-link" asp-controller="Roles" asp-action="Index">
+                    <div class="menu-icon"><i class="fa-solid fa-dice-d20"></i></div>
+                    <div class="menu-text">Roles</div>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a class="menu-link" asp-controller="ApplicationUser" asp-action="Index">
+                    <div class="menu-icon"><i class="fa-solid fa-user"></i></div>
+                    <div class="menu-text">Application User</div>
+                </a>
+            </div>
+            <hr />
 
 
 

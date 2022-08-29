@@ -1,69 +1,95 @@
 ﻿@model IEnumerable<WebShop.Models.ViewModel.ApplicationUserViewModel>
 @{
     ViewData["Title"] = "Index";
+    Layout = "_LayoutADMIN";
     int counter = 1;
 }
 
 <!-- ApplicationUser -->
-<div class="container mt-5">
-    <main role="main" class="pb-3">
-        <h1>ApplicationUser</h1>
-        <div class="card-body mt-3 p-0">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 3%">#</th>
-                        <th style="width: 15%">User</th>
-                        <th style="width: 5%">Role</th>
-                        <th style="width: 10%">Phone</th>
-                        <th style="width: 15%">Email</th>
-                        <th style="width: 10%">Created</th>
-                        <th style="width: 10%"><a asp-controller="ApplicationUser" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@counter</td>
-                            <td>@item.FirstName @item.LastName</td>
-                            <td>
-                                @if (item.Role == "Admin")
-                                {
-                                    <span class="badge bg-secondary">@item.Role</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-primary">@item.Role</span>
-                                }
-                            </td>
-                            <td>@item.PhoneNumber</td>
-                            <td>@item.Email</td>
-                            <td>@item.Created.ToShortDateString()</td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
-                                    <a asp-controller="ApplicationUser" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                    <form asp-route-userId="@item.Id">
-                                        @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
-                                        {
-                                            <button asp-action="LockUnlock" asp-route-userId="@item.Id" class="btn btn-primary text-white btn-sm" style="cursor:pointer"><span>&nbsp; Lock &nbsp;</span></button>
-                                        }
-                                        else
-                                        {
-                                            <button asp-action="LockUnlock" asp-route-userId="@item.Id" class="btn btn-warning text-white btn-sm" style="cursor:pointer"><span>UnLock</span></button>
-                                        }
-                                    </form>
-                                    <a asp-controller="ApplicationUser" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                        counter++;
-                    }
-                </tbody>
-            </table>
-        </div>
-    </main>
+<!-- BEGIN breadcrumb -->
+<!-- BEGIN page-header -->
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item active">ApplicationUser</li>
+        </ol>
+        <h1 class="page-header mb-0">ApplicationUser</h1>
+    </div>
+    <div class="ms-auto">
+        <a asp-controller="ApplicationUser" asp-action="Create" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
+    </div>
 </div>
-
-@await Html.PartialAsync("_CreateItem", "ApplicationUser")
+<div class="mt-5 col-xl-12">
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse" data-sortable-id="table-basic-7">
+        <div class="panel-heading">
+            <h4 class="panel-title">ApplicationUser <span class="badge bg-success ms-5px">PRO</span></h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+        <!-- BEGIN panel-body -->
+        <div class="panel-body">
+            <!-- BEGIN table-responsive -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%">#</th>
+                            <th style="width: 15%">User</th>
+                            <th style="width: 5%">Role</th>
+                            <th style="width: 10%">Phone</th>
+                            <th style="width: 15%">Email</th>
+                            <th style="width: 10%">Created</th>
+                            <th style="width: 10%"><a asp-controller="ApplicationUser" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@item.FirstName @item.LastName</td>
+                                <td>
+                                    @if (item.Role == "Admin")
+                                    {
+                                        <span class="badge bg-primary">@item.Role</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">@item.Role</span>
+                                    }
+                                </td>
+                                <td>@item.PhoneNumber</td>
+                                <td>@item.Email</td>
+                                <td>@item.Created.ToShortDateString()</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                        <a asp-controller="ApplicationUser" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <form asp-route-userId="@item.Id">
+                                            @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
+                                            {
+                                                <button asp-action="LockUnlock" asp-route-userId="@item.Id" class="btn btn-primary text-white btn-sm" style="cursor:pointer"><span>&nbsp; Lock &nbsp;</span></button>
+                                            }
+                                            else
+                                            {
+                                                <button asp-action="LockUnlock" asp-route-userId="@item.Id" class="btn btn-warning text-white btn-sm" style="cursor:pointer"><span>UnLock</span></button>
+                                            }
+                                        </form>
+                                        <a asp-controller="ApplicationUser" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

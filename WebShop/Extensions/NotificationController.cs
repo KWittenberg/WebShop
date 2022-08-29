@@ -20,7 +20,7 @@ public enum NotificationPosition
     BottomEnd
 }
 
-public class BaseController : Controller
+public class NotificationController : Controller
 {
     string pos = "";
 
@@ -32,19 +32,7 @@ public class BaseController : Controller
 
     public void DeleteNotification()
     {
-        //TempData["notification"] = $"Swal.fire('{title}','{msj}', '{type.ToString().ToLower()}')";
-
-        TempData["notification"] = $"Swal.fire({{\r\n  title: 'Are you sure?',\r\n  text: \"You won't be able to revert this!\",\r\n  icon: 'warning',\r\n  showCancelButton: true,\r\n  confirmButtonColor: '#3085d6',\r\n  cancelButtonColor: '#d33',\r\n  confirmButtonText: 'Yes, delete it!'\r\n}})";
-                                   
-
-
-
-
-
-
-
-
-
+        TempData["notification"] = $"Swal.fire({{\r\n  title: 'Are you sure?',\r\n  text: \"You won't be able to revert this!\",\r\n  icon: 'warning',\r\n  showCancelButton: true,\r\n  confirmButtonColor: '#3085d6',\r\n  cancelButtonColor: '#d33',\r\n  confirmButtonText: 'Yes, delete it!'\r\n}}).then((result) => {{\r\n  if (result.isConfirmed) {{\r\n    Swal.fire(\r\n      'Deleted!',\r\n      'Your file has been deleted.',\r\n      'success'\r\n    )\r\n  }}\r\n}})";
     }
 
 
