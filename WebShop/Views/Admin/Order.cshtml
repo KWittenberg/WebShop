@@ -5,6 +5,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject ICustomerService customerService
 @{
+    Layout = "_LayoutADMIN";
     int counter = 1;
     var user = await UserManager.GetUserAsync(User);
     //var address = await customerService.GetAddress(user.Id);

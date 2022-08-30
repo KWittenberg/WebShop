@@ -5,18 +5,23 @@
     int counter = 1;
 }
 <!-- Hero -->
-<!-- BEGIN breadcrumb -->
-<ol class="breadcrumb float-xl-end">
-    <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
-    <li class="breadcrumb-item active">Hero</li>
-</ol>
-<!-- BEGIN page-header -->
-<h1 class="page-header">Hero @*<small>header small text goes here...</small>*@</h1>
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item active">Hero</li>
+        </ol>
+        <h1 class="page-header mb-0">Hero</h1>
+    </div>
+    <div class="ms-auto">
+        <a asp-controller="Hero" asp-action="AddOrEdit" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
+    </div>
+</div>
 <div class="mt-5 col-xl-12">
     <!-- BEGIN panel -->
     <div class="panel panel-inverse" data-sortable-id="table-basic-7">
         <div class="panel-heading">
-            <h4 class="panel-title">Hero <span class="badge bg-success ms-5px">NEW</span></h4>
+            <h4 class="panel-title">Hero <span class="badge bg-success ms-5px">PRO</span></h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -76,10 +81,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    function RedirectToUrl(url) {
-        console.log(url);
-        window.location.href = url;
-    }
-</script>

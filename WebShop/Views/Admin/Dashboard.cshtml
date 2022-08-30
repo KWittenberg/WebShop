@@ -1,6 +1,45 @@
-﻿@{
+﻿@inject UserManager<ApplicationUser> UserManager
+@inject IProductService productService
+@{
     Layout = "_LayoutADMIN";
     ViewData["Title"] = "Dashboard";
+
+    
+    int counter = 0;
+    decimal subTotalPrice = default;
+    decimal totalPrice = default;
+
+    var user = await UserManager.GetUserAsync(User);
+
+    var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
+    if (shoppingCart != null)
+    {
+        subTotalPrice = shoppingCart.GetSubTotalPrice();
+        totalPrice = shoppingCart.GetTotalPrice();
+        foreach (var item in shoppingCart.ShoppingCartItems) { counter++; }
+    }
+    
+    
+    @foreach (var item in shoppingCart.ShoppingCartItems)
+    {
+        <tr>
+            <td class="si-pic"><img src="@item.Product.Image" width="100"></td>
+            <td class="si-text">
+                <div class="product-selected">
+                    <h6>@item.Product.Title</h6>
+                    <p>@item.Price.ToString("c") x @item.Quantity</p>
+                </div>
+            </td>
+            <td class="si-close">
+                <p>@((item.Quantity * item.Price).ToString("c"))</p>
+                <i class="ti-close"></i>
+            </td>
+        </tr>
+    }
+
+
+
+
 }
 @section Styles {
     <link rel="stylesheet" href="~/lib/admin/jvectormap-next/jquery-jvectormap.css" />
@@ -37,7 +76,7 @@
                 <div class="stats-icon stats-icon-lg"><i class="fa fa-globe fa-fw"></i></div>
                 <div class="stats-content">
                     <div class="stats-title">TODAY'S VISITS</div>
-                    <div class="stats-number">7,842,900</div>
+                    <div class="stats-number">1,234</div>
                     <div class="stats-progress progress">
                         <div class="progress-bar" style="width: 70.1%;"></div>
                     </div>
@@ -46,6 +85,26 @@
             </div>
         </div>
         <!-- END col-3 -->
+        <!-- BEGIN col-3 -->
+        <div class="col-xl-3 col-md-6">
+            <div class="widget widget-stats bg-indigo">
+                <div class="stats-icon stats-icon-lg"><i class="fa fa-archive fa-fw"></i></div>
+                <div class="stats-content">
+                    <div class="stats-title">ORDERS</div>
+                    <div class="stats-number">38,900</div>
+                    <div class="stats-progress progress">
+                        <div class="progress-bar" style="width: 76.3%;"></div>
+                    </div>
+                    <div class="stats-desc">Better than last week (76.3%)</div>
+                </div>
+            </div>
+        </div>
+        <!-- END col-3 -->
+        
+        
+        
+        
+        
         <!-- BEGIN col-3 -->
         <div class="col-xl-3 col-md-6">
             <div class="widget widget-stats bg-blue">
@@ -61,21 +120,7 @@
             </div>
         </div>
         <!-- END col-3 -->
-        <!-- BEGIN col-3 -->
-        <div class="col-xl-3 col-md-6">
-            <div class="widget widget-stats bg-indigo">
-                <div class="stats-icon stats-icon-lg"><i class="fa fa-archive fa-fw"></i></div>
-                <div class="stats-content">
-                    <div class="stats-title">NEW ORDERS</div>
-                    <div class="stats-number">38,900</div>
-                    <div class="stats-progress progress">
-                        <div class="progress-bar" style="width: 76.3%;"></div>
-                    </div>
-                    <div class="stats-desc">Better than last week (76.3%)</div>
-                </div>
-            </div>
-        </div>
-        <!-- END col-3 -->
+        
         <!-- BEGIN col-3 -->
         @*<div class="col-xl-3 col-md-6">
     <div class="widget widget-stats bg-gray-900">

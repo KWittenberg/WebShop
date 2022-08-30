@@ -13,10 +13,15 @@ public class ShopController : Controller
         this.userManager = userManager;
     }
 
+
+    /// <summary>
+    /// Get Available Products
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult Index()
     {
-        return View(productService.GetProductsAsync().Result);
+        return View(productService.GetAvailableProductsAsync().Result);
     }
 
     /// <summary>
@@ -79,7 +84,22 @@ public class ShopController : Controller
         return View("Index", product);
     }
 
+    /// <summary>
+    /// Category Search Filter
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> CategoryFilter(int id)
+    {
+        var product = await this.productService.GetProductsAsync();
 
+        if (id != 0)
+        {
+            var filteredResult = product.Where(n => n.ProductCategoryId == id).ToList();
+            return View("Index", filteredResult);
+        }
+        return View("Index", product);
+    }
 
 
 

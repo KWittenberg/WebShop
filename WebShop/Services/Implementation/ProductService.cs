@@ -1,6 +1,4 @@
-﻿using WebShop.Models.Dbo;
-
-namespace WebShop.Services.Implementation;
+﻿namespace WebShop.Services.Implementation;
 
 public class ProductService : IProductService
 {
@@ -167,7 +165,7 @@ public class ProductService : IProductService
     }
 
     /// <summary>
-    /// Find All Products
+    /// Get All Products
     /// </summary>
     /// <returns></returns>
     public async Task<List<ProductViewModel>> GetProductsAsync()
@@ -175,6 +173,19 @@ public class ProductService : IProductService
         var dbo = await db.Product.Include(x => x.ProductCategory).ToListAsync();
         return dbo.Select(x => mapper.Map<ProductViewModel>(x)).ToList();
     }
+
+    /// <summary>
+    /// GetAvailableProductsAsync
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ProductViewModel>> GetAvailableProductsAsync()
+    {
+        var dbo = await db.Product.Include(x => x.ProductCategory).Where(x => x.Available == true).ToListAsync();
+        return dbo.Select(x => mapper.Map<ProductViewModel>(x)).ToList();
+    }
+
+
+
 
     /// <summary>
     /// Add Category Product

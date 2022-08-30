@@ -81,9 +81,12 @@ ol {
     margin: 0;
 }
 
+
+
 /*---------------------
   Helper CSS
 -----------------------*/
+
 
 .section-title {
     margin-bottom: 40px;
@@ -1695,7 +1698,7 @@ ol {
     .breadcrumb-text a {
         display: inline-block;
         font-size: 16px;
-        color: #252525;
+        color: #A9A9A9;
         margin-right: 28px;
         position: relative;
     }
@@ -1729,7 +1732,7 @@ ol {
 }
 
     .filter-widget .fw-title {
-        color: #252525;
+        color: #A9A9A9;
         font-size: 22px;
         font-weight: 700;
         margin-bottom: 26px;

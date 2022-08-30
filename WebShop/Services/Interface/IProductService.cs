@@ -14,6 +14,7 @@ public interface IProductService
     Task<ProductViewModel> GetProductAsync(int id);
     Task<ProductViewModel> GetProductByNameAsync(string name);
     Task<List<ProductViewModel>> GetProductsAsync();
+    Task<List<ProductViewModel>> GetAvailableProductsAsync();
     Task<ProductViewModel> AddProductAsync(ProductBinding model);
     Task<ProductViewModel> UpdateProductAsync(ProductUpdateBinding model);
     Task<ProductViewModel> DeleteProductAsync(ProductUpdateBinding model);

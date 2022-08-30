@@ -1,6 +1,4 @@
-﻿using WebShop.Services.Implementation;
-
-namespace WebShop.Controllers;
+﻿namespace WebShop.Controllers;
 
 public class HeroController : Controller
 {
@@ -54,6 +52,48 @@ public class HeroController : Controller
         TempData["success"] = "Hero successfully publish!";
         return RedirectToAction("Index");
     }
+
+
+
+    /// <summary>
+    /// Add Or Edit
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> AddOrEdit(int id=0)
+    {
+        if (id == 0)
+        {
+            return View();
+        }
+        else
+        {
+            return View(await productService.GetHeroAsync(id));
+        }
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddOrEdit(HeroBinding model)
+    {
+        if (ModelState.IsValid)
+        {
+            if (model.Id == 0)
+            {
+                await productService.AddHeroAsync(model);
+                TempData["success"] = "Hero created successfully!";
+            }
+            else
+            {
+                await productService.UpdateHeroAsync(model);
+                TempData["success"] = "Hero update successfully!";
+            }
+            return RedirectToAction("Index");
+        }
+        return View(model);
+    }
+
+
 
     /// <summary>
     /// Create Hero

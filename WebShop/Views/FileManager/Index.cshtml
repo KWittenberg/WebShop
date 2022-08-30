@@ -3,15 +3,17 @@
     Layout = "_LayoutADMIN";
 }
 <!-- File Manager -->
-<!-- BEGIN breadcrumb -->
-<ol class="breadcrumb float-xl-end">
-    <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
-    @*<li class="breadcrumb-item"><a href="javascript:;">Category</a></li>*@
-    <li class="breadcrumb-item active">File Manager</li>
-</ol>
-<!-- BEGIN page-header -->
-<h1 class="page-header">File Manager @*<small>header small text goes here...</small>*@</h1>
-<div class="mt-3 col-xl-12">
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            @*<li class="breadcrumb-item"><a href="javascript:;">File Manager</a></li>*@
+            <li class="breadcrumb-item active">File Manager</li>
+        </ol>
+        <h1 class="page-header mb-0">File Manager @*<small>by Syncfusion</small>*@</h1>
+    </div>
+</div>
+<div class="mt-5 col-xl-12">
     <!-- BEGIN panel -->
     <div class="panel panel-inverse" data-sortable-id="table-basic-7">
         <div class="panel-heading">
@@ -27,7 +29,7 @@
         <div class="panel-body">
             <div class="mt-3 control-section" style="background: white">
                 <div class="sample-container" style="padding:10px">
-                    <ejs-filemanager id="file" created="created" view="Details" height="700px">
+                    <ejs-filemanager id="file" created="created" view="Details" height="600px">
                         <e-filemanager-ajaxsettings url="/FileManager/FileOperations"
                                                     downloadUrl="/FileManager/Download"
                                                     uploadUrl="/FileManager/Upload"

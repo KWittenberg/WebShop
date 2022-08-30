@@ -15,7 +15,8 @@
                 </h4><h5 class="col" align="right"><a type="button" class="btn-close float-end" asp-controller="Hero" asp-action="Index"></a></h5>
             </div>
         </div>
-        <div class="card-body" style="background-color: #272B30"><img src="@Model.ImageUrl" />
+        <div class="card-body" style="background-color: #272B30">
+            <img src="@Model.ImageUrl" class="img-fluid" />
             <hr />
             <div class="row"><h5 class="col" align="left">Publish</h5><h5 class="col" align="right">@Model.Publish</h5></div>
             <hr />
