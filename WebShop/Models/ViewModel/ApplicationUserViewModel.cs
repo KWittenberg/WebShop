@@ -15,4 +15,7 @@ public class ApplicationUserViewModel : ApplicationUserBase
     //public Roles Roles { get; set; }
     public string RoleId { get; set; }
     public string Role { get; set; }
+
+    // Add ToDoList
+    public List<ToDoListViewModel> ToDoList { get; set; }
 }

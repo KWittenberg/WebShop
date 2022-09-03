@@ -1,45 +1,7 @@
-﻿@inject UserManager<ApplicationUser> UserManager
-@inject IProductService productService
-@{
+﻿@{
     Layout = "_LayoutADMIN";
     ViewData["Title"] = "Dashboard";
-
-    
-    int counter = 0;
-    decimal subTotalPrice = default;
-    decimal totalPrice = default;
-
-    var user = await UserManager.GetUserAsync(User);
-
-    var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
-    if (shoppingCart != null)
-    {
-        subTotalPrice = shoppingCart.GetSubTotalPrice();
-        totalPrice = shoppingCart.GetTotalPrice();
-        foreach (var item in shoppingCart.ShoppingCartItems) { counter++; }
-    }
-    
-    
-    @foreach (var item in shoppingCart.ShoppingCartItems)
-    {
-        <tr>
-            <td class="si-pic"><img src="@item.Product.Image" width="100"></td>
-            <td class="si-text">
-                <div class="product-selected">
-                    <h6>@item.Product.Title</h6>
-                    <p>@item.Price.ToString("c") x @item.Quantity</p>
-                </div>
-            </td>
-            <td class="si-close">
-                <p>@((item.Quantity * item.Price).ToString("c"))</p>
-                <i class="ti-close"></i>
-            </td>
-        </tr>
-    }
-
-
-
-
+    int counter = 1;
 }
 @section Styles {
     <link rel="stylesheet" href="~/lib/admin/jvectormap-next/jquery-jvectormap.css" />
@@ -57,7 +19,6 @@
     <script src="~/js/admin/dashboard-v2.js"></script>
 }
 
-    
     <!-- BEGIN breadcrumb -->
     <ol class="breadcrumb float-xl-end">
         <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
@@ -91,7 +52,7 @@
                 <div class="stats-icon stats-icon-lg"><i class="fa fa-archive fa-fw"></i></div>
                 <div class="stats-content">
                     <div class="stats-title">ORDERS</div>
-                    <div class="stats-number">38,900</div>
+                    <div class="stats-number">@ViewBag.orders</div>
                     <div class="stats-progress progress">
                         <div class="progress-bar" style="width: 76.3%;"></div>
                     </div>
@@ -100,18 +61,13 @@
             </div>
         </div>
         <!-- END col-3 -->
-        
-        
-        
-        
-        
         <!-- BEGIN col-3 -->
         <div class="col-xl-3 col-md-6">
             <div class="widget widget-stats bg-blue">
-                <div class="stats-icon stats-icon-lg"><i class="fa fa-dollar-sign fa-fw"></i></div>
+                <div class="stats-icon stats-icon-lg"><i class="fa fa-euro-sign fa-fw"></i></div>
                 <div class="stats-content">
-                    <div class="stats-title">TODAY'S PROFIT</div>
-                    <div class="stats-number">180,200</div>
+                    <div class="stats-title">TOTAL</div>
+                    <div class="stats-number">@ViewBag.ordersTotal</div>
                     <div class="stats-progress progress">
                         <div class="progress-bar" style="width: 40.5%;"></div>
                     </div>
@@ -120,7 +76,6 @@
             </div>
         </div>
         <!-- END col-3 -->
-        
         <!-- BEGIN col-3 -->
         @*<div class="col-xl-3 col-md-6">
     <div class="widget widget-stats bg-gray-900">
@@ -151,128 +106,11 @@
             </div>
         </div>
         <!-- END col-3 -->
-
-
-
-
     </div>
     <!-- END row -->
     <!-- BEGIN row -->
     <div class="row">
-        <!-- BEGIN col-8 -->
-        <div class="col-xl-8">
-            <div class="widget-chart with-sidebar inverse-mode">
-                <div class="widget-chart-content bg-gray-800">
-                    <h4 class="chart-title">
-                        Visitors Analytics
-                        <small>Where do our visitors come from</small>
-                    </h4>
-                    <div id="visitors-line-chart" class="widget-chart-full-width dark-mode" style="height: 260px;"></div>
-                </div>
-                <div class="widget-chart-sidebar bg-gray-900">
-                    <div class="chart-number">
-                        1,225,729
-                        <small>Total visitors</small>
-                    </div>
-                    <div class="flex-grow-1 d-flex align-items-center">
-                        <div id="visitors-donut-chart" class="dark-mode" style="height: 180px"></div>
-                    </div>
-                    <ul class="chart-legend fs-11px">
-                        <li><i class="fa fa-circle fa-fw text-blue fs-9px me-5px t-minus-1"></i> 34.0% <span>New Visitors</span></li>
-                        <li><i class="fa fa-circle fa-fw text-teal fs-9px me-5px t-minus-1"></i> 56.0% <span>Return Visitors</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- END col-8 -->
-        <!-- BEGIN col-4 -->
-        <div class="col-xl-4">
-            <div class="panel panel-inverse" data-sortable-id="index-1">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        Visitors Origin
-                    </h4>
-                </div>
-                <div id="visitors-map" class="bg-gray-900" style="height: 170px;"></div>
-                <div class="list-group list-group-flush">
-                    <a href="javascript:;" class="list-group-item rounded-0 list-group-item-action list-group-item-inverse d-flex justify-content-between align-items-center text-ellipsis">
-                        1. United State
-                        <span class="badge bg-teal fs-10px">20.95%</span>
-                    </a>
-                    <a href="javascript:;" class="list-group-item list-group-item-action list-group-item-inverse d-flex justify-content-between align-items-center text-ellipsis">
-                        2. India
-                        <span class="badge bg-blue fs-10px">16.12%</span>
-                    </a>
-                    <a href="javascript:;" class="list-group-item list-group-item-action list-group-item-inverse d-flex justify-content-between align-items-center text-ellipsis">
-                        3. Mongolia
-                        <span class="badge bg-gray-600 fs-10px">14.99%</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- END col-4 -->
-    </div>
-    <!-- END row -->
-    <!-- BEGIN row -->
-    <div class="row">
-        <!-- BEGIN col-4 -->
-        <div class="col-xl-4 col-lg-6">
-            <!-- BEGIN panel -->
-            <div class="panel panel-inverse" data-sortable-id="index-2">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Chat History</h4>
-                    <span class="badge bg-teal">4 message</span>
-                </div>
-                <div class="panel-body bg-light">
-                    <div class="chats" data-scrollbar="true" data-height="225px">
-                        <div class="chats-item start">
-                            <span class="date-time">yesterday 11:23pm</span>
-                            <a href="javascript:;" class="name">Sowse Bawdy</a>
-                            <a href="javascript:;" class="image"><img alt="" src="/img/user/user-12.jpg" /></a>
-                            <div class="message">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit volutpat. Praesent mattis interdum arcu eu feugiat.
-                            </div>
-                        </div>
-                        <div class="chats-item end">
-                            <span class="date-time">08:12am</span>
-                            <a href="javascript:;" class="name"><span class="badge bg-blue">ADMIN</span> Me</a>
-                            <a href="javascript:;" class="image"><img alt="" src="/img/user/user-13.jpg" /></a>
-                            <div class="message">
-                                Nullam posuere, nisl a varius rhoncus, risus tellus hendrerit neque.
-                            </div>
-                        </div>
-                        <div class="chats-item start">
-                            <span class="date-time">09:20am</span>
-                            <a href="javascript:;" class="name">Neck Jolly</a>
-                            <a href="javascript:;" class="image"><img alt="" src="/img/user/user-10.jpg" /></a>
-                            <div class="message">
-                                Euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                            </div>
-                        </div>
-                        <div class="chats-item start">
-                            <span class="date-time">11:15am</span>
-                            <a href="javascript:;" class="name">Shag Strap</a>
-                            <a href="javascript:;" class="image"><img alt="" src="/img/user/user-14.jpg" /></a>
-                            <div class="message">
-                                Nullam iaculis pharetra pharetra. Proin sodales tristique sapien mattis placerat.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <form name="send_message_form" data-id="message-form">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="message" placeholder="Enter your message here.">
-                            <button class="btn btn-primary" type="button"><i class="fa fa-camera"></i></button>
-                            <button class="btn btn-primary" type="button"><i class="fa fa-link"></i></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- END panel -->
-        </div>
-        <!-- END col-4 -->
-        <!-- BEGIN col-4 -->
+        <!-- BEGIN Today's Schedule -->
         <div class="col-xl-4 col-lg-6">
             <!-- BEGIN panel -->
             <div class="panel panel-inverse" data-sortable-id="index-3">
@@ -294,79 +132,209 @@
             </div>
             <!-- END panel -->
         </div>
-        <!-- END col-4 -->
-        <!-- BEGIN col-4 -->
+        <!-- END Today's Schedule -->
+        <!-- BEGIN Todo List -->
         <div class="col-xl-4 col-lg-6">
             <!-- BEGIN panel -->
-            <div class="panel panel-inverse" data-sortable-id="index-4">
+            <div class="panel panel-inverse" data-sortable-id="index-8">
                 <div class="panel-heading">
-                    <h4 class="panel-title">New Registered Users</h4>
-                    <span class="badge bg-teal">24 new users</span>
+                    <h4 class="panel-title">Todo List</h4>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
                 </div>
-                <ul class="registered-users-list">
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-5.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Savory Posh
-                            <small>Algerian</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-3.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Ancient Caviar
-                            <small>Korean</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-1.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Marble Lungs
-                            <small>Indian</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-8.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Blank Bloke
-                            <small>Japanese</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-2.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Hip Sculling
-                            <small>Cuban</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-6.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Flat Moon
-                            <small>Nepalese</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-4.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Packed Puffs
-                            <small>Malaysian</small>
-                        </h4>
-                    </li>
-                    <li>
-                        <a href="javascript:;"><img src="/img/user/user-9.jpg" alt="" /></a>
-                        <h4 class="username text-ellipsis">
-                            Clay Hike
-                            <small>Swedish</small>
-                        </h4>
-                    </li>
-                </ul>
-                <div class="panel-footer text-center">
-                    <a href="javascript:;" class="text-decoration-none text-dark">View All</a>
+                <div class="panel-body p-0">
+                    <div class="todolist">
+                        <div class="todolist-item active">
+                            <div class="todolist-input">
+                                <div class="form-check"><input type="checkbox" class="form-check-input" id="todolist1" data-change="todolist" checked /></div>
+                            </div><label class="todolist-label" for="todolist1">Add Price in €</label>
+                        </div>
+                        <div class="todolist-item">
+                            <div class="todolist-input">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="todolist2" data-change="todolist" />
+                                </div>
+                            </div>
+                            <label class="todolist-label" for="todolist2">Update Dashborad</label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- END panel -->
         </div>
-        <!-- END col-4 -->
+        <!-- END Todo List -->
+        <!-- BEGIN col-12 -->
+        <div class="col-xl-4 col-lg-6">
+            <!-- BEGIN widget-todolist -->
+            @*<div class="mb-10px mt-10px fs-10px">
+        <a href="#modal-widget-todolist" class="float-end text-gray-600 text-decoration-none me-3px fw-bold" data-bs-toggle="modal">source code</a>
+        <b class="text-dark">WIDGET TODOLIST</b>
+        </div>*@
+            <div class="widget-todolist rounded mb-4" data-id="widget">
+                <!-- BEGIN widget-todolist-header -->
+                <div class="widget-todolist-header">
+                    <div class="widget-todolist-header-title">Todolist</div>
+                    @*<div class="widget-todolist-header-total"><span>0</span><small>Done</small></div>*@
+                </div>
+                <!-- END widget-todolist-header -->
+                <!-- BEGIN widget-todolist-body -->
+                <div class="widget-todolist-body">
+                    <!-- BEGIN widget-todolist-item -->
+                @foreach (var item in @ViewBag.Tasks)
+                {
+                    string redirectUrl = Url.Action("ChangeTaskStatus", "Todo", new { id = item.Id, status = !item.Status });
+                    <div class="widget-todolist-item">
+                        <div class="widget-todolist-input">
+                            <div class="form-check">
+                                @if (item.Status)
+                                {
+                                    <input class="form-check-input" type="checkbox" onclick="RedirectToUrl('@redirectUrl')" checked>
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" onclick="RedirectToUrl('@redirectUrl')">
+                                }
+                            </div>
+                        </div>
+                        <div class="widget-todolist-content">
+                            <h6 class="mb-2px">
+
+                                @if (item.Status)
+                                {
+                                    <s>@item.Title</s>
+                                }
+                                else
+                                {
+                                    @item.Title
+                                }
+                            </h6>
+                            <div class="text-gray-500 fw-bold fs-11px">@item.Description</div>
+                            <div class="text-gray-500 fw-bold fs-11px">@item.Created</div>
+                        </div>
+                        <div class="widget-todolist-icon">
+                            <a href="#"><i class="fa fa-question-circle"></i></a>
+                        </div>
+                    </div>
+                }
+                <!-- END widget-todolist-item -->
+                <!-- BEGIN widget-todolist-item -->
+                <div class="widget-todolist-item">
+                    <div class="widget-todolist-input">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="widget_todolist_2" />
+                        </div>
+                    </div>
+                    <div class="widget-todolist-content">
+                        <h6 class="mb-2px">Finish expense report</h6>
+                        <div class="text-gray-500 fw-bold fs-11px">Today, 4:00PM, Daily</div>
+                    </div>
+                    <div class="widget-todolist-icon">
+                        <a href="#"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                </div>
+                <!-- END widget-todolist-item -->
+                <!-- BEGIN widget-todolist-item -->
+                <div class="widget-todolist-item">
+                    <div class="widget-todolist-input">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="widget_todolist_3" />
+                        </div>
+                    </div>
+                    <div class="widget-todolist-content">
+                        <h6 class="mb-2px">Confirm conference call for Wednesday</h6>
+                        <div class="text-gray-500 fw-bold fs-11px">Work</div>
+                    </div>
+                    <div class="widget-todolist-icon">
+                        <a href="#"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                </div>
+                <!-- END widget-todolist-item -->
+                <!-- BEGIN widget-todolist-item -->
+                <div class="widget-todolist-item">
+                    <div class="widget-todolist-input">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="widget_todolist_4" />
+                        </div>
+                    </div>
+                    <div class="widget-todolist-content">
+                        <h6 class="mb-2px"><b class="text-warning">!!</b> Mobile App WIP Presentation</h6>
+                        <div class="text-gray-500 fw-bold fs-11px">Today, 12:00PM</div>
+                    </div>
+                    <div class="widget-todolist-icon">
+                        <a href="#"><i class="fa fa-question-circle"></i></a>
+                    </div>
+                </div>
+                <!-- END widget-todolist-item -->
+                <!-- BEGIN widget-todolist-item -->
+                <div class="widget-todolist-item">
+                    <div class="widget-todolist-input">
+                        <i class="fa fa-plus text-gray-500 fa-fw"></i>
+                    </div>
+                    <div class="widget-todolist-content">
+                        <input type="text" class="form-control border-0 shadow-none rounded-0 p-0 h-20px bg-none" placeholder="Write your task here..." />
+                    </div>
+                </div>
+                <!-- END widget-todolist-item -->
+            </div>
+            <!-- END widget-todolist-body -->
+        </div>
+        <!-- END widget-todolist -->
+    </div>
+    <!-- END col-12 -->
+    <!-- BEGIN New Registered Users -->
+    <div class="col-xl-4 col-lg-6">
+        <!-- BEGIN panel -->
+        <div class="panel panel-inverse" data-sortable-id="index-4">
+            <div class="panel-heading">
+                <h4 class="panel-title">New Registered Users</h4>
+                <span class="badge bg-teal">24 new users</span>
+            </div>
+            <ul class="registered-users-list">
+
+                @foreach (var item in ViewBag.ApplicationUser)
+                {
+                    <li>
+                        @*<a href="javascript:;"><img src="~/img/user/user.png" alt="user" /></a>*@
+                        <h4 class="username text-ellipsis">@item.FirstName @item.LastName<small>Croatia</small></h4>
+                    </li>
+                }
+
+            </ul>
+            <div class="panel-footer text-center">
+                <a href="javascript:;" class="text-decoration-none text-dark">View All</a>
+            </div>
+        </div>
+        <!-- END New Registered Users -->
+
     </div>
     <!-- END row -->
+    <!-- BEGIN col-8 -->
+    @*<div class="col-xl-8">
+    <div class="widget-chart with-sidebar inverse-mode">
+    <div class="widget-chart-content bg-gray-800">
+    <h4 class="chart-title">Sales<small>Total orders</small></h4>
+    <div id="visitors-line-chart" class="widget-chart-full-width dark-mode" style="height: 260px;"></div>
+    </div>
+    <div class="widget-chart-sidebar bg-gray-900">
+    <div class="chart-number">1,225,729<small>Total visitors</small></div>
+    <div class="flex-grow-1 d-flex align-items-center">
+    <div id="visitors-donut-chart" class="dark-mode" style="height: 180px"></div>
+    </div>
+    <ul class="chart-legend fs-11px">
+    <li><i class="fa fa-circle fa-fw text-blue fs-9px me-5px t-minus-1"></i> 34.0% <span>New Visitors</span></li>
+    <li><i class="fa fa-circle fa-fw text-teal fs-9px me-5px t-minus-1"></i> 56.0% <span>Return Visitors</span></li>
+    </ul>
+    </div>
+    </div>
+    </div>*@
+    <!-- END col-8 -->
+    <!-- BEGIN row -->
+    <div class="row">
+    </div>
+    <!-- END col-4 -->
+</div>
+<!-- END row -->

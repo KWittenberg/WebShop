@@ -3,12 +3,17 @@
 [Authorize(Roles = Roles.Admin)]
 public class AdminController : Controller
 {
+    private readonly ApplicationDbContext db;
     private readonly IProductService productService;
+    private readonly IToDoService toDoService;
     private readonly IMapper mapper;
-    public AdminController(IProductService productService, IMapper mapper)
+    
+    public AdminController(IProductService productService, IMapper mapper, ApplicationDbContext db, IToDoService toDoService)
     {
         this.productService = productService;
+        this.toDoService = toDoService;
         this.mapper = mapper;
+        this.db = db;
     }
 
 
@@ -19,6 +24,13 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> Dashboard()
     {
+        ViewBag.orders = db.Order.Count();
+        ViewBag.ordersTotal = db.ShoppingCartItem.Sum(x => x.Price);
+
+        List<ApplicationUser> applicationUser = db.ApplicationUser.ToList();
+        ViewBag.ApplicationUser = applicationUser;
+
+        ViewBag.Tasks = await toDoService.GetTasks(1);
         return View();
     }
 
@@ -86,7 +98,7 @@ public class AdminController : Controller
         TempData["success"] = "Product update successfully";
         return RedirectToAction("ProductAdministration");
     }
-    
+
     /// <summary>
     /// Delete Product
     /// </summary>
@@ -107,7 +119,7 @@ public class AdminController : Controller
         return RedirectToAction("ProductAdministration");
     }
 
-    
+
 
     /// <summary>
     /// AddProductCategory
@@ -126,7 +138,7 @@ public class AdminController : Controller
         return RedirectToAction("ProductAdministration");
     }
 
-    
+
 
 
     /// <summary>
@@ -149,7 +161,7 @@ public class AdminController : Controller
     public async Task<IActionResult> Orders()
     {
         var orders = await productService.GetOrdersAsync();
-        return View(orders.OrderByDescending(x=>x.Created));
+        return View(orders);
     }
 
     /// <summary>
@@ -178,7 +190,7 @@ public class AdminController : Controller
         var discount = await productService.ChangeAvailableStatus(id, status);
         return RedirectToAction("ProductAdministration");
     }
-    
+
     /// <summary>
     /// Change Discount Status
     /// </summary>

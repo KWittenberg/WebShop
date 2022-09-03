@@ -28,6 +28,14 @@ public interface IProductService
     Task<ProductCategoryViewModel> AddProductCategoryAsync(ProductCategoryBinding model);
     Task<ProductCategoryViewModel> UpdateProductCategoryAsync(ProductCategoryUpdateBinding model);
 
+    // ProductImagesViewModel
+    Task<List<ProductImagesViewModel>> GetProductImagesAsync();
+    Task<ProductImagesViewModel> AddProductImagesAsync(ProductImagesBinding model);
+
+
+
+
+
     // ShoppingCartViewModel
     Task<ShoppingCartViewModel> GetShoppingCartAsync(string userId);
     Task<List<ShoppingCartViewModel>> GetShoppingCartsAsync(ShoppingCartStatus status);

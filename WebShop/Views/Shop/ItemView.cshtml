@@ -2,9 +2,11 @@
 @inject IProductService productService
 @model WebShop.Models.ViewModel.ProductViewModel
 @{
+    var euro = 7.53450m;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await UserManager.GetUserAsync(User);
     var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
+    var productImages = await productService.GetProductImagesAsync();
 }
 
 @using (Html.BeginForm())
@@ -31,18 +33,26 @@
                             </div>
                             <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
-                                    <div class="pt active" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 01 1x1.jpg">
-                                        <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 01 1x1.jpg" alt="">
-                                    </div>
-                                    <div class="pt" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 02 1x1.jpg">
-                                        <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 02 1x1.jpg" alt="">
-                                    </div>
-                                    <div class="pt" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 03 1x1.jpg">
-                                        <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 03 1x1.jpg" alt="">
-                                    </div>
-                                    <div class="pt" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 04 1x1.jpg">
-                                        <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 04 1x1.jpg" alt="">
-                                    </div>
+                                    @*@foreach (var item in Model.ProductImages)*@
+                                    @foreach (var item in Model.ProductImages)
+                                    {
+                                        <div class="pt active" data-imgbigurl="@item.ImageUrl">
+                                            <img src="@item.ImageUrl" alt="@item.Name">
+                                        </div>
+                                    }
+
+                                    @*<div class="pt active" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 01 1x1.jpg">
+                                <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 01 1x1.jpg" alt="">
+                                </div>
+                                <div class="pt" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 02 1x1.jpg">
+                                <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 02 1x1.jpg" alt="">
+                                </div>
+                                <div class="pt" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 03 1x1.jpg">
+                                <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 03 1x1.jpg" alt="">
+                                </div>
+                                <div class="pt" data-imgbigurl="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 04 1x1.jpg">
+                                <img src="/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije 04 1x1.jpg" alt="">
+                                </div>*@
                                 </div>
                             </div>
                         </div>
@@ -88,53 +98,23 @@
                                 <div class="pd-desc">
                                     @if (Model.Discount == true)
                                     {
-                                        <h3>@string.Format("{0:C}", Model.DiscountPrice) <span> @string.Format("{0:C}", Model.Price)</span></h3>
+                                        var priceEuroDiscount = @Model.DiscountPrice / euro;
+                                        var priceEuro = @Model.Price / euro;
+                                        <h3>@string.Format("{0:C}", Model.DiscountPrice)<span>@string.Format("{0:C}", Model.Price)</span>&nbsp; @priceEuroDiscount.ToString("0.00") € <span>@priceEuro.ToString("0.00") €</span></h3>
                                         <input type="text" readonly hidden value="@Model.DiscountPrice" name="Price">
                                     }
                                     else
                                     {
+                                        var priceEuro = @Model.Price / euro;
                                         <h3>@string.Format("{0:C}", Model.Price)</h3>
                                         <input type="text" readonly hidden value="@Model.Price" name="Price">
                                     }
                                 </div>
 
-
-
-                                @*@if (Model.Discount == true)
-                            {
-                            <input type="text" readonly hidden value="@Model.DiscountPrice" name="Price">
-                            }
-                            else
-                            {
-                            <input type="text" readonly hidden value="@Model.Price" name="Price">
-                            }*@
-
-                                @*<input type="text" readonly hidden value="@Model.Price" name="Price">*@
-
-
-
                                 <div class="mt-5 quantity">
                                     <div class="pro-qty"><input name="Quantity" type="text" value="1" style=""></div>
-
                                     <input type="submit" value="Add to Cart" class="site-btn place-btn"><a asp-controller="Shop" asp-action="Index" class="secondary-btn">Back</a>
-                                    @*<a type="submit" name="Quantity" value="Add to Cart" asp-route-id="@Model.Id" asp-controller="Shop" asp-action="ShoppingCart" class="primary-btn pd-cart"><i class="fas fa-cart-plus fa-lg mr-2"></i> Add To Cart</a>*@
-                                    @*<input type="submit" value="Add to Cart" class="btn btn-primary btn-lg">*@
                                 </div>
-
-
-                                @*<div class="select-button">
-                            <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                            <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                            </div>
-
-                            <div class="order-btn">
-                            <button type="submit" class="site-btn place-btn">Place Order</button>
-                            </div>*@
-
-
-                                @*<div class="mt-5 d-grid gap-2">
-                            <a class="secondary-btn text-center" href="/Shop">Continue Shopping</a>
-                            </div>    *@
 
                             </div>
                         </div>

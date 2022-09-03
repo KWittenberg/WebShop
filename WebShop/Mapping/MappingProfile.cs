@@ -45,7 +45,13 @@ public class MappingProfile : Profile
         CreateMap<ProductCategoryBinding, ProductCategory>();
         CreateMap<ProductCategoryUpdateBinding, ProductCategory>();
         CreateMap<ProductCategory, ProductCategoryViewModel>();
-        
+
+        // ProductImages
+        CreateMap<ProductImagesBinding, ProductImages>();
+        CreateMap<ProductImages, ProductImagesViewModel>();
+
+
+
         // ShoppingCartItem
         CreateMap<ShoppingCartItemBinding, ShoppingCartItem>();
         CreateMap<ShoppingCartItem, ShoppingCartItemViewModel>();
@@ -55,5 +61,19 @@ public class MappingProfile : Profile
 
         // Order
         CreateMap<Order, OrderViewModel>();
+
+
+
+        // ToDoList
+        CreateMap<ToDoListBinding, ToDoList>();
+        CreateMap<ToDoListUpdateBinding, ToDoList>();
+        CreateMap<ToDoList, ToDoListViewModel>();
+        CreateMap<ToDoListViewModel, ToDoListUpdateBinding>();
+
+        // Task
+        CreateMap<TaskBinding, Models.Dbo.Task>();
+        CreateMap<TaskUpdateBinding, Models.Dbo.Task>();
+        CreateMap<Models.Dbo.Task, TaskViewModel>();
+        CreateMap<TaskViewModel, TaskUpdateBinding>();
     }
 }

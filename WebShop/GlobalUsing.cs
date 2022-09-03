@@ -35,3 +35,5 @@ global using WebShop.Services.Interface;
 global using WebShop.Services.Implementation;
 
 global using AutoMapper;
+
+global using Task = System.Threading.Tasks.Task;

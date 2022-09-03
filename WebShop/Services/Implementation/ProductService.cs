@@ -149,7 +149,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<ProductViewModel> GetProductAsync(int id)
     {
-        var dbo = await db.Product.Include(x => x.ProductCategory).FirstOrDefaultAsync(x => x.Id == id);
+        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x => x.ProductImages).FirstOrDefaultAsync(x => x.Id == id);
         return mapper.Map<ProductViewModel>(dbo);
     }
 
@@ -170,7 +170,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<List<ProductViewModel>> GetProductsAsync()
     {
-        var dbo = await db.Product.Include(x => x.ProductCategory).ToListAsync();
+        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x=>x.ProductImages).ToListAsync();
         return dbo.Select(x => mapper.Map<ProductViewModel>(x)).ToList();
     }
 
@@ -233,6 +233,43 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<ProductCategoryViewModel>(dbo);
     }
+
+
+
+    /// <summary>
+    /// GetProductImagesAsync
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ProductImagesViewModel>> GetProductImagesAsync()
+    {
+        var dbo = await db.ProductImages.ToListAsync();
+        return dbo.Select(x => mapper.Map<ProductImagesViewModel>(x)).ToList();
+    }
+
+    /// <summary>
+    /// Add Product Images
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<ProductImagesViewModel> AddProductImagesAsync(ProductImagesBinding model)
+    {
+        var product = await db.Product.FindAsync(model.ProductId);
+        if (product == null) { return null; }
+        var dbo = mapper.Map<ProductImages>(model);
+        dbo.Product = product;
+        db.ProductImages.Add(dbo);
+        await db.SaveChangesAsync();
+        return mapper.Map<ProductImagesViewModel>(dbo);
+    }
+    
+
+
+
+
+
+
+
+
 
 
 
@@ -385,6 +422,7 @@ public class ProductService : IProductService
             .Include(x => x.ShoppingCart)
             .ThenInclude(x => x.ShoppingCartItems)
             .ThenInclude(x => x.Product)
+            .OrderByDescending(x => x.Created)
             .ToListAsync();
 
         return orders.Select(x => mapper.Map<OrderViewModel>(x)).ToList();

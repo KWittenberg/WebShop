@@ -39,8 +39,9 @@
                     <tr>
                         <th style="width: 2%">#</th>
                         <th style="width: 10%">Image</th>
-                        <th style="width: 20%">Title</th>
-                        <th>Description</th>
+                        <th style="width: 15%">Title</th>
+                        <th style="width: 15%">Description</th>
+                            <th style="width: 15%">Gallery</th>
                         <th>Available</th>
                         <th>Quantity</th>
                         <th>Discount</th>
@@ -59,6 +60,17 @@
                                 <td><a href="@item.Image" class="popupImg"><img src="@item.Image" width="150" /></a></td>
                                 <td><b>@item.Title</b></td>
                                 <td>@item.ShortDescription</td>
+                                <td>
+                                    @foreach (var gallery in item.ProductImages)
+                                    {
+                                        <div class="card" style="width: 5rem;">
+                                            <img class="card-img-top" src="@gallery.ImageUrl" alt="@gallery.Name" />
+                                            <div class="card-img-overlay">
+                                                <h5 class="card-title" align="right"><i class="bi bi-trash"></i></h5>
+                                            </div>
+                                        </div>
+                                    }
+                                </td>
                                 <td>
                                     @if (item.Available)
                                     {
@@ -93,6 +105,7 @@
                                 <td>
                                     <div class="btn-group btn-group-sm">
                                         <a asp-controller="Admin" asp-action="DetailsProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                        <a asp-controller="ProductImages" asp-action="Create" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
                                         <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
                                         <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
                                     </div>

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebShop.Models.ViewModel.ToDoListViewModel>
+@{
+    ViewData["Title"] = "ToDoList";
+    Layout = "_LayoutADMIN";
+    int counter = 1;
+}
+<!-- ToDo List -->
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item active">ToDo</li>
+        </ol>
+        <h1 class="page-header mb-0">ToDo</h1>
+    </div>
+    <div class="ms-auto">
+        <a asp-controller="ToDo" asp-action="CreateToDoList" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
+    </div>
+</div>
+<div class="mt-5 container col-xl-12">
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse" data-sortable-id="table-basic-7">
+        <div class="panel-heading">
+            <h4 class="panel-title">ToDo <span class="badge bg-success ms-5px">PRO</span></h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+        <!-- BEGIN panel-body -->
+        <div class="panel-body">
+            <!-- BEGIN table-responsive -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 30%">Title</th>
+                            <th>Description</th>
+                            <th style="width: 10%"><a asp-controller="ToDo" asp-action="CreateToDoList" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td nowrap>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="ToDo" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                        <a asp-controller="ToDo" asp-action="EditToDoList" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-controller="ToDo" asp-action="DeleteToDoList" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

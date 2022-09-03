@@ -1,4 +1,6 @@
-﻿namespace WebShop.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WebShop.Models.Base;
+namespace WebShop.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
@@ -51,16 +53,17 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     // Add ApplicationUser
     public DbSet<ApplicationUser> ApplicationUser { get; set; }
-    
+
     // Add Address
     public DbSet<Address> Address { get; set; }
 
     // Add Hero
     public DbSet<Hero> Hero { get; set; }
-    
+
     // Add Product
     public DbSet<Product> Product { get; set; }
     public DbSet<ProductCategory> ProductCategory { get; set; }
+    public DbSet<ProductImages> ProductImages { get; set; }
 
     // Add ShoppingChart
     public DbSet<ShoppingCartItem> ShoppingCartItem { get; set; }
@@ -68,4 +71,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     // Add Order
     public DbSet<Order> Order { get; set; }
+
+    //Add ToDoList
+    public DbSet<Models.Dbo.Task> Task { get; set; }
+    public DbSet<ToDoList> ToDoList { get; set; }
 }

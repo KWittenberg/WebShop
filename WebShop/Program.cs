@@ -55,6 +55,8 @@ builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 // Add CustomerService
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+// Add ToDoService
+builder.Services.AddScoped<IToDoService, ToDoService>();
 
 
 // Custom Location for Login Page
@@ -93,7 +95,6 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 var app = builder.Build();
 
 //Register Syncfusion license
-
 
 
 // Configure the HTTP request pipeline.

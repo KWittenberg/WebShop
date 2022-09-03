@@ -386,7 +386,7 @@ namespace WebShop.Migrations
                     b.Property<bool>("Discount")
                         .HasColumnType("bit");
 
-                    b.Property<decimal?>("DiscountPrice")
+                    b.Property<decimal>("DiscountPrice")
                         .HasColumnType("decimal(9,2)");
 
                     b.Property<DateTime?>("EndDate")
@@ -404,7 +404,7 @@ namespace WebShop.Migrations
                     b.Property<int?>("NumberOfPages")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(9,2)");
 
                     b.Property<int>("ProductCategoryId")
@@ -469,6 +469,35 @@ namespace WebShop.Migrations
                     b.ToTable("ProductCategory");
                 });
 
+            modelBuilder.Entity("WebShop.Models.Dbo.ProductImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("WebShop.Models.Dbo.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -524,6 +553,68 @@ namespace WebShop.Migrations
                     b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ShoppingCartItem");
+                });
+
+            modelBuilder.Entity("WebShop.Models.Dbo.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ToDoListId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ToDoListId");
+
+                    b.ToTable("Task");
+                });
+
+            modelBuilder.Entity("WebShop.Models.Dbo.ToDoList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("ToDoList");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -610,6 +701,17 @@ namespace WebShop.Migrations
                     b.Navigation("ProductCategory");
                 });
 
+            modelBuilder.Entity("WebShop.Models.Dbo.ProductImages", b =>
+                {
+                    b.HasOne("WebShop.Models.Dbo.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WebShop.Models.Dbo.ShoppingCart", b =>
                 {
                     b.HasOne("WebShop.Models.Dbo.ApplicationUser", "ApplicationUser")
@@ -640,6 +742,28 @@ namespace WebShop.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
+            modelBuilder.Entity("WebShop.Models.Dbo.Task", b =>
+                {
+                    b.HasOne("WebShop.Models.Dbo.ToDoList", "ToDoList")
+                        .WithMany("Task")
+                        .HasForeignKey("ToDoListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ToDoList");
+                });
+
+            modelBuilder.Entity("WebShop.Models.Dbo.ToDoList", b =>
+                {
+                    b.HasOne("WebShop.Models.Dbo.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("WebShop.Models.Dbo.ApplicationUser", b =>
                 {
                     b.Navigation("Address");
@@ -647,9 +771,19 @@ namespace WebShop.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
+            modelBuilder.Entity("WebShop.Models.Dbo.Product", b =>
+                {
+                    b.Navigation("ProductImages");
+                });
+
             modelBuilder.Entity("WebShop.Models.Dbo.ShoppingCart", b =>
                 {
                     b.Navigation("ShoppingCartItems");
+                });
+
+            modelBuilder.Entity("WebShop.Models.Dbo.ToDoList", b =>
+                {
+                    b.Navigation("Task");
                 });
 #pragma warning restore 612, 618
         }

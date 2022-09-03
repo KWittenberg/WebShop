@@ -15,6 +15,15 @@
     <None Include="Views\ApplicationUser\Login.cshtml" />
     <None Include="Views\ApplicationUser\xCreate.cshtml" />
     <None Include="Views\ApplicationUser\Register.cshtml" />
+    <None Include="Views\Todo\CreateTask.cshtml" />
+    <None Include="Views\Todo\CreateToDoList.cshtml" />
+    <None Include="Views\Todo\DeleteTask.cshtml" />
+    <None Include="Views\Todo\DeleteToDoList.cshtml" />
+    <None Include="Views\Todo\Details.cshtml" />
+    <None Include="Views\Todo\DetailsTask.cshtml" />
+    <None Include="Views\Todo\EditTask.cshtml" />
+    <None Include="Views\Todo\EditToDoList.cshtml" />
+    <None Include="Views\Todo\Index.cshtml" />
     <None Include="wwwroot\lib\admin\d3\d3.min.js" />
     <None Include="wwwroot\lib\admin\gritter\js\jquery.gritter.js" />
     <None Include="wwwroot\lib\admin\gritter\js\jquery.gritter.min.js" />

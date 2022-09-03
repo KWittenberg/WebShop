@@ -105,6 +105,18 @@ ol {
             color: #636363;
         }
 
+    .section-title .product-price-euro {
+        font-size: 20px;
+        font-weight: 700;
+        color: #A9A9A9;
+    }
+
+        .section-title .product-price-euro span {
+            font-size: 16px;
+            font-weight: 400;
+            color: #636363;
+        }
+
     .section-title h2 {
         color: darkgray;
         font-size: 36px;
@@ -1275,6 +1287,19 @@ ol {
                 text-decoration: line-through;
             }
 
+        .product-item .pi-text .product-price-euro {
+            color: #b2b2b2;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+            .product-item .pi-text .product-price-euro span {
+                font-size: 14px;
+                font-weight: 400;
+                color: #b2b2b2;
+                text-decoration: line-through;
+            }
+
 /*---------------------
   Deal Of The Week
 -----------------------*/
@@ -1439,7 +1464,7 @@ ol {
         }
 
             .single-latest-blog .latest-text a h4 {
-                color: #252525;
+                color: #A9A9A9;
                 font-weight: 700;
                 line-height: 30px;
                 margin-bottom: 16px;

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<WebShop.Models.Dbo.ProductImages>
+@{
+    ViewData["Title"] = "Hero";
+    Layout = "_LayoutADMIN";
+    int counter = 1;
+}
+<!-- ProductImages -->
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item active">ProductImages</li>
+        </ol>
+        <h1 class="page-header mb-0">ProductImages</h1>
+    </div>
+    <div class="ms-auto">
+        <a asp-controller="Hero" asp-action="AddOrEdit" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
+    </div>
+</div>
+<div class="mt-5 col-xl-12">
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse" data-sortable-id="table-basic-7">
+        <div class="panel-heading">
+            <h4 class="panel-title">ProductImages <span class="badge bg-success ms-5px">PRO</span></h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+        <!-- BEGIN panel-body -->
+        <div class="panel-body">
+            <!-- BEGIN table-responsive -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 2%">#</th>
+                            <th style="width: 10%">Product Name</th>
+                            <th style="width: 10%">Product Image</th>
+                            <th style="width: 10%">Product Images</th>
+                            <th style="width: 10%">Images Name</th>
+                            <th style="width: 20%">Image Url</th>
+                            <th style="width: 10%">Created</th>
+                            <th style="width: 11%"><a asp-controller="Hero" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@item.Product.Title</td>
+                                <td><a href="@item.Product.Image" class="popupImg"><img src="@item.Product.Image" width="100" /></a></td>
+                                <td><a href="@item.ImageUrl" class="popupImg"><img src="@item.ImageUrl" width="100" /></a></td>
+                                <td>@item.Name</td>
+                                <td>@item.ImageUrl</td>
+                                <td>@item.Created</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="Hero" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                        <a asp-controller="Hero" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-controller="Hero" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

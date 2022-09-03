@@ -1,0 +1,20 @@
+﻿@model WebShop.Models.ViewModel.TaskViewModel
+@{
+    ViewData["Title"] = "DetailsTask";
+    Layout = "_LayoutADMIN";
+}
+
+<br/>
+<br/>
+<div class="container mt-5" align="center">
+    <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+        <div class="card-header" align="left">Task<a type="button" class="btn-close float-end" asp-controller="ToDo" asp-action="Details" asp-route-id="@Model.ToDoListId"></a>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title" align="left">@Model.Title</h3>
+            <p class="card-text" align="left">@Model.Description</p>
+            <h4 align="left"> Status: @Html.DisplayFor(model => model.Status)</h4>
+        </div>
+        <div class="card-footer">@Model.Created</div>
+    </div>
+</div>

@@ -25,7 +25,7 @@
             <div class="col-lg-2 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter rounded-3 border-black" style="background: #272C2D">
 
                 <!-- Product Category View -->
-                <div class="mt-2 filter-widget">
+                @*<div class="mt-2 filter-widget">
                     <h4 class="fw-title">Categories</h4>
                     <ul class="filter-catagories">
                         @foreach (var item in productCategory)
@@ -33,8 +33,16 @@
                             <li><a asp-controller="Shop" asp-action="CategoryFilter" asp-route-Id="@item.Id"><span class="badge bg-light"><b>@item.Title</b></span></a></li>
                         }
                     </ul>
+                </div>*@
+                <div class="mt-2 filter-widget">
+                    <h4 class="fw-title">Categories</h4>
+                    <div class="fw-tags">
+                        @foreach (var item in productCategory)
+                        {
+                            <a asp-controller="Shop" asp-action="CategoryFilter" asp-route-Id="@item.Id"><b>@item.Title</b></a>
+                        }
+                    </div>
                 </div>
-
 
                 @*<div class="filter-widget">
                 <h4 class="fw-title">Author</h4>
@@ -114,18 +122,17 @@
                                     <div class="pi-text">
                                         <div class="catagory-name">@product.Author</div><a href="#"><h4 style="color: #A9A9A9"><b>@product.Title</b></h4></a>
                                         @if (product.Discount == true)
-
                                         {
                                             var priceEuroDiscount = @product.DiscountPrice / euro;
                                             var priceEuro = @product.Price / euro;
                                             <div class="product-price">@product.DiscountPrice Kn &nbsp;&nbsp;<span>@product.Price Kn</span></div>
-                                            <div class="product-price" style="color: #a9a9a9">@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
+                                            <div class="product-price-euro" >@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
                                         }
                                         else
                                         {
                                             var priceEuro = @product.Price / euro;
                                             <div class="product-price">@product.Price Kn</div>
-                                            <div class="product-price" style="color: #a9a9a9">@priceEuro.ToString("0.00") €</div>
+                                            <div class="product-price-euro">@priceEuro.ToString("0.00") €</div>
                                         }
                                     </div>
                                 </div>

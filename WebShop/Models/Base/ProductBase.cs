@@ -3,13 +3,12 @@
 public abstract class ProductBase
 {
     // 01
-    [Required] [StringLength(200, MinimumLength = 2)] public string Title { get; set; }
+    [Required][StringLength(200, MinimumLength = 2)] public string Title { get; set; }
     public string? Description { get; set; }
     public string? ShortDescription { get; set; }
     public string? Author { get; set; }
     // Image
     public string? Image { get; set; }
-
     
     // 02
     public bool Available { get; set; }
