@@ -66,7 +66,8 @@
                                         <div class="card" style="width: 5rem;">
                                             <img class="card-img-top" src="@gallery.ImageUrl" alt="@gallery.Name" />
                                             <div class="card-img-overlay">
-                                                <h5 class="card-title" align="right"><i class="bi bi-trash"></i></h5>
+                                                <form asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>
+                                                @*<a class="card-title" asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id" align="right"><i class="bi bi-trash"></i></a>*@
                                             </div>
                                         </div>
                                     }

@@ -149,7 +149,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<ProductViewModel> GetProductAsync(int id)
     {
-        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x => x.ProductImages).FirstOrDefaultAsync(x => x.Id == id);
+        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x=>x.ProductImages).FirstOrDefaultAsync(x => x.Id == id);
         return mapper.Map<ProductViewModel>(dbo);
     }
 
@@ -242,7 +242,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<List<ProductImagesViewModel>> GetProductImagesAsync()
     {
-        var dbo = await db.ProductImages.ToListAsync();
+        var dbo = await db.ProductImages.Include(x=>x.Product).ToListAsync();
         return dbo.Select(x => mapper.Map<ProductImagesViewModel>(x)).ToList();
     }
 
@@ -253,10 +253,10 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<ProductImagesViewModel> AddProductImagesAsync(ProductImagesBinding model)
     {
-        //var product = await db.Product.FindAsync(model.ProductId);
-        //if (product == null) { return null; }
+        var product = await db.Product.FindAsync(model.ProductId);
+        if (product == null) { return null; }
         var dbo = mapper.Map<ProductImages>(model);
-        //dbo.Product = product;
+        dbo.Product = product;
         db.ProductImages.Add(dbo);
         await db.SaveChangesAsync();
         return mapper.Map<ProductImagesViewModel>(dbo);

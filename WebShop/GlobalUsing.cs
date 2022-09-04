@@ -4,6 +4,7 @@ global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 global using Microsoft.AspNetCore.Mvc.TagHelpers;
+global using Microsoft.AspNetCore.Mvc.ViewFeatures;
 global using Microsoft.AspNetCore.Mvc.Rendering;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Cors;
