@@ -2,22 +2,26 @@
 @inject IProductService productService
 @{
     int counter = 0;
+    int shoppingCartItemsCount = 0;
     decimal subTotalPrice = default;
+    decimal subTotalPriceEuro = default;
     decimal totalPrice = default;
+    var euro = 7.53450m;
 
     var user = await UserManager.GetUserAsync(User);
-
-    var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
-    if (shoppingCart != null)
+    @if (user != null)
     {
-        subTotalPrice = shoppingCart.GetSubTotalPrice();
-        totalPrice = shoppingCart.GetTotalPrice();
-        foreach (var item in shoppingCart.ShoppingCartItems) { counter++; }
+        var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
+        if (shoppingCart != null)
+        {
+            shoppingCartItemsCount = shoppingCart.ShoppingCartItems.Count();
+            subTotalPrice = shoppingCart.GetSubTotalPrice();
+            subTotalPriceEuro = subTotalPrice / euro;
+        }
     }
 }
-
+<!-- Header -->
 <header class="header-section">
-
     <div class="container">
         <div class="inner-header">
             <div class="row">
@@ -25,7 +29,6 @@
                     @*<a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index"><img src="/img/logo-Bolta-web.png" /></a>*@
                     <div class="logo"><a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index">BoltaShop</a></div>
                 </div>
-
                 <!-- Search -->
                 <div class="col-lg-5 col-md-6 offset-sm-1">
                     <div class="advanced-search">
@@ -36,7 +39,6 @@
                         </form>
                     </div>
                 </div>
-
                 <!-- WhisList & ShoppingCart -->
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
@@ -44,54 +46,84 @@
                         <li class="heart-icon"><a href="#"><i class="icon_heart_alt" style="color:darkgray"></i>@*<span>1</span>*@</a></li>
                         <!-- ShoppingCart -->
                         <li class="cart-icon">
-                            <a href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-shopping" style="color:darkgray"></i><span>@counter</span></a>
+                            <a href="@Url.Action("ShoppingCart", "Shop")"><i class="fa-solid fa-cart-shopping" style="color:darkgray"></i><span>@shoppingCartItemsCount</span></a>
                             <!-- ShoppingCartHover -->
                             @*<partial name="_CartHover" />*@
 
                             <!-- Cart hover -->
-                            <div class="cart-hover">
-                                @if (shoppingCart != null)
-                                {
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
+                            @if (user != null)
+                            {
+                                <div class="cart-hover">
+                                    @{
+                                        var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
+                                        if (shoppingCart != null)
+                                        {
+                                            //subTotalPrice = shoppingCart.GetSubTotalPrice();
+                                            //subTotalPriceEuro = subTotalPrice / euro;
+                                        }
+                                    }
+                                    @if (shoppingCart != null)
+                                    {
+                                        <div class="select-items">
+                                            <table>
+                                                <tbody>
 
-                                                @foreach (var item in shoppingCart.ShoppingCartItems)
-                                                {
-                                                    <tr>
-                                                        <td class="si-pic"><img src="@item.Product.Image" width="100"></td>
-                                                        <td class="si-text">
-                                                            <div class="product-selected">
-                                                                <h6>@item.Product.Title</h6>
-                                                                <p>@item.Price.ToString("c") x @item.Quantity</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="si-close">
-                                                            <p>@((item.Quantity * item.Price).ToString("c"))</p>
-                                                            <i class="ti-close"></i>
-                                                        </td>
-                                                    </tr>
-                                                }
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total"><span>total:</span><h5>@string.Format("{0:C}",subTotalPrice)</h5></div>
-                                    <div class="select-button">
-                                        <a class="primary-btn view-card" href="@Url.Action("ShoppingCart", "Shop")">VIEW CARD</a>
-                                        <a href="@Url.Action("ShoppingCart", "Shop")" class="primary-btn checkout-btn">BUY NOW</a>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="select-items mt-5 mb-5" align="center">
-                                        <i class="fa-solid fa-cart-shopping fa-5x" style="color: #DFAD51"></i>
-                                        <h3 class="mt-5">No product in the cart !</h3>
-                                    </div>
-                                }
-                            </div>
+                                                    @foreach (var item in shoppingCart.ShoppingCartItems)
+                                                    {
+                                                        var priceEuro = @item.Price / euro;
+                                                        <tr>
+                                                            <td class="si-pic"><img src="@item.Product.Image" width="100"></td>
+                                                            <td class="si-text">
+                                                                <div class="product-selected">
+                                                                    <h6><b>@item.Product.Title</b></h6>
+                                                                    <h6>@item.Price.ToString("c") x @item.Quantity</h6>
+                                                                    <h6>@priceEuro.ToString("0.00") € x @item.Quantity</h6>
+                                                                </div>
+                                                            </td>
+                                                            <td class="si-text">
+                                                                <div class="product-selected">
+                                                                    <p><b>@((item.Quantity * item.Price).ToString("c"))</b></p>
+                                                                    <p><b>@((item.Quantity * priceEuro).ToString("0.00")) €</b></p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="si-close">
+                                                                <a asp-controller="Shop" asp-action="SuspendShoppingCartItem" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+                                                                @*<i class="bi bi-trash"></i>*@
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h3>TOTAL :</h3>
+                                                </div>
+                                                <div class="col" align="right">
+                                                    <h4 style="color: #dfad51">@string.Format("{0:C}", subTotalPrice)</h4>
+                                                    <h5>@subTotalPriceEuro.ToString("0.00") €</h5>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                        <div class="select-button">
+                                            <a class="primary-btn view-card" href="@Url.Action("ShoppingCart", "Shop")">VIEW CARD</a>
+                                            <a href="@Url.Action("ShoppingCart", "Shop")" class="primary-btn checkout-btn">BUY NOW</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="select-items mt-5 mb-5" align="center">
+                                            <i class="fa-solid fa-cart-shopping fa-5x" style="color: #DFAD51"></i>
+                                            <h3 class="mt-5">No product in the cart !</h3>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </li>
-                        <li class="cart-price text-white-50">@string.Format("{0:C}",subTotalPrice)</li>
+                        @*<li class="cart-price text-white-50">@string.Format("{0:C}", subTotalPrice) @subTotalPriceEuro.ToString("0.00") €</li>*@
                     </ul>
                 </div>
             </div>
@@ -131,7 +163,7 @@
                                 <i class="ti-menu"></i>
                                 <span>Admin</span>
                                 <ul class="depart-hover">
-                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Dashboard"><i class="fa-solid fa-chart-line" style="color:dimgray" ></i>&nbsp; Dashboard </a>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Dashboard"><i class="fa-solid fa-chart-line" style="color:dimgray"></i>&nbsp; Dashboard </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="ProductCategory" asp-action="Index"><i class="fa-solid fa-file" style="color:dimgray"></i>&nbsp; Category</a>
                                     <div class="dropdown-divider"></div>
@@ -142,7 +174,6 @@
                                     <a class="dropdown-item" asp-controller="Hero" asp-action="Index"><i class="fa-brands fa-chromecast" style="color:dimgray"></i>&nbsp; Hero</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" asp-controller="ApplicationUser" asp-action="Index"><i class="fa-solid fa-user" style="color:dimgray"></i>&nbsp; ApplicationUser</a>
-                                    @*<a class="dropdown-item" asp-controller="User" asp-action="Index">User</a>*@
                                     <a class="dropdown-item" asp-controller="Roles" asp-action="Index"><i class="fa-solid fa-dice-d20" style="color:dimgray"></i>&nbsp; Role</a>
                                     <a class="dropdown-item" asp-controller="Address" asp-action="Index"><i class="fa-solid fa-address-book" style="color:dimgray"></i>&nbsp; Address</a>
                                     <div class="dropdown-divider"></div>
@@ -152,8 +183,8 @@
                             break;
                     }
                 }
-
             </div>
+
             <nav class="nav-menu mobile-menu">
                 <ul>
                     @*<li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@

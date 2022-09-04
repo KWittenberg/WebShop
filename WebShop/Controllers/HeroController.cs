@@ -61,7 +61,7 @@ public class HeroController : Controller
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> AddOrEdit(int id=0)
+    public async Task<IActionResult> AddOrEdit(int id = 0)
     {
         if (id == 0)
         {

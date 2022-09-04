@@ -33,7 +33,6 @@
                             </div>
                             <div class="product-thumbs">
                                 <div class="product-thumbs-track ps-slider owl-carousel">
-                                    @*@foreach (var item in Model.ProductImages)*@
                                     @foreach (var item in Model.ProductImages)
                                     {
                                         <div class="pt active" data-imgbigurl="@item.ImageUrl">
@@ -106,7 +105,7 @@
                                     else
                                     {
                                         var priceEuro = @Model.Price / euro;
-                                        <h3>@string.Format("{0:C}", Model.Price)</h3>
+                                        <h3 style="display:inline;">@string.Format("{0:C}", Model.Price) &nbsp;</h3> <h4 style="display:inline;">@priceEuro.ToString("0.00") €</h4>
                                         <input type="text" readonly hidden value="@Model.Price" name="Price">
                                     }
                                 </div>

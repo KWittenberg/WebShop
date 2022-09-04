@@ -253,10 +253,10 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<ProductImagesViewModel> AddProductImagesAsync(ProductImagesBinding model)
     {
-        var product = await db.Product.FindAsync(model.ProductId);
-        if (product == null) { return null; }
+        //var product = await db.Product.FindAsync(model.ProductId);
+        //if (product == null) { return null; }
         var dbo = mapper.Map<ProductImages>(model);
-        dbo.Product = product;
+        //dbo.Product = product;
         db.ProductImages.Add(dbo);
         await db.SaveChangesAsync();
         return mapper.Map<ProductImagesViewModel>(dbo);

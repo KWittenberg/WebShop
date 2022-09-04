@@ -97,6 +97,7 @@ var app = builder.Build();
 //Register Syncfusion license
 
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

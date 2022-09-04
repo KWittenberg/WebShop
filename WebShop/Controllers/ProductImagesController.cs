@@ -16,7 +16,8 @@ public class ProductImagesController : Controller
     // GET: ProductImages
     public async Task<IActionResult> Index()
     {
-        var productImages = this.db.ProductImages.Include(x=>x.Product);
+        //var productImages = this.db.ProductImages.Include(x=>x.Product);
+        var productImages = this.db.ProductImages;
         return View(await productImages.ToListAsync());
     }
 
@@ -28,7 +29,8 @@ public class ProductImagesController : Controller
     [HttpGet]
     public async Task<IActionResult> Create(int id)
     {
-        return View(new ProductImagesBinding { ProductId = id });
+        //return View(new ProductImagesBinding { ProductId = id });
+        return View();
     }
     [HttpPost]
     [ValidateAntiForgeryToken]

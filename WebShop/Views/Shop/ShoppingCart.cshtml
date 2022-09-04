@@ -183,7 +183,7 @@
                                         <td align="right">@string.Format("{0:C}",subTotalPrice)</td>
                                     </tr>
 
-                                    @if (Model.Option == "LocalPickup")
+                                    @*@if (Model.Option == "LocalPickup")
                                     {
                                         <tr>
                                             <td>Local pickup</td>
@@ -203,7 +203,7 @@
                                             <td class="left">Shipping Croatia</td>
                                             <td align="right">55,00 kn</td>
                                         </tr>
-                                    }
+                                    }*@
 
                                     <tr>
                                         <td><strong>Total</strong></td>
@@ -262,7 +262,7 @@
 
         })
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         function Form() {
             var selectvalue = $('input[name=Option]:checked', '#f1').val();
             if (selectvalue == "LocalPickup") {
@@ -278,5 +278,5 @@
                 return true;
             }
             return false;
-    </script>
+    </script>*@
     }

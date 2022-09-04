@@ -6,29 +6,34 @@ public class AppDbInitializer
     {
         using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
         {
-            var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 
-            context.Database.EnsureCreated();
-            
+            db.Database.EnsureCreated();
 
-            //ProductCategory
-            if (!context.ProductCategory.Any())
+
+            // ProductCategory
+            if (!db.ProductCategory.Any())
             {
-                context.ProductCategory.AddRange(new List<ProductCategory>()
+                db.ProductCategory.AddRange(new List<ProductCategory>()
                 {
                     new ProductCategory()
                     {
                         Title = "Book",
                         Description = "Book Category"
-                        }
+                    },
+                    new ProductCategory()
+                    {
+                    Title = "Photo",
+                    Description = "Photo Category"
+                    }
                 });
-                context.SaveChanges();
+                db.SaveChanges();
             }
-            
-            //Product
-            if (!context.Product.Any())
+
+            // Product
+            if (!db.Product.Any())
             {
-                context.Product.AddRange(new List<Product>()
+                db.Product.AddRange(new List<Product>()
                     {
                         new Product()
                         {
@@ -369,7 +374,72 @@ public class AppDbInitializer
                             Weight = 520
                         },
                         });
-                context.SaveChanges();
+                db.SaveChanges();
+            }
+            
+            // Hero
+            if (!db.Hero.Any())
+            {
+                db.Hero.AddRange(new List<Hero>()
+                {
+                    new Hero()
+                    {
+                        Publish = true,
+                        ImageUrl = "/img/hero/01-rudina.jpg",
+                        Title = "Rudina",
+                        Subtitle = "T. Wittenberg",
+                        Description = "Rudina je bila centar ili bolje rečeno središte centralne Slavonije u kojoj se spaja sve ono najbolje toga vremena. 'Rudina se rudila od crvenih fresaka.' - Akademik Matko Peić.",
+                        ProductUrl = "/Shop/ItemView/2",
+                        Align = "col-lg-5",
+                        ColorTitle = "#000000",
+                        ColorDescription = "#000000",
+                        EventName = "Sale",
+                        EventText = "- 17%"
+                    },
+                    new Hero()
+                    {
+                    Publish = true,
+                    ImageUrl = "/img/hero/02-ag.jpg",
+                    Title = "Almanah Gimnazije '48",
+                    Subtitle = "T. Wittenberg",
+                    Description = "Iako se pišu monografije o samo onim osobama koje su, kako se to obično kaže ‘postigle’ nešto o životu, a onda svakako da su završile gimnaziju, ja sam se opredijelio da navedem sve učenike upisnike te školske godine 1948./49.",
+                    ProductUrl = "/Shop/ItemView/10",
+                    Align = "col-lg-5 offset-sm-7",
+                    ColorTitle = "#b3b3b3",
+                    ColorDescription = "#ffffff",
+                    EventName = null,
+                    EventText = null
+                    },
+                    new Hero()
+                    {
+                    Publish = true,
+                    ImageUrl = "/img/hero/03-puvarija.jpg",
+                    Title = "Puvarija",
+                    Subtitle = "T. Wittenberg",
+                    Description = "Prva cjelovita obrada sjeverno-zapadnog dijela Dilj-gore i naselja na diljskim padinama, od srednjeg vijeka do današnjih dana.",
+                    ProductUrl = "/Shop/ItemView/3",
+                    Align = "col-lg-5",
+                    ColorTitle = "#000000",
+                    ColorDescription = "#000000",
+                    EventName = null,
+                    EventText = null
+                    },
+                    new Hero()
+                    {
+                    Publish = true,
+                    ImageUrl = "/img/hero/04-vetovo.jpg",
+                    Title = "Vetovo",
+                    Subtitle = "T. Wittenberg",
+                    Description = "Stiješnjena između tri centra: Kutjeva, Kaptola i Jakšića, župa ili bolje rečeno područje župe Vetovo, već stoljećima odolijeva kao svojevrstan ‘kuglager’ u nastalom trenju.",
+                    ProductUrl = "/Shop/ItemView/8",
+                    Align = "col-lg-5 offset-sm-7",
+                    ColorTitle = "#b3b3b3",
+                    ColorDescription = "#ffffff",
+                    EventName = "Sale",
+                    EventText = "- 17%"
+                    }
+                });
+                db.SaveChanges();
             }
         }
     }
