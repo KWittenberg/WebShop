@@ -35,41 +35,44 @@
             <div class="table-responsive">
                 <table class="table table-hover mb-0 align-middle">
                     <thead>
-                        <tr>
-                            <th style="width: 2%">#</th>
-                            <th style="width: 5%">Product Image</th>
-                            <th style="width: 10%">Product Name</th>
-                            <th style="width: 5%">Product Images</th>
-                            <th style="width: 15%">Images Name</th>
-                            <th style="width: 25%">Image Url</th>
-                            <th style="width: 10%">Created</th>
-                            <th style="width: 11%"><a asp-controller="ProductImages" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
-                        </tr>
+                    <tr>
+                        <th style="width: 2%">#</th>
+                        <th style="width: 5%">Product Image</th>
+                        <th style="width: 10%">Product Name</th>
+                        <th style="width: 5%">Product Images</th>
+                        <th style="width: 15%">Images Name</th>
+                        <th style="width: 25%">Image Url</th>
+                        <th style="width: 10%">Created</th>
+                        <th style="width: 11%"><a asp-controller="ProductImages" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@counter</td>
-                                <td><a href="@item.Product.Image" class="popupImg"><img src="@item.Product.Image" width="100" /></a></td>
-                                <td>@item.Product.Title</td>
-                                <td><a href="@item.ImageUrl" class="popupImg"><img src="@item.ImageUrl" width="100" /></a></td>
-                                <td>@item.Name</td>
-                                <td>@item.ImageUrl</td>
-                                <td>@item.Created</td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="ProductImages" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
-                                        <a asp-controller="ProductImages" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                        <form asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>
-                                    </div>
-                                </td>
-                            </tr>
-                            counter++;
-                        }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td><a href="@item.Product.Image" class="popupImg"><img src="@item.Product.Image" width="100" /></a></td>
+                            <td>@item.Product.Title</td>
+                            <td><a href="@item.ImageUrl" class="popupImg"><img src="@item.ImageUrl" width="100" /></a></td>
+                            <td>@item.Name</td>
+                            <td>@item.ImageUrl</td>
+                            <td>@item.Created</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="ProductImages" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="ProductImages" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    <button class="deleteBtn btn btn-secondary btn-sm" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
+                                    @*<form asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>*@
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<form id="deleteForm" asp-controller="ProductImages" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>

@@ -12,7 +12,7 @@
 
 <!-- AddOrEdit Category -->
 <!-- BEGIN breadcrumb -->
-<ol class="breadcrumb float-xl-end">
+<ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
     <li class="breadcrumb-item"><a href="~/ProductCategories">Category</a></li>
     <li class="breadcrumb-item active">Add Or Edit</li>
@@ -71,3 +71,9 @@
     <!-- END panel -->
 </div>
 <!-- END col-6 -->
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

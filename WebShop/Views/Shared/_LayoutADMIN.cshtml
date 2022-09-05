@@ -25,7 +25,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Syncfusion ASP.NET Core controls scripts -->
     <script src="https://cdn.syncfusion.com/ej2/20.2.43/dist/ej2.min.js"></script>
-    
+
     @RenderSection("Styles", required: false)
     <!-- ================== END core-css ================== -->
 </head>
@@ -88,120 +88,37 @@
             window.location.href = url;
         }
     </script>
-
-    
-
-
-    @*<script>
-    function deletealert(ctl) {
-    // STORE HREF ATTRIBUTE OF LINK CTL (THIS) BUTTON
-    var defaultAction = $(ctl).prop("href");
-    // CANCEL DEFAULT LINK BEHAVIOUR
-    event.preventDefault();
-    swal.fire({
-    title: "Are you sure?",
-    text: "You will not be able to recover this imaginary   file!",
-    type: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#DD6B55",
-    confirmButtonText: "Yes, delete it!",
-    cancelButtonText: "No, cancel plx!",
-    closeOnConfirm: false,
-    closeOnCancel: false
-    }, function (isConfirm) {
-    if (isConfirm) {
-    swal.fire("Deleted!", "Your imaginary file has been deleted.", "success");
-    // RESUME THE DEFAULT LINK ACTION
-    eval(defaultAction);
-    return true;
-    } else {
-    swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
-    return false;
-    }
-    });
-    }
-    </script>*@
-
-    @*<script>
-    function ConfirmDelete() {
-    Swal({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-    },
-    function () {
-    Swal("Deleted!", "Yoir", "sucess")
-    });
-    })
-    </script>
-    *@
+    <!-- For SweetAlert2 -->
     <script>
-        $('.delete').on('click', function (e) {
-            e.preventDefault();
-            var self = $(this);
-            console.log(self.data('title'));
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    //Swal.fire(
-                    //    'Deleted!',
-                    //    self.attr('href'),
-                    //    'success'
-                    //)
-                    //location.href = self.attr('href');
-                    //var txt = $("input").val();
-                    $.post("https://localhost:44367/ProductCategory/Delete", 18, function (result) {
-                        Swal.fire(
-                            'Deleted!',
-                            "result",
-                            'success'
-                        )
-                    });
-                }
-            })
-        })
+        $(function () {
+            $('.deleteBtn').on('click', function (e) {
+                e.preventDefault();
+                var self = $(this);
+                console.log(self.data('title'));
+                Swal.fire({
+                    title: 'Are you sure ???',
+                    //text: "You won't be able to revert this!",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it !'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var btn = $(this);
+                        var id = btn.data("id");
+                        $('#leaveTypeId').val(id);
+                        $('#deleteForm').submit();
+                        //Swal.fire("Deleted!", "Your data has been deleted.", "success");
+                    }
+                });
+            });
+        });
     </script>
 
-    @*<script>
-    $('.delete').on('click', function (e) {
-    e.preventDefault();
-    var self = $(this);
-    console.log(self.data('title'));
-    Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-    if (result.isConfirmed) {
-    Swal.fire(
-    'Deleted!',
-    'Your file has been deleted.',
-    'success'
-    )
-    location.href = self.attr('href');
-    }
-    })
-    })
-    </script>*@
-    
     <!-- ================== END core-js ================== -->
     @RenderSection("Scripts", required: false)
-    
+
     <!-- Syncfusion ASP.NET Core Script Manager -->
     <ejs-scripts></ejs-scripts>
 </body>

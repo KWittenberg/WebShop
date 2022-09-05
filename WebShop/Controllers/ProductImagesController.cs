@@ -40,9 +40,7 @@ public class ProductImagesController : Controller
         TempData["success"] = "Product Image created successfully";
         return RedirectToAction("ProductAdministration", "Admin");
     }
-
-
-
+    
     /// <summary>
     /// Delete
     /// </summary>
@@ -50,12 +48,9 @@ public class ProductImagesController : Controller
     /// <returns></returns>
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        if (this.db.ProductImages == null)
-        {
-            return Problem("Entity set 'ApplicationDbContext.ProductImages'  is null.");
-        }
+        if (this.db.ProductImages == null) { return Problem("Entity set 'ApplicationDbContext.ProductImages'  is null."); }
         var productImages = await this.db.ProductImages.FindAsync(id);
         if (productImages != null)
         {
@@ -63,8 +58,8 @@ public class ProductImagesController : Controller
             TempData["success"] = "Image deleted successfully!";
         }
         await this.db.SaveChangesAsync();
-        //return View();
-        return RedirectToAction(nameof(Index));
+        //return RedirectToAction(nameof(Index));
+        return RedirectToAction("ProductAdministration", "Admin");
     }
 
 

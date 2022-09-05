@@ -120,7 +120,7 @@
                                         </ul>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="catagory-name">@product.Author</div><a href="#"><h4 style="color: #A9A9A9"><b>@product.Title</b></h4></a>
+                                        <div class="catagory-name">@product.Author</div><a href="@Url.Action("ItemView", "Shop", new { id = product.Id })"><h4 style="color: #A9A9A9"><b>@product.Title</b></h4></a>
                                         @if (product.Discount == true)
                                         {
                                             var priceEuroDiscount = @product.DiscountPrice / euro;

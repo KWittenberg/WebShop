@@ -41,7 +41,7 @@
                         <th style="width: 10%">Image</th>
                         <th style="width: 15%">Title</th>
                         <th style="width: 15%">Description</th>
-                            <th style="width: 15%">Gallery</th>
+                        <th style="width: 15%">Gallery</th>
                         <th>Available</th>
                         <th>Quantity</th>
                         <th>Discount</th>
@@ -50,73 +50,76 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
-                        {
-                            string redirectUrlAvailable = Url.Action("ChangeAvailableStatus", "Admin", new { id = item.Id, status = !item.Available });
-                            string redirectUrlDiscount = Url.Action("ChangeDiscountStatus", "Admin", new { id = item.Id, status = !item.Discount });
+                    @foreach (var item in Model)
+                    {
+                        string redirectUrlAvailable = Url.Action("ChangeAvailableStatus", "Admin", new { id = item.Id, status = !item.Available });
+                        string redirectUrlDiscount = Url.Action("ChangeDiscountStatus", "Admin", new { id = item.Id, status = !item.Discount });
 
-                            <tr>
-                                <td>@counter</td>
-                                <td><a href="@item.Image" class="popupImg"><img src="@item.Image" width="150" /></a></td>
-                                <td><b>@item.Title</b></td>
-                                <td>@item.ShortDescription</td>
-                                <td>
-                                    @foreach (var gallery in item.ProductImages)
-                                    {
-                                        <div class="card" style="width: 5rem;">
-                                            <img class="card-img-top" src="@gallery.ImageUrl" alt="@gallery.Name" />
-                                            <div class="card-img-overlay">
-                                                <form asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>
-                                                @*<a class="card-title" asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id" align="right"><i class="bi bi-trash"></i></a>*@
-                                            </div>
+                        <tr>
+                            <td>@counter</td>
+                            <td><a href="@item.Image" class="popupImg"><img src="@item.Image" width="150" /></a></td>
+                            <td><b>@item.Title</b></td>
+                            <td>@item.ShortDescription</td>
+                            <td>
+                                @foreach (var gallery in item.ProductImages)
+                                {
+                                    <div class="card" style="width: 5rem;">
+                                        <img class="card-img-top" src="@gallery.ImageUrl" alt="@gallery.Name" />
+                                        <div class="card-img-overlay">
+                                                <button class="deleteBtn btn btn-secondary btn-sm" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
+                                            @*<form asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>*@
+                                            @*<a class="card-title" asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id" align="right"><i class="bi bi-trash"></i></a>*@
                                         </div>
-                                    }
-                                </td>
-                                <td>
-                                    @if (item.Available)
-                                    {
-                                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrlAvailable')" checked>
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrlAvailable')">
-                                    }
-                                </td>
-                                <td>@item.Quantity</td>
-                                <td>
-                                    @if (item.Discount)
-                                    {
-                                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrlDiscount')" checked>
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrlDiscount')">
-                                    }
-                                </td>
-                                <td>
-                                    @if (item.Discount == true)
-                                    {
-                                        <div><b style="color:white">@item.DiscountPrice</b><sub><s> @item.Price</s></sub></div>
-                                    }
-                                    else
-                                    {
-                                        <div><b style="color:white">@item.Price</b></div>
-                                    }
-                                </td>
-                                <td>
-                                    <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Admin" asp-action="DetailsProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
-                                        <a asp-controller="ProductImages" asp-action="Create" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
-                                        <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                        <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
                                     </div>
-                                </td>
-                            </tr>
-                            counter++;
-                        }
+                                }
+                            </td>
+                            <td>
+                                @if (item.Available)
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlAvailable')" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlAvailable')">
+                                }
+                            </td>
+                            <td>@item.Quantity</td>
+                            <td>
+                                @if (item.Discount)
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlDiscount')" checked>
+                                }
+                                else
+                                {
+                                    <input type="checkbox" onclick="RedirectToUrl('@redirectUrlDiscount')">
+                                }
+                            </td>
+                            <td>
+                                @if (item.Discount == true)
+                                {
+                                    <div><b style="color:white">@item.DiscountPrice</b><sub><s> @item.Price</s></sub></div>
+                                }
+                                else
+                                {
+                                    <div><b style="color:white">@item.Price</b></div>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a asp-controller="Admin" asp-action="DetailsProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="ProductImages" asp-action="Create" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
+                                    <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        counter++;
+                    }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<form id="deleteForm" asp-controller="ProductImages" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>

@@ -20,7 +20,7 @@ public class ProductCategoryController : Controller
                     View(await this.db.ProductCategory.ToListAsync()) :
                     Problem("Entity set 'ApplicationDbContext.ProductCategory'  is null.");
     }
-    
+
     /// <summary>
     /// Add Or Edit
     /// </summary>
@@ -54,7 +54,7 @@ public class ProductCategoryController : Controller
         }
         return View(productCategory);
     }
-    
+
     /// <summary>
     /// Delete
     /// </summary>
@@ -62,20 +62,15 @@ public class ProductCategoryController : Controller
     /// <returns></returns>
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        if (this.db.ProductCategory == null)
-        {
-            return Problem("Entity set 'ApplicationDbContext.ProductCategory'  is null.");
-        }
-
+        if (this.db.ProductCategory == null) { return Problem("Entity set 'ApplicationDbContext.ProductCategory'  is null."); }
         var category = await this.db.ProductCategory.FindAsync(id);
         if (category != null)
         {
             this.db.ProductCategory.Remove(category);
             TempData["success"] = "Category deleted successfully!";
         }
-
         await this.db.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }

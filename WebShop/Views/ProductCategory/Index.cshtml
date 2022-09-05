@@ -17,7 +17,7 @@
         <a asp-controller="ProductCategory" asp-action="AddOrEdit" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
     </div>
 </div>
-<div class="mt-5 col-xl-12">
+<div class="mt-5 container col-xl-12">
     <!-- BEGIN panel -->
     <div class="panel panel-inverse" data-sortable-id="table-basic-7">
         <div class="panel-heading">
@@ -35,32 +35,35 @@
             <div class="table-responsive">
                 <table class="table table-hover mb-0 align-middle">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th style="width: 10%"><a asp-controller="ProductCategory" asp-action="AddOrEdit" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th style="width: 10%"><a asp-controller="ProductCategory" asp-action="AddOrEdit" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@counter</td>
-                            <td>@item.Title</td>
-                            <td>@item.Description</td>
-                            <td nowrap>
-                                <div class="btn-group btn-group-sm">
-                                    <a asp-controller="ProductCategory" asp-action="AddOrEdit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                    <form asp-controller="ProductCategory" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>
-                                    <form class="delete" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></button></form>                                    </div>
-                            </td>
-                        </tr>
-                        counter++;
-                    }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td nowrap>
+                                    <div class="btn-group btn-group-sm">
+                                        <a asp-controller="ProductCategory" asp-action="AddOrEdit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        @*<form asp-controller="ProductCategory" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>*@
+                                        <button class="deleteBtn btn btn-secondary btn-sm" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<form id="deleteForm" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>
