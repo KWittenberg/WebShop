@@ -104,7 +104,10 @@ public class ToDoService : IToDoService
     /// <returns></returns>
     public async Task<List<TaskViewModel>> GetTasks(int todoListId)
     {
-        var task = await db.Task.Include(x => x.ToDoList).Where(x => x.ToDoList.Id == todoListId /*&& !x.Status*/).ToListAsync();
+        var task = await db.Task
+            .Include(x => x.ToDoList).Where(x => x.ToDoList.Id == todoListId /*&& !x.Status*/)
+            .OrderByDescending(x=>x.Created)
+            .ToListAsync();
         if (task == null) { return new List<TaskViewModel>(); }
         return task.Select(x => mapper.Map<TaskViewModel>(x)).ToList();
     }

@@ -1,4 +1,9 @@
-﻿<!-- Related Products Section Begin -->
+﻿@inject IProductService productService
+@{
+    var euro = 7.53450m;
+    var relatedProduct = await productService.GetProductsAsync();
+}
+<!-- Related Products Section Begin -->
 <div class="related-products spad">
     <div class="container">
         <div class="row">
@@ -9,82 +14,47 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="/img/1996 Groblja Pozeske Doline/1996 Groblja Pozeske Doline.jpg" alt="">
-                        <div class="sale">Sale</div>
-                        <div class="icon"><i class="icon_heart_alt"></i></div>
-                        <ul>
-                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="pi-text">
-                        <div class="catagory-name">T. Wittenberg</div>
-                        <a href="#"><h5>Groblja Pozeske Doline</h5></a>
-                        <div class="product-price">150.00 kn <span>200.00 kn</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="/img/1997 Rudina/1997 Rudina.jpg" alt="">
-                        <div class="sale">Sale</div>
-                        <div class="icon"><i class="icon_heart_alt"></i></div>
-                        <ul>
-                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="pi-text">
-                        <div class="catagory-name">T. Wittenberg</div>
-                        <a href="#"><h5>Rudina</h5></a>
-                        <div class="product-price">300.00 kn <span>250.00 kn</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="/img/2004 Pjesme/2004 Pjesme.jpg" alt="">
-                        <div class="sale">Sale</div>
-                        <div class="icon"><i class="icon_heart_alt"></i></div>
-                        <ul>
-                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="pi-text">
-                        <div class="catagory-name">V. Hip</div>
-                        <a href="#"><h5>Pjesme</h5></a>
-                        <div class="product-price">80.00 kn <span>50.00 kn</span></div>
+            @foreach (var item in relatedProduct.OrderBy(x => Guid.NewGuid()).Take(4))
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="@item.Image" alt="Product Image" />
+                            @*<div class="percentage"><i class="fa-solid fa-percent"></i></div>*@
+
+                            @if (item.Discount is true)
+                            {
+                                <div class="sale">Sale</div>
+                            }
+
+                            @*<div class="icon"><i class="icon_heart_alt"></i></div>*@
+                            <ul>
+                                @*<li class="w-icon active"><a href="#"><i class="fa-solid fa-eye"></i></a></li>*@
+                                <li class="quick-view"><a href="@Url.Action("ItemView", "Shop", new { id = item.Id })"><i class="fa-solid fa-cart-plus"></i> Add To Cart</a></li>
+                                @*<li class="w-icon active"><a href="#"><i class="fa-solid fa-heart-circle-plus"></i></a></li>*@
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">@item.Author</div>
+                            <a href="@Url.Action("ItemView", "Shop", new { id = item.Id })"><h5 style="color:white"><b>@item.Title</b></h5></a>
+
+                            @if (item.Discount is true)
+                            {
+                                var priceEuroDiscount = @item.DiscountPrice / euro;
+                                var priceEuro = @item.Price / euro;
+                                <div class="product-price">@item.DiscountPrice Kn &nbsp;&nbsp;<span>@item.Price Kn</span></div>
+                                <div class="product-price-euro">@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
+                            }
+                            else
+                            {
+                                var priceEuro = @item.Price / euro;
+                                <div class="product-price">@item.Price Kn</div>
+                                <div class="product-price-euro">@priceEuro.ToString("0.00") €</div>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="/img/2004 Putopisne Impresije/2004 Putopisne Impresije.jpg" alt="">
-                        <div class="sale">Sale</div>
-                        <div class="icon"><i class="icon_heart_alt"></i></div>
-                        <ul>
-                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="pi-text">
-                        <div class="catagory-name">B. Živković</div>
-                        <a href="#"><h5>Putopisne Impresije</h5></a>
-                        <div class="product-price">100.00 kn <span>80.00 kn</span></div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
