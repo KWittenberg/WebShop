@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebShop.Models.ViewModel.OrderViewModel>
 @{
     ViewData["Title"] = "Orders";
-    int counter = 1;
+    int counter = Model.Count();
 }
 <!-- Orders -->
 <div class="container mt-5">
@@ -35,7 +35,7 @@
                                     </div>
                             </td>
                         </tr>
-                        counter++;
+                        counter--;
                     }
                 </tbody>
             </table>

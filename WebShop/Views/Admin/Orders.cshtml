@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Orders";
     Layout = "_LayoutADMIN";
-    int counter = 1;
+    int counter = Model.Count();
 }
 
 <!-- Orders -->
@@ -105,7 +105,7 @@
                                     }
                                 </td>
                                 <td><span class="badge border border-success text-success px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i class="fa fa-circle fs-9px fa-fw me-5px"></i> Fulfilled</span></td>
-                                <td>3 items</td>
+                                <td>@order.ShoppingCart.ShoppingCartItems.Sum(x=>x.Quantity)</td>
                                 <td>@string.Format("{0:C}",totalPrice)</td>
                                 <td>Local pickup</td>
                                 <td>
@@ -127,7 +127,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            counter++;
+                            counter--;
                         }
                     </tbody>
                 </table>

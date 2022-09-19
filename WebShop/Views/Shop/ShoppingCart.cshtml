@@ -37,7 +37,7 @@
         </div>
         <div class="mt-3 mb-5 card">
             <div class="card-header">
-                <div class="row"><h5 class="col" align="left" style="color:white">@documentId - @user.FirstName @user.LastName</h5><h5 class="col" align="right">Status: <strong> @documentStatus</strong></h5></div>
+                <div class="row"><h5 class="col" align="left" style="color:white">@documentId - @user.FirstName @user.LastName</h5><h5 class="col" align="right">Status: <strong style="color: white"> @documentStatus</strong></h5></div>
             </div>
             <div class="card-body">
                 <div class="table-responsive-sm">
@@ -136,7 +136,7 @@
                         </div>
                     </div>
 
-                    <!-- Empty Shopping Cart -->
+                    <!-- Shopping Cart -->
                     <div class="col">
                         <div class="col-md-10 offset-2">
 
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -184,26 +184,26 @@
                                     </tr>
 
                                     @*@if (Model.Option == "LocalPickup")
-                                    {
-                                        <tr>
-                                            <td>Local pickup</td>
-                                            <td align="right">00,00 kn</td>
-                                        </tr>
-                                    }
-                                    @if (Model.Option == "ChashOnDelivery")
-                                    {
-                                        <tr>
-                                            <td class="left">Shipping Croatia</td>
-                                            <td align="right">55,00 kn</td>
-                                        </tr>
-                                    }
-                                    @if (Model.Option == "PayPal")
-                                    {
-                                        <tr>
-                                            <td class="left">Shipping Croatia</td>
-                                            <td align="right">55,00 kn</td>
-                                        </tr>
-                                    }*@
+                                {
+                                <tr>
+                                <td>Local pickup</td>
+                                <td align="right">00,00 kn</td>
+                                </tr>
+                                }
+                                @if (Model.Option == "ChashOnDelivery")
+                                {
+                                <tr>
+                                <td class="left">Shipping Croatia</td>
+                                <td align="right">55,00 kn</td>
+                                </tr>
+                                }
+                                @if (Model.Option == "PayPal")
+                                {
+                                <tr>
+                                <td class="left">Shipping Croatia</td>
+                                <td align="right">55,00 kn</td>
+                                </tr>
+                                }*@
 
                                     <tr>
                                         <td><strong>Total</strong></td>
@@ -219,8 +219,8 @@
                             @using (Html.BeginForm())
                             {
                                 <input type="text" name="ShoppingCartId" value="@Model.Id" hidden>
-                                <a asp-controller="Shop" asp-action="Index" class="secondary-btn">Continue Shopping</a>
                                 <input type="submit" class="primary-btn" value="Buy Now">
+                                <a asp-controller="Shop" asp-action="Index" class="secondary-btn">Continue Shopping</a>
                             }
                         </div>
                     </div>

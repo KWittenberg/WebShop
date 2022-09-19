@@ -21,7 +21,9 @@ public class QueueProcessor : BackgroundService
                     await productService.UpdateShoppinCartStatus();
                 }
             }
-            await Task.Delay(1000, stoppingToken);
+            // 1 Minute = 60,000 Milliseconds
+            // 5 Minutes = 300,000 Milliseconds
+            await Task.Delay(300000, stoppingToken);
         }
     }
 }

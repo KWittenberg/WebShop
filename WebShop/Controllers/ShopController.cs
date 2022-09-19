@@ -1,4 +1,7 @@
-﻿namespace WebShop.Controllers;
+﻿using WebShop.Models.Dbo;
+using WebShop.Services.Implementation;
+
+namespace WebShop.Controllers;
 
 public class ShopController : Controller
 {
@@ -64,7 +67,7 @@ public class ShopController : Controller
     {
         model.UserId = userManager.GetUserId(User);
         var product = await productService.AddShoppingCartAsync(model);
-        return RedirectToAction("Index");
+        return RedirectToAction("ShoppingCart", "Shop");
     }
 
     /// <summary>
@@ -120,7 +123,7 @@ public class ShopController : Controller
     public async Task<IActionResult> ShoppingCart(OrderBinding model)
     {
         var order = await productService.AddOrder(model);
-        return RedirectToAction("Index");
+        return RedirectToAction("Order", "User", new { id = order.Id });
     }
 
 

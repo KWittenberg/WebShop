@@ -33,10 +33,9 @@
 
     <!-- Add for Toast -->
     <partial name="_Notification" />
-    <!-- Add for SweetAlert2 -->
-    <partial name="_NotificationPartial" />
+    
 
-    <!-- BEGIN #app -->
+<!-- BEGIN #app -->
     <div id="app" class="app @(ViewData["AppSidebarNone"] == null ? "app-sidebar-fixed" : "") @(ViewData["AppHeaderNone"] == null ? "app-header-fixed" : "") @ViewData["AppClass"]">
         @if (ViewData["AppHeaderNone"] == null)
         {

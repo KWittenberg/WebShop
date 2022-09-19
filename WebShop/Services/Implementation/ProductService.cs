@@ -57,6 +57,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<HeroViewModel> AddHeroAsync(HeroBinding model)
     {
+        model.ImageUrl = "/img/hero/" + model.ImageUrl;
         var dbo = mapper.Map<Hero>(model);
         db.Hero.Add(dbo);
         await db.SaveChangesAsync();
@@ -149,7 +150,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<ProductViewModel> GetProductAsync(int id)
     {
-        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x=>x.ProductImages).FirstOrDefaultAsync(x => x.Id == id);
+        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x => x.ProductImages).FirstOrDefaultAsync(x => x.Id == id);
         return mapper.Map<ProductViewModel>(dbo);
     }
 
@@ -170,7 +171,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<List<ProductViewModel>> GetProductsAsync()
     {
-        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x=>x.ProductImages).ToListAsync();
+        var dbo = await db.Product.Include(x => x.ProductCategory).Include(x => x.ProductImages).ToListAsync();
         return dbo.Select(x => mapper.Map<ProductViewModel>(x)).ToList();
     }
 
@@ -242,7 +243,7 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task<List<ProductImagesViewModel>> GetProductImagesAsync()
     {
-        var dbo = await db.ProductImages.Include(x=>x.Product).ToListAsync();
+        var dbo = await db.ProductImages.Include(x => x.Product).ToListAsync();
         return dbo.Select(x => mapper.Map<ProductImagesViewModel>(x)).ToList();
     }
 
@@ -261,7 +262,7 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<ProductImagesViewModel>(dbo);
     }
-    
+
 
 
 
@@ -440,6 +441,7 @@ public class ProductService : IProductService
             .Include(x => x.ShoppingCart)
             .ThenInclude(x => x.ShoppingCartItems)
             .ThenInclude(x => x.Product)
+            .OrderByDescending(x => x.Created)
             .ToListAsync();
 
         var userOrders = orders.FindAll(x => x.ShoppingCart.ApplicationUser.Id == id);
@@ -457,16 +459,12 @@ public class ProductService : IProductService
         var shoppingCart = await db.ShoppingCart.FirstOrDefaultAsync(x => x.Id == model.ShoppingCartId);
         shoppingCart.ShoppingCartStatus = Models.ShoppingCartStatus.Succeeded;
 
-        if (shoppingCart == null)
-        {
-            return null;
-        }
+        if (shoppingCart == null) { return null; }
 
         var dbo = new Order
         {
             //Paid = true,
             ShoppingCart = shoppingCart
-
         };
 
         db.Order.Add(dbo);
@@ -539,12 +537,7 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<OrderViewModel>(order);
     }
-
-
-
-
-
-
+    
     /// <summary>
     /// UpdateShoppinCartStatus
     /// Ako je shoppingcart u statusu active npr 2h.
@@ -554,7 +547,9 @@ public class ProductService : IProductService
     /// <returns></returns>
     public async Task UpdateShoppinCartStatus()
     {
-        var shoppingCarts = await db.ShoppingCart.Include(x => x.ShoppingCartItems).ThenInclude(x => x.Product)
+        var shoppingCarts = await db.ShoppingCart
+            .Include(x => x.ShoppingCartItems)
+            .ThenInclude(x => x.Product)
             .Where(x => x.ShoppingCartStatus == ShoppingCartStatus.Pending && x.Created < DateTime.Now.AddHours(appConfig.ShoppingCartOffset))
             .ToListAsync();
 
@@ -563,7 +558,7 @@ public class ProductService : IProductService
         SuspendShoppingCarts(shoppingCarts);
         await db.SaveChangesAsync();
     }
-
+    
     /// <summary>
     /// SuspendShoppingCart
     /// </summary>

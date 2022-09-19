@@ -20,9 +20,9 @@
 <!-- Breadcrumb Section Begin -->
 <!-- Product Shop Section Begin -->
 <section class="product-shop spad">
-    <div class="container">
+    <div class="px-5">
         <div class="row">
-            <div class="col-lg-2 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter rounded-3 border-black" style="background: #272C2D">
+            <div class="col-lg-1 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter rounded-3 border-black" style="background: #272C2D">
 
                 <!-- Product Category View -->
                 @*<div class="mt-2 filter-widget">
@@ -74,7 +74,7 @@
                 </div>*@
             </div>
 
-            <div class="col-lg-10 order-1 order-lg-2">
+            <div class="col-lg-11 order-1 order-lg-2">
                 @*<div class="product-show-option">
                 <div class="row">
                 <div class="col-lg-7 col-md-7">
@@ -97,10 +97,10 @@
                     <div class="row">
                         @foreach (var product in Model.OrderBy(x => Guid.NewGuid()))
                         {
-                            <div class="col-lg-4 col-sm-6">
+                            <div class="col-lg-3">
                                 <div class="product-item">
                                     <div class="pi-pic">
-                                        <img class="img-fluid rounded-3" src="@product.Image" alt="product image">
+                                        <img class="img-fluid rounded-3" src="@product.Image" alt="product image"/>
                                         @if (product.Discount == true)
                                         {
                                             <div class="sale pp-sale"><b><i class="fa-solid fa-percent"></i>&nbsp; Sale</b></div>

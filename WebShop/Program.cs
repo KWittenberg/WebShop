@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -46,7 +44,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.Configure<AppConfig>(builder.Configuration);
 
 
-
+// Add QueueProcessor for Empty Shopping Cart after 2h
+builder.Services.AddSingleton<Microsoft.Extensions.Hosting.IHostedService, QueueProcessor>();
 // Add IdentityService
 builder.Services.AddSingleton<IIdentityService, IdentityService>();
 // Add ApplicationUserService
@@ -72,7 +71,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddControllersWithViews();
 
 // Add for Sweet Alert
-builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+//builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 builder.Services.AddSession();
 
 
@@ -125,7 +124,7 @@ app.UseReDoc();
 app.UseRouting();
 
 // Add for Sweet Alert
-app.UseSession();
+//app.UseSession();
 
 
 // Add Cors

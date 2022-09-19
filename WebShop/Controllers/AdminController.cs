@@ -25,7 +25,9 @@ public class AdminController : Controller
     public async Task<IActionResult> Dashboard()
     {
         ViewBag.orders = db.Order.Count();
-        ViewBag.ordersTotal = db.ShoppingCartItem.Sum(x => x.Price);
+        ViewBag.ordersTotal = db.ShoppingCartItem
+            .Where(x => x.ShoppingCart.ShoppingCartStatus == ShoppingCartStatus.Succeeded)
+            .Sum(x => x.Price);
 
         List<ApplicationUser> applicationUser = db.ApplicationUser.ToList();
         ViewBag.ApplicationUser = applicationUser;

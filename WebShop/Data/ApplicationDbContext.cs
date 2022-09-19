@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebShop.Models.Base;
-namespace WebShop.Data;
+﻿namespace WebShop.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {

@@ -4,13 +4,11 @@ public class HeroController : Controller
 {
     private readonly ApplicationDbContext db;
     private readonly IProductService productService;
-    private readonly IMapper mapper;
 
-    public HeroController(ApplicationDbContext db, IProductService productService, IMapper mapper)
+    public HeroController(ApplicationDbContext db, IProductService productService)
     {
         this.db = db;
         this.productService = productService;
-        this.mapper = mapper;
     }
 
 
@@ -36,65 +34,7 @@ public class HeroController : Controller
         var hero = await productService.GetHeroAsync(id);
         return View(hero);
     }
-
-    /// <summary>
-    /// Change Publish Status
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="status"></param>
-    /// <returns></returns>
-    public async Task<IActionResult> ChangePublishStatus(int id, bool status)
-    {
-        var hero = await db.Hero.FindAsync(id);
-        if (hero == null) { return null; }
-        hero.Publish = status;
-        await db.SaveChangesAsync();
-        TempData["success"] = "Hero successfully publish!";
-        return RedirectToAction("Index");
-    }
-
-
-
-    /// <summary>
-    /// Add Or Edit
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpGet]
-    public async Task<IActionResult> AddOrEdit(int id = 0)
-    {
-        if (id == 0)
-        {
-            return View();
-        }
-        else
-        {
-            return View(await productService.GetHeroAsync(id));
-        }
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddOrEdit(HeroBinding model)
-    {
-        if (ModelState.IsValid)
-        {
-            if (model.Id == 0)
-            {
-                await productService.AddHeroAsync(model);
-                TempData["success"] = "Hero created successfully!";
-            }
-            else
-            {
-                await productService.UpdateHeroAsync(model);
-                TempData["success"] = "Hero update successfully!";
-            }
-            return RedirectToAction("Index");
-        }
-        return View(model);
-    }
-
-
-
+    
     /// <summary>
     /// Create Hero
     /// </summary>
@@ -131,23 +71,40 @@ public class HeroController : Controller
         TempData["success"] = "Hero update successfully!";
         return RedirectToAction("Index");
     }
-
+    
     /// <summary>
     /// Delete Hero
     /// </summary>
+    /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var hero = await productService.GetHeroAsync(id);
-        return View(hero);
-    }
-    [HttpPost]
+    [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete(HeroBinding model)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        await productService.DeleteHeroAsync(model);
-        TempData["success"] = "Hero deleted successfully!";
+        if (this.db.Hero == null) { return Problem("Entity set 'ApplicationDbContext.Hero' is null."); }
+        var hero = await this.db.Hero.FindAsync(id);
+        if (hero != null)
+        {
+            this.db.Hero.Remove(hero);
+            TempData["success"] = "Hero deleted successfully!";
+        }
+        await this.db.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+    
+    /// <summary>
+    /// Change Publish Status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<IActionResult> ChangePublishStatus(int id, bool status)
+    {
+        var hero = await db.Hero.FindAsync(id);
+        if (hero == null) { return null; }
+        hero.Publish = status;
+        await db.SaveChangesAsync();
+        TempData["success"] = "Hero successfully publish!";
         return RedirectToAction("Index");
     }
 }
