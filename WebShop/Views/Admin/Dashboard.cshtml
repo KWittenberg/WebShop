@@ -133,12 +133,12 @@
             <!-- END panel -->
         </div>
         <!-- END Today's Schedule -->
-        <!-- BEGIN Todo List -->
+        <!-- BEGIN Quick Email -->
         <div class="col-xl-4 col-lg-6">
             <!-- BEGIN panel -->
-            <div class="panel panel-inverse" data-sortable-id="index-8">
+            <div class="panel panel-inverse" data-sortable-id="index-4">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Todo List</h4>
+                    <h4 class="panel-title">Quick Email</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -146,27 +146,73 @@
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
                     </div>
                 </div>
-                <div class="panel-body p-0">
-                    <div class="todolist">
-                        <div class="todolist-item active">
-                            <div class="todolist-input">
-                                <div class="form-check"><input type="checkbox" class="form-check-input" id="todolist1" data-change="todolist" checked /></div>
-                            </div><label class="todolist-label" for="todolist1">Add Price in €</label>
-                        </div>
-                        <div class="todolist-item">
-                            <div class="todolist-input">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="todolist2" data-change="todolist" />
-                                </div>
-                            </div>
-                            <label class="todolist-label" for="todolist2">Update Dashborad</label>
-                        </div>
+                <div class="panel-toolbar">
+                    <div class="form-floating mt-4 mb-3 mb-md-0">
+                        @*<input asp-for="To" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" To">*@
+                        <label for="floatingInput" class="d-flex align-items-center fs-13px"> To</label>
+                        @*<span asp-validation-for="To" class="text-danger"></span>*@
                     </div>
+                    <div class="form-floating mt-3 mb-3 mb-md-0">
+                        @*<input asp-for="Subject" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" Subject">*@
+                        <label for="floatingInput" class="d-flex align-items-center fs-13px"> Subject</label>
+                        @*<span asp-validation-for="Subject" class="text-danger"></span>*@
+                    </div>
+                    @*<div class="btn-group me-5px">
+                        <a class="btn btn-white" href="javascript:;"><i class="fa fa-bold"></i></a>
+                        <a class="btn btn-white active" href="javascript:;"><i class="fa fa-italic"></i></a>
+                        <a class="btn btn-white" href="javascript:;"><i class="fa fa-underline"></i></a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-white" href="javascript:;"><i class="fa fa-align-left"></i></a>
+                        <a class="btn btn-white active" href="javascript:;"><i class="fa fa-align-center"></i></a>
+                        <a class="btn btn-white" href="javascript:;"><i class="fa fa-align-right"></i></a>
+                        <a class="btn btn-white" href="javascript:;"><i class="fa fa-align-justify"></i></a>
+                    </div>*@
+                </div>
+                <hr class="m-0" />
+                <textarea class="form-control rounded-0 border-0 shadow-none bg-light p-3" rows="14"> Enter email...</textarea>
+                <div class="panel-footer text-end">
+                    @*<a href="javascript:;" class="btn btn-white btn-sm">Cancel</a>*@
+                    <a href="javascript:;" class="btn btn-primary btn-sm ms-5px">Send</a>
                 </div>
             </div>
             <!-- END panel -->
         </div>
-        <!-- END Todo List -->
+        <!-- END Quick Email -->
+        @*<!-- BEGIN Todo List -->
+    <div class="col-xl-4 col-lg-6">
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse" data-sortable-id="index-8">
+    <div class="panel-heading">
+    <h4 class="panel-title">Todo List</h4>
+    <div class="panel-heading-btn">
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+    </div>
+    </div>
+    <div class="panel-body p-0">
+    <div class="todolist">
+    <div class="todolist-item active">
+    <div class="todolist-input">
+    <div class="form-check"><input type="checkbox" class="form-check-input" id="todolist1" data-change="todolist" checked /></div>
+    </div><label class="todolist-label" for="todolist1">Add Price in €</label>
+    </div>
+    <div class="todolist-item">
+    <div class="todolist-input">
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="todolist2" data-change="todolist" />
+    </div>
+    </div>
+    <label class="todolist-label" for="todolist2">Update Dashborad</label>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- END panel -->
+    </div>
+    <!-- END Todo List -->*@
         <!-- BEGIN col-12 -->
         <div class="col-xl-4 col-lg-6">
             <!-- BEGIN widget-todolist -->
@@ -221,8 +267,6 @@
                     </div>
                 }
                 <!-- END widget-todolist-item -->
-                
-                
                 <!-- BEGIN widget-todolist-item -->
                 <div class="widget-todolist-item">
                     <div class="widget-todolist-input">

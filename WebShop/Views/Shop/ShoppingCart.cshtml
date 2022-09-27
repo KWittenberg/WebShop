@@ -129,11 +129,9 @@
                             <div>
                                 <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.</p>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                                <label class="form-check-label" for="flexCheckChecked"> I have read and agree to the website terms and conditions *</label>
+                            <input class="fw-brand-check bc-item" type="checkbox" value="" id="terms" checked>
+                            <label class="form-check-label" for="terms">&nbsp; I have read and agree to the website terms and conditions *</label>
                             </div>
-                        </div>
                     </div>
 
                     <!-- Shopping Cart -->
@@ -219,7 +217,7 @@
                             @using (Html.BeginForm())
                             {
                                 <input type="text" name="ShoppingCartId" value="@Model.Id" hidden>
-                                <input type="submit" class="primary-btn" value="Buy Now">
+                                <input type="submit" class="primary-btn" value="Buy Now" />
                                 <a asp-controller="Shop" asp-action="Index" class="secondary-btn">Continue Shopping</a>
                             }
                         </div>

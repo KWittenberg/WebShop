@@ -24,6 +24,7 @@
     <None Include="Views\Todo\EditTask.cshtml" />
     <None Include="Views\Todo\EditToDoList.cshtml" />
     <None Include="Views\Todo\Index.cshtml" />
+    <None Include="wwwroot\emails\sample.html" />
     <None Include="wwwroot\lib\admin\d3\d3.min.js" />
     <None Include="wwwroot\lib\admin\gritter\js\jquery.gritter.js" />
     <None Include="wwwroot\lib\admin\gritter\js\jquery.gritter.min.js" />
@@ -44,20 +45,22 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
+    <PackageReference Include="MailKit" Version="3.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.9" />
+    <PackageReference Include="MimeKit" Version="3.4.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
-    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="20.2.0.48" />
-    <PackageReference Include="Syncfusion.Licensing" Version="20.2.0.48" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.17.0" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="20.2.0.50" />
+    <PackageReference Include="Syncfusion.Licensing" Version="20.2.0.50" />
   </ItemGroup>
 
   <ItemGroup>

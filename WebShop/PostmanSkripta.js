@@ -1,5 +1,5 @@
-﻿var Username = 'kejo@net.hr';
-var Password = 'Kejo2#Kejo';
+﻿var Username = 'admin@gmail.com';
+var Password = 'admin@gmail.com';
 
 pm.sendRequest({
     url: "https://localhost:44367/api/userapi/token",

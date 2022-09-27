@@ -7,9 +7,10 @@ public class UserController : Controller
     private readonly IApplicationUserService userService;
     private readonly IProductService productService;
     private readonly ICustomerService customerService;
+    private readonly IEmailService emailService;
     private readonly IMapper mapper;
 
-    public UserController(ApplicationDbContext db, ICustomerService customerService, IMapper mapper, IApplicationUserService userService, IProductService productService, SignInManager<ApplicationUser> signInManager)
+    public UserController(ApplicationDbContext db, ICustomerService customerService, IMapper mapper, IApplicationUserService userService, IProductService productService, SignInManager<ApplicationUser> signInManager, IEmailService emailService)
     {
         this.db = db;
         this.productService = productService;
@@ -17,6 +18,7 @@ public class UserController : Controller
         this.mapper = mapper;
         this.userService = userService;
         this.signInManager = signInManager;
+        this.emailService = emailService;
     }
 
 
@@ -71,6 +73,12 @@ public class UserController : Controller
 
             if (result.Succeeded)
             {
+                var dbo = await db.ApplicationUser.FirstOrDefaultAsync(x=>x.Email == model.Email);
+                var to = "kejo@net.hr";
+                var subject = "Bolta WebShop - PRIJAVA";
+                var body = dbo.FirstName + " " + dbo.LastName + " upravo ste se prijavili na Bolta WebShop !";
+                this.emailService.SendEmail(to, subject, body);
+                
                 TempData["success"] = "User Login successfully";
                 return RedirectToAction("Index", "Home");
             }

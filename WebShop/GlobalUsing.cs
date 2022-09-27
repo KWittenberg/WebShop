@@ -2,6 +2,7 @@
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.UI.Services;
 global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 global using Microsoft.AspNetCore.Mvc.TagHelpers;
 global using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -22,6 +23,7 @@ global using System.Diagnostics;
 global using System.Security.Claims;
 global using System.IdentityModel.Tokens.Jwt;
 
+global using WebShop.Utils;
 global using WebShop.Data;
 global using WebShop.Models;
 global using WebShop.Models.Base;
@@ -38,3 +40,8 @@ global using WebShop.Services.Implementation;
 global using AutoMapper;
 
 global using Task = System.Threading.Tasks.Task;
+
+global using MailKit.Net.Smtp;
+global using MailKit.Security;
+global using MimeKit.Text;
+global using MimeKit;

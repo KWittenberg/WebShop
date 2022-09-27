@@ -1,4 +1,6 @@
-﻿namespace WebShop.Controllers;
+﻿using WebShop.Utils;
+
+namespace WebShop.Controllers;
 
 [Authorize(Roles = Roles.Admin)] //[Area("Admin")]
 public class ApplicationUserController : Controller
@@ -93,7 +95,7 @@ public class ApplicationUserController : Controller
         }
         return View();
     }
-    
+
     /// <summary>
     /// Edit
     /// </summary>
@@ -113,7 +115,7 @@ public class ApplicationUserController : Controller
         TempData["success"] = "ApplicationUser update successfully";
         return RedirectToAction("Index", "ApplicationUser");
     }
-    
+
     /// <summary>
     /// Delete
     /// </summary>
@@ -133,7 +135,7 @@ public class ApplicationUserController : Controller
         return RedirectToAction("Index", "ApplicationUser");
     }
 
-    
+
 
     /// <summary>
     /// LockUnlock
@@ -266,6 +268,4 @@ public class ApplicationUserController : Controller
         TempData["success"] = "User update successfully";
         return RedirectToAction("Index", "ApplicationUser");
     }
-
-
 }

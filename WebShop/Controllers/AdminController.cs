@@ -123,6 +123,28 @@ public class AdminController : Controller
 
 
 
+
+
+    /// <summary>
+    /// Delete
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        if (this.db.Product == null) { return Problem("Entity set 'ApplicationDbContext.Product' is null."); }
+        var product = await this.db.Product.FindAsync(id);
+        if (product != null)
+        {
+            this.db.Product.Remove(product);
+            TempData["success"] = "Product deleted successfully";
+        }
+        await this.db.SaveChangesAsync();
+        return RedirectToAction(nameof(ProductAdministration));
+    }
+
     /// <summary>
     /// AddProductCategory
     /// </summary>

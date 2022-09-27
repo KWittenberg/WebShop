@@ -70,9 +70,9 @@
                                                     <div class="col">
                                                         <div class="card">
                                                             <img src="@gallery.ImageUrl" class="card-img-top">
-                                                            <div class="card-img-overlay">
-                                                                <button class="deleteBtn btn btn-outline-red btn-xs" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
-                                                            </div>
+                                                            @* <div class="card-img-overlay">
+                                                    <button class="deleteBtn btn btn-outline-red btn-xs" type="button" data-id="@gallery.Id"><i class="bi bi-trash"></i></button>
+                                                    </div>*@
                                                         </div>
                                                     </div>
                                                 }
@@ -113,10 +113,10 @@
                                 </td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a asp-controller="Admin" asp-action="DetailsProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                        <a asp-controller="Shop" asp-action="ItemView" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
                                         <a asp-controller="ProductImages" asp-action="Create" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="fa-solid fa-image"></i></a>
                                         <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                        <a asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-trash"></i></a>
+                                        <button class="deleteBtn btn btn-secondary btn-sm" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -129,4 +129,5 @@
     </div>
 </div>
 
-<form id="deleteForm" asp-controller="ProductImages" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>
+@*<form id="deleteForm" asp-controller="ProductImages" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>*@
+<form id="deleteForm" asp-controller="Admin" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>

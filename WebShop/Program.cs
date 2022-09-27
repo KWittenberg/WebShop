@@ -56,6 +56,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 // Add ToDoService
 builder.Services.AddScoped<IToDoService, ToDoService>();
+// Add EmailService
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 
 // Custom Location for Login Page
@@ -95,7 +98,7 @@ var app = builder.Build();
 
 
 //Register Syncfusion license
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(WebShop.Key.SyncfusionKey);
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["SyncfusionKey"]);
 
 
 // Configure the HTTP request pipeline.

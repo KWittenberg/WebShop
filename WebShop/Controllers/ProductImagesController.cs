@@ -50,7 +50,7 @@ public class ProductImagesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        if (this.db.ProductImages == null) { return Problem("Entity set 'ApplicationDbContext.ProductImages'  is null."); }
+        if (this.db.ProductImages == null) { return Problem("Entity set 'ApplicationDbContext.ProductImages' is null."); }
         var productImages = await this.db.ProductImages.FindAsync(id);
         if (productImages != null)
         {
