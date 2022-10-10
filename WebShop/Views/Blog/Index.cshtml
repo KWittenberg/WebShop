@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebShop.Models.ViewModel.BlogViewModel>
+@{
+    ViewData["Title"] = "Blog";
+    Layout = "_LayoutADMIN";
+    int counter = Model.Count();
+}
+<!-- Blog -->
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item active">Blog</li>
+        </ol>
+        <h1 class="page-header mb-0">Blog</h1>
+    </div>
+    <div class="ms-auto">
+        <a asp-controller="Blog" asp-action="Create" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
+    </div>
+</div>
+<div class="mt-5 col-xl-12">
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse" data-sortable-id="table-basic-7">
+        <div class="panel-heading">
+            <h4 class="panel-title">Blog <span class="badge bg-success ms-5px">PRO</span></h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+        <!-- BEGIN panel-body -->
+        <div class="panel-body">
+            <!-- BEGIN table-responsive -->
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">#</th>
+                            <th style="width: 5%">Publish</th>
+                            <th style="width: 20%">Image</th>
+                            <th style="width: 20%">Title</th>
+                            <th style="width: 10%">Author</th>
+                            <th style="width: 10%">Created</th>
+                            <th style="width: 11%"><a asp-controller="Blog" asp-action="Create" class="btn btn-block btn-secondary btn-sm"><i class="bi bi-plus-circle"></i> &nbsp; Add New</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string redirectUrlPrimary = Url.Action("ChangePublishStatus", "Blog", new { id = item.Id, status = !item.Publish });
+                            <tr>
+                                <td>@counter</td>
+                                <td>
+                                    @if (item.Publish)
+                                    {
+                                        <input class="form-check-input" type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')" checked>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-check-input" type="checkbox" onclick="RedirectToUrl('@redirectUrlPrimary')">
+                                    }
+                                </td>
+                                <td><a href="@item.ImageUrl" class="popupImg"><img src="@item.ImageUrl" width="300" /></a></td>
+                                <td>@item.Title</td>
+                                <td>@item.ApplicationUser.FirstName @item.ApplicationUser.LastName</td>
+                                <td>@item.Created</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        @*<a asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>*@
+                                        <a asp-controller="Blog" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                        <button class="deleteBtn btn btn-secondary btn-sm" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter--;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="deleteForm" asp-action="Delete"><input type="hidden" id="leaveTypeId" name="Id" /></form>

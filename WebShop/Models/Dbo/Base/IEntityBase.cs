@@ -9,4 +9,5 @@ public interface IEntity : IEntityBase
 public interface IEntityBase
 {
     public DateTime Created { get; set; }
+    public DateTime Modified { get; set; }
 }

@@ -7,4 +7,5 @@ public class ToDoList : ToDoListBase, IEntity
     public ICollection<Task> Task { get; set; }
     public ApplicationUser ApplicationUser { get; set; }
     public DateTime Created { get; set; }
+    public DateTime Modified { get; set; }
 }

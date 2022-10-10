@@ -1,0 +1,64 @@
+﻿@model WebShop.Models.ViewModel.BlogViewModel
+@{
+    ViewData["Title"] = "Edit Blog";
+    Layout = "_LayoutADMIN";
+}
+<!-- Edit Blog -->
+<div class="d-flex align-items-center mb-3">
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Admin/Dashboard">Home</a></li>
+            <li class="breadcrumb-item"><a href="~/Blog">Blog</a></li>
+            <li class="breadcrumb-item active">Create</li>
+        </ol>
+        <h1 class="page-header mb-0">Blog <small>New Post</small></h1>
+    </div>
+</div>
+<div class="mt-5 col-xl-8 offset-xl-2">
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse" data-sortable-id="form-stuff-3">
+        <!-- BEGIN panel-heading -->
+        <div class="panel-heading">
+            <h4 class="panel-title">Blog <span class="badge bg-success ms-1">NEW</span></h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+        <!-- END panel-heading -->
+        <!-- BEGIN panel-body -->
+        <form method="post" asp-action="Edit">
+            <div class="panel-body">
+                
+                        <div class="form-floating mt-4 mb-3 mb-md-0">
+                            <input asp-for="Title" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" Title">
+                            <label for="floatingInput" class="d-flex align-items-center fs-13px"> Title</label>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="ImageUrl" type="text" class="form-control mt-4" placeholder=" ImageUrl">
+                        </div>
+                        <div class="form-group">
+                            <textarea asp-for="Content" type="text" rows="10" class="form-control mt-3" placeholder=" Content"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+
+                <input asp-for="Publish" type="text" name="Publish" value="True" hidden />
+                <input asp-for="ApplicationUserId" type="text" name="ApplicationUserId" hidden />
+                
+                <div align="right" class="mt-3">
+                    <input type="submit" class="btn btn-primary" value="Update" /><a asp-controller="Blog" asp-action="Index" class="btn btn-default active">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- END panel -->
+</div>
+<!-- END col-6 -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -8,6 +8,7 @@ public class ApplicationUser : IdentityUser, IEntityBase
     public string Email { get; set; }
     public DateTime? DOB { get; set; }
     public DateTime Created { get; set; }
+    public DateTime Modified { get; set; }
 
     // Add Address
     public ICollection<Address> Address { get; set; }

@@ -1,0 +1,161 @@
+﻿@model List<BlogViewModel>
+@inject IBlogService blogService
+@{
+    ViewData["Title"] = "Blog";
+    }
+<!-- Breadcrumb Section Begin -->
+@*<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="~/"><i class="fa fa-home"></i> Home</a><span>Shop</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+<!-- Breadcrumb Section Begin -->
+<!-- Product Shop Section Begin -->
+<div class="mt-5">
+<section class="product-shop spad">
+    <div class="px-5">
+        <div class="row">
+            <div class="col-lg-1 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter rounded-3 border-black" style="background: #272C2D">
+
+                <!-- Product Category View -->
+                @*<div class="mt-2 filter-widget">
+                    <h4 class="fw-title">Categories</h4>
+                    <ul class="filter-catagories">
+                        @foreach (var item in productCategory)
+                        {
+                            <li><a asp-controller="Shop" asp-action="CategoryFilter" asp-route-Id="@item.Id"><span class="badge bg-light"><b>@item.Title</b></span></a></li>
+                        }
+                    </ul>
+                </div>*@
+                @* <div class="mt-2 filter-widget">
+                    <h4 class="fw-title">Categories</h4>
+                    <div class="fw-tags">
+                        @foreach (var item in productCategory)
+                        {
+                            <a asp-controller="Shop" asp-action="CategoryFilter" asp-route-Id="@item.Id"><b>@item.Title</b></a>
+                        }
+                    </div>
+                </div>*@
+
+                @*<div class="filter-widget">
+                <h4 class="fw-title">Author</h4>
+                <div class="fw-brand-check">
+
+                <div class="bc-item">
+                <label for="bc-wittenberg">Tomislav Wittenberg<input type="checkbox" id="bc-wittenberg"><span class="checkmark"></span></label>
+                </div>
+
+                </div>
+                </div>
+
+                <div class="filter-widget">
+                <h4 class="fw-title">Price</h4>
+                <div class="filter-range-wrap">
+                <div class="range-slider">
+                <div class="price-input">
+                <input type="text" id="minamount">
+                <input type="text" id="maxamount">
+                </div>
+                </div>
+                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="10" data-max="50">
+                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                </div>
+                </div>
+                <a href="#" class="filter-btn">Filter</a>
+                </div>*@
+            </div>
+
+            <div class="col-lg-11 order-1 order-lg-2">
+                @*<div class="product-show-option">
+                <div class="row">
+                <div class="col-lg-7 col-md-7">
+                <div class="select-option">
+                <select class="sorting">
+                <option value="">Default Sorting</option>
+                </select>
+                <select class="p-show">
+                <option value="">Show:</option>
+                </select>
+                </div>
+                </div>
+                <div class="col-lg-5 col-md-5 text-right">
+                <p>Show 01- 09 Of 36 Product</p>
+                </div>
+                </div>
+                </div>*@
+
+                <div class="product-list">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-3">
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img class="img-fluid rounded-3" src="@item.ImageUrl" alt="blog image"/>
+                                        
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        @*<ul>
+                                            @if (product.Quantity > 0)
+                                            {
+                                                <li class="quick-view"><a href="@Url.Action("ItemView", "Shop", new { id = product.Id })" style="color: #DFAD51">&nbsp; Buy Now &nbsp;</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="quick-view"><a href="" style="color: #DFAD51">&nbsp; Not available! &nbsp;</a></li>
+                                            }
+                                        </ul>*@
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="row">
+                                            <div class="col" align="left">
+                                                    <div class="catagory-name">@item.ApplicationUser.FirstName @item.ApplicationUser.LastName</div>
+                                            </div>
+                                            <div class="col" align="right">
+                                                    <div class="catagory-name">@item.Created.ToShortDateString()</div>
+                                            </div>
+                                        </div>
+                                        <a href="@Url.Action("Post", "Home", new { id = item.Id })"><h4 style="color: #A9A9A9"><b>@item.Title</b></h4></a>
+                                        @*@if (product.Discount == true)
+                                        {
+                                            var priceEuroDiscount = @product.DiscountPrice / euro;
+                                            var priceEuro = @product.Price / euro;
+                                            <div class="product-price">@product.DiscountPrice Kn &nbsp;&nbsp;<span>@product.Price Kn</span></div>
+                                            <div class="product-price-euro" >@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
+                                        }
+                                        else
+                                        {
+                                            var priceEuro = @product.Price / euro;
+                                            <div class="product-price">@product.Price Kn</div>
+                                            <div class="product-price-euro">@priceEuro.ToString("0.00") €</div>
+                                        }*@
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @*<div class="loading-more">
+                <i class="icon_loading"></i>
+                <a href="#">
+                Loading More
+                </a>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<!-- Product Shop Section End -->
+
+
+<partial name="_Footer" />

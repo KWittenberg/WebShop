@@ -58,7 +58,8 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IToDoService, ToDoService>();
 // Add EmailService
 builder.Services.AddScoped<IEmailService, EmailService>();
-
+// Add BlogService
+builder.Services.AddScoped<IBlogService, BlogService>();
 
 
 // Custom Location for Login Page

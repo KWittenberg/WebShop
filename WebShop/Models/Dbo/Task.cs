@@ -6,4 +6,5 @@ public class Task : TaskBase, IEntity
     public int Id { get; set; }
     public ToDoList ToDoList { get; set; }
     public DateTime Created { get; set; }
+    public DateTime Modified { get; set; }
 }

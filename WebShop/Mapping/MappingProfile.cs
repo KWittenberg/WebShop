@@ -1,4 +1,6 @@
-﻿namespace WebShop.Mapping;
+﻿using WebShop.Models.Dto;
+
+namespace WebShop.Mapping;
 
 public class MappingProfile : Profile
 {
@@ -8,6 +10,11 @@ public class MappingProfile : Profile
         CreateMap<HeroBinding, Hero>();
         CreateMap<Hero, HeroViewModel>();
         CreateMap<HeroViewModel, HeroBinding>();
+
+        // Blog
+        CreateMap<BlogBinding, Blog>();
+        CreateMap<Blog, BlogViewModel>();
+        CreateMap<BlogViewModel, BlogBinding>();
 
 
         CreateMap<IdentityRole, ApplicationUserViewModel>();

@@ -1,0 +1,41 @@
+﻿@model WebShop.Models.ViewModel.HeroViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_LayoutADMIN";
+}
+<br />
+<br />
+<!-- Details Hero -->
+<div class="container mt-5" align="center">
+    <div class="card text-bg-light mb-3" style="max-width: 50rem;">
+        <div class="card-header" align="left" style="color: #DFAD51; background-color: #3A3F44">
+            <div class="row">
+                <h4 class="col" align="left" style="color: #DFAD51">
+                    @Model.Title
+                </h4><h5 class="col" align="right"><a type="button" class="btn-close float-end" asp-controller="Hero" asp-action="Index"></a></h5>
+            </div>
+        </div>
+        <div class="card-body" style="background-color: #272B30">
+            <img src="@Model.ImageUrl" class="img-fluid" />
+            <hr />
+            <div class="row"><h5 class="col" align="left">Publish</h5><h5 class="col" align="right">@Model.Publish</h5></div>
+            <hr />
+            <div class="row"><h6 class="col" align="left">Color Title</h6><h6 class="col" align="right">@Model.ColorTitle</h6></div>
+            <hr />
+            <div class="row"><h5 class="col" align="left">Subtitle</h5><h5 class="col" align="right">@Model.Subtitle</h5></div>
+            <hr />
+            <div class="row"><h5 class="col" align="left">Description</h5><h5 class="col" align="right">@Model.Description</h5></div>
+            <hr />
+            <div class="row"><h6 class="col" align="left">Color Description</h6><h6 class="col" align="right">@Model.ColorDescription</h6></div>
+            <hr />
+            <div class="row"><h5 class="col" align="left">Event Name</h5><h5 class="col" align="right">@Model.EventName</h5></div>
+            <hr />
+            <div class="row"><h5 class="col" align="left">Event Text</h5><h5 class="col" align="right">@Model.EventText</h5></div>
+            <hr />
+            <div class="row"><h5 class="col" align="left">Product Url</h5><h5 class="col" align="right">@Model.ProductUrl</h5></div>
+        </div>
+        <div class="card-footer">
+            <div class="row"><h5 class="col" align="left">Created</h5><h5 class="col" align="right">@Model.Created.ToShortDateString()</h5></div>
+        </div>
+    </div>
+</div>

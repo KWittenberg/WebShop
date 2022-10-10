@@ -16,10 +16,61 @@
 </div>
 <div class="mt-5 col-xl-8 offset-xl-2">
     <!-- BEGIN panel -->
-    <div class="panel panel-inverse" data-sortable-id="form-stuff-3">
-        <!-- BEGIN panel-heading -->
+    @*<div class="panel panel-inverse" data-sortable-id="form-stuff-3">
+    <!-- BEGIN panel-heading -->
+    <div class="panel-heading">
+    <h4 class="panel-title">Quick Email <span class="badge bg-success ms-1">NEW</span></h4>
+    <div class="panel-heading-btn">
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
+    <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
+    </div>
+    </div>
+    <!-- END panel-heading -->
+    <!-- BEGIN panel-body -->
+    <form method="post" asp-action="QuickEmail">
+    <div class="panel-body">
+    <div class="row">
+    <div class="panel-toolbar">
+    <div class="form-floating mb-3 mb-md-0">
+    <input asp-for="To" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" To">
+    <label for="floatingInput" class="d-flex align-items-center fs-15px"> To</label>
+    <span asp-validation-for="To" class="text-danger"></span>
+    </div>
+    <div class="form-floating mt-3 mb-3 mb-md-0">
+    <input asp-for="Subject" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" Subject">
+    <label for="floatingInput" class="d-flex align-items-center fs-15px"> Subject</label>
+    <span asp-validation-for="Subject" class="text-danger"></span>
+    </div>
+    </div>
+    <hr class="m-0" />
+    <textarea asp-for="Body" class="form-control rounded-0 border-0 shadow-none bg-light p-3" rows="10" placeholder=" Enter email..."></textarea>
+    <div class="panel-body p-0">
+    <form class="" action="/" name="wysihtml5" method="POST">
+    <textarea class="ckeditor" id="editor1" name="editor1" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+    </form>
+    </div>
+    <span asp-validation-for="Body" class="text-danger"></span>
+    </div>
+    <div align="right" class="mt-3">
+    <input type="submit" class="btn btn-primary" value="Send" />
+    </div>
+    </div>
+    </form>
+    </div>*@
+    <!-- END panel -->
+    <!-- BEGIN panel -->
+    <div class="panel panel-inverse">
         <div class="panel-heading">
-            <h4 class="panel-title">Quick Email <span class="badge bg-success ms-1">NEW</span></h4>
+            <h4 class="panel-title">
+                Quick Email
+                <b class="badge d-inline-flex align-items-center p-0 ms-1">
+                    <i class="fa fa-circle fa-fw fs-6px text-teal me-1"></i>
+                    <i class="fa fa-circle fa-fw fs-6px text-warning me-1"></i>
+                    <i class="fa fa-circle fa-fw fs-6px text-danger"></i>
+                </b>
+            </h4>
             <div class="panel-heading-btn">
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -27,38 +78,35 @@
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
             </div>
         </div>
-        <!-- END panel-heading -->
-        <!-- BEGIN panel-body -->
         <form method="post" asp-action="QuickEmail">
-            <div class="panel-body">
-                <div class="row">
-                    <div class="panel-toolbar">
-                        <div class="form-floating mb-3 mb-md-0">
-                            <input asp-for="To" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" To">
-                            <label for="floatingInput" class="d-flex align-items-center fs-15px"> To</label>
-                            <span asp-validation-for="To" class="text-danger"></span>
-                        </div>
-                        <div class="form-floating mt-3 mb-3 mb-md-0">
-                            <input asp-for="Subject" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" Subject">
-                            <label for="floatingInput" class="d-flex align-items-center fs-15px"> Subject</label>
-                            <span asp-validation-for="Subject" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <hr class="m-0" />
-                    <textarea asp-for="Body" class="form-control rounded-0 border-0 shadow-none bg-light p-3" rows="10" placeholder=" Enter email..."></textarea>
-                    <span asp-validation-for="Body" class="text-danger"></span>
+            <div class="panel-toolbar">
+                <div class="form-floating mb-3 mb-md-0">
+                    <input asp-for="To" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" To">
+                    <label for="floatingInput" class="d-flex align-items-center fs-15px"> To</label>
+                    <span asp-validation-for="To" class="text-danger"></span>
                 </div>
-                <div align="right" class="mt-3">
-                    <input type="submit" class="btn btn-primary" value="Send" />
+                <div class="form-floating mt-3 mb-3 mb-md-0">
+                    <input asp-for="Subject" type="text" class="form-control fs-15px" id="floatingInput" placeholder=" Subject">
+                    <label for="floatingInput" class="d-flex align-items-center fs-15px"> Subject</label>
+                    <span asp-validation-for="Subject" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="panel-body p-0">
+                <textarea asp-for="Body" class="form-control ckeditor rounded-0 border-0 shadow-none bg-light p-3" id="editor1" rows="10" placeholder=" Enter email..."></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div class="panel-footer" align="right">
+                <input type="submit" class="btn btn-primary" value="SEND" />
             </div>
         </form>
     </div>
     <!-- END panel -->
+
 </div>
 <!-- END col-6 -->
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    }
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+}

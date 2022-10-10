@@ -18,7 +18,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                     ((IEntityBase)entityEntry.Entity).Created = DateTime.Now;
                     break;
                 case EntityState.Modified:
-                    ((IEntityBase)entityEntry.Entity).Created = DateTime.Now;
+                    ((IEntityBase)entityEntry.Entity).Modified = DateTime.Now;
                     break;
                 default:
                     break;
@@ -39,7 +39,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
                     ((IEntityBase)entityEntry.Entity).Created = DateTime.Now;
                     break;
                 case EntityState.Modified:
-                    ((IEntityBase)entityEntry.Entity).Created = DateTime.Now;
+                    ((IEntityBase)entityEntry.Entity).Modified = DateTime.Now;
                     break;
                 default:
                     break;
@@ -73,4 +73,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     //Add ToDoList
     public DbSet<Models.Dbo.Task> Task { get; set; }
     public DbSet<ToDoList> ToDoList { get; set; }
+
+    // Add Blog
+    public DbSet<Blog> Blog { get; set; }
 }

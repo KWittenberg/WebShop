@@ -26,16 +26,18 @@ public class EmailController : Controller
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> QuickEmail(EmailDto model)
+    public async Task<IActionResult> QuickEmail(QuickEmailBinding model)
     {
         var to = model.To;
         var subject = model.Subject;
         var body = model.Body;
-        this.emailService.SendEmail(to, subject, body);
-
-
-        TempData["success"] = "Email send successfully!";
-        return RedirectToAction("QuickEmail");
+        if (ModelState.IsValid)
+        {
+            emailService.SendEmail(to, subject, body);
+            TempData["success"] = "Email send successfully!";
+            return RedirectToAction("QuickEmail");
+        }
+        return View();
     }
 
 
@@ -65,7 +67,7 @@ public class EmailController : Controller
     //    var hero = await productService.GetHeroAsync(id);
     //    return View(hero);
     //}
-    
+
     ///// <summary>
     ///// Create Hero
     ///// </summary>
@@ -102,7 +104,7 @@ public class EmailController : Controller
     //    TempData["success"] = "Hero update successfully!";
     //    return RedirectToAction("Index");
     //}
-    
+
     ///// <summary>
     ///// Delete Hero
     ///// </summary>
@@ -122,7 +124,7 @@ public class EmailController : Controller
     //    await this.db.SaveChangesAsync();
     //    return RedirectToAction(nameof(Index));
     //}
-    
+
     ///// <summary>
     ///// Change Publish Status
     ///// </summary>
