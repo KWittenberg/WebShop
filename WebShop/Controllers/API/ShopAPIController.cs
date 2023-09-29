@@ -1,4 +1,4 @@
-﻿namespace WebShop.Controllers;
+﻿namespace WebShop.Controllers.API;
 
 [Route("api/[controller]")]
 [ApiController]

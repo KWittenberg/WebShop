@@ -83,13 +83,20 @@ public class RolesController : Controller
     {
         if (String.IsNullOrEmpty(id))
         {
-            return View();
+            return RedirectToAction(nameof(Index));
         }
         else
         {
-            //update
+            // update
             var objFromDb = this.roleManager.Roles.FirstOrDefault(u => u.Id == id);
-            return View(objFromDb);
+
+            if (objFromDb == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Only return the view when objFromDb is not null.
+            return (IActionResult)objFromDb;
         }
     }
     [HttpPost, ActionName("Delete")]

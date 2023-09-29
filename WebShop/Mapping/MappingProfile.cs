@@ -1,6 +1,4 @@
-﻿using WebShop.Models.Dto;
-
-namespace WebShop.Mapping;
+﻿namespace WebShop.Mapping;
 
 public class MappingProfile : Profile
 {

@@ -20,22 +20,23 @@ public class IdentityService : IIdentityService
             {
                 FirstName = "Admin",
                 LastName = "Admin",
-                PhoneNumber = "098111222",
+                PhoneNumber = "098870888",
                 Email = "admin@gmail.com",
                 UserName = "admin@gmail.com",
-                DOB = new DateTime(2000, 10, 10),
+                DOB = new DateTime(1973, 10, 11),
                 Address = new List<Address>
                     {
                         new Address
                         {
                             Primary = true,
-                            Street = "J.J. Strossmayera 1.",
+                            Street = "J.J. Strossmayera 4.",
                             City = "Požega",
                             PostCode = "34000",
                             Country = "Croatia"
                         }
                     }
             }, "admin@gmail.com", Roles.Admin).Wait();
+            
             CreateUserAsync(new ApplicationUser
             {
                 FirstName = "User",
@@ -49,9 +50,9 @@ public class IdentityService : IIdentityService
                         new Address
                         {
                             Primary = true,
-                            Street = "Miramarska 8.",
-                            City = "Zagreb",
-                            PostCode = "10000",
+                            Street = "Radnička 8.",
+                            City = "Dervišaga",
+                            PostCode = "34000",
                             Country = "Croatia"
                         }
                     }

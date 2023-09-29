@@ -2,7 +2,7 @@
 @inject IProductService productService
 @model WebShop.Models.ViewModel.ProductViewModel
 @{
-    var euro = 7.53450m;
+    var kn = 7.53450m;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await UserManager.GetUserAsync(User);
     var shoppingCart = await productService.GetShoppingCartAsync(user.Id);
@@ -84,15 +84,18 @@
                                 <div class="pd-desc">
                                     @if (Model.Discount == true)
                                     {
-                                        var priceEuroDiscount = @Model.DiscountPrice / euro;
-                                        var priceEuro = @Model.Price / euro;
-                                        <h3>@string.Format("{0:C}", Model.DiscountPrice)<span>@string.Format("{0:C}", Model.Price)</span>&nbsp; @priceEuroDiscount.ToString("0.00") € <span>@priceEuro.ToString("0.00") €</span></h3>
+                                        var priceKnDiscount = @Model.DiscountPrice * kn;
+                                        var priceKn = @Model.Price * kn;
+                                        // OLD Kn way   <h3>@string.Format("{0:C}", Model.DiscountPrice)<span>@string.Format("{0:C}", Model.Price)</span>&nbsp; @priceKnDiscount.ToString("0.00") € <span>@priceKn.ToString("0.00") €</span></h3>
+                                        // € and Kn     <h3>@Model.DiscountPrice.ToString("0.00") € <span>@Model.Price.ToString("0.00") € </span>&nbsp; @priceKnDiscount.ToString("0.00") Kn <span>@priceKn.ToString("0.00") Kn</span></h3>
+                                        <h3>@Model.DiscountPrice.ToString("0.00") € <span>@Model.Price.ToString("0.00") € </span></h3>
                                         <input type="text" readonly hidden value="@Model.DiscountPrice" name="Price">
                                     }
                                     else
                                     {
-                                        var priceEuro = @Model.Price / euro;
-                                        <h3 style="display:inline;">@string.Format("{0:C}", Model.Price) &nbsp;</h3> <h4 style="display:inline;">@priceEuro.ToString("0.00") €</h4>
+                                        var priceKn = @Model.Price * kn;
+                                        <h3>@Model.Price.ToString("0.00") €</h3>
+                                        // OLD Kn way   <h3 style="display:inline;">@string.Format("{0:C}", Model.Price) &nbsp;</h3> <h4 style="display:inline;">@priceKn.ToString("0.00") €</h4>
                                         <input type="text" readonly hidden value="@Model.Price" name="Price">
                                     }
                                 </div>

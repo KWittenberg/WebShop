@@ -20,6 +20,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
         options.ClaimsIdentity.UserIdClaimType = JwtRegisteredClaimNames.Jti;
     }).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+
 // Add for Swagger
 builder.Services.AddOpenApiDocument();
 
@@ -121,8 +122,8 @@ app.UseStaticFiles();
 
 #region Add for Swagger
 app.UseOpenApi(); // serve OpenAPI/Swagger documents
-app.UseSwaggerUi3(); // serve Swagger UI
-app.UseReDoc();
+app.UseSwaggerUi3(); // serve Swagger UI            
+app.UseReDoc();                                     
 #endregion
 
 app.UseRouting();

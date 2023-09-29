@@ -4,17 +4,16 @@ public class AppDbInitializer
 {
     public static void Seed(IApplicationBuilder applicationBuilder)
     {
-        using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+        using var serviceScope = applicationBuilder.ApplicationServices.CreateScope();
+        var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+
+        db.Database.EnsureCreated();
+
+
+        // ProductCategory
+        if (!db.ProductCategory.Any())
         {
-            var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-
-            db.Database.EnsureCreated();
-
-
-            // ProductCategory
-            if (!db.ProductCategory.Any())
-            {
-                db.ProductCategory.AddRange(new List<ProductCategory>()
+            db.ProductCategory.AddRange(new List<ProductCategory>()
                 {
                     new ProductCategory()
                     {
@@ -23,17 +22,17 @@ public class AppDbInitializer
                     },
                     new ProductCategory()
                     {
-                    Title = "Photo",
-                    Description = "Photo Category"
+                        Title = "Photo",
+                        Description = "Photo Category"
                     }
                 });
-                db.SaveChanges();
-            }
+            db.SaveChanges();
+        }
 
-            // Product
-            if (!db.Product.Any())
-            {
-                db.Product.AddRange(new List<Product>()
+        // Product
+        if (!db.Product.Any())
+        {
+            db.Product.AddRange(new List<Product>()
                     {
                         new Product()
                         {
@@ -45,9 +44,9 @@ public class AppDbInitializer
                             Image = "/img/1996 Groblja Pozeske Doline/1996 Groblja Pozeske Doline.jpg",
                             Available = true,
                             Quantity = 70,
-                            Price = 200,
-                            Discount = false,
-                            DiscountPrice = 150,
+                            Price = 29.99m,
+                            Discount = true,
+                            DiscountPrice = 19.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now,
                             YearOfPublication = 1996,
@@ -71,9 +70,9 @@ public class AppDbInitializer
                             Image = "/img/1997 Rudina/1997 Rudina.jpg",
                             Available = true,
                             Quantity = 116,
-                            Price = 300,
+                            Price = 39.99m,
                             Discount = true,
-                            DiscountPrice = 250,
+                            DiscountPrice = 33.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 1997,
@@ -97,9 +96,9 @@ public class AppDbInitializer
                             Image = "/img/1998 Puvarija/1998 Puvarija.jpg",
                             Available = true,
                             Quantity = 100,
-                            Price = 300,
+                            Price = 39.99m,
                             Discount = true,
-                            DiscountPrice = 250,
+                            DiscountPrice = 33.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 1998,
@@ -123,9 +122,9 @@ public class AppDbInitializer
                             Image = "/img/2002 Sesvetacki Kraj U Srcu Poljadije/2002 Sesvetacki Kraj U Srcu Poljadije.jpg",
                             Available = true,
                             Quantity = 123,
-                            Price = 300,
+                            Price = 39.99m,
                             Discount = true,
-                            DiscountPrice = 250,
+                            DiscountPrice = 33.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2002,
@@ -149,9 +148,9 @@ public class AppDbInitializer
                             Image = "/img/2004 Pjesme/2004 Pjesme.jpg",
                             Available = true,
                             Quantity = 24,
-                            Price = 80,
+                            Price = 9.99m,
                             Discount = true,
-                            DiscountPrice = 50,
+                            DiscountPrice = 6.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2004,
@@ -175,9 +174,9 @@ public class AppDbInitializer
                             Image = "/img/2004 Putopisne Impresije/2004 Putopisne Impresije.jpg",
                             Available = true,
                             Quantity = 18,
-                            Price = 100,
+                            Price = 14.99m,
                             Discount = true,
-                            DiscountPrice = 80,
+                            DiscountPrice = 10.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2004,
@@ -201,9 +200,9 @@ public class AppDbInitializer
                             Image = "/img/2007 Osam Generacija Thallera/2007 Osam Generacija Thallera.jpg",
                             Available = true,
                             Quantity = 20,
-                            Price = 200,
+                            Price = 29.99m,
                             Discount = true,
-                            DiscountPrice = 150,
+                            DiscountPrice = 19.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2007,
@@ -227,9 +226,9 @@ public class AppDbInitializer
                             Image = "/img/2008 Vetovo/2008 Vetovo.jpg",
                             Available = true,
                             Quantity = 75,
-                            Price = 300,
+                            Price = 39.99m,
                             Discount = true,
-                            DiscountPrice = 250,
+                            DiscountPrice = 33.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2008,
@@ -253,9 +252,9 @@ public class AppDbInitializer
                             Image = "/img/2009 100 Godina DVD Buk/2009 100 Godina DVD Buk.jpg",
                             Available = true,
                             Quantity = 1,
-                            Price = 150,
+                            Price = 19.99m,
                             Discount = true,
-                            DiscountPrice = 100,
+                            DiscountPrice = 14.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2009,
@@ -279,9 +278,9 @@ public class AppDbInitializer
                             Image = "/img/2009 Almanah Gimnazije/2009 Almanah Gimnazije.jpg",
                             Available = true,
                             Quantity = 11,
-                            Price = 200,
+                            Price = 29.99m,
                             Discount = true,
-                            DiscountPrice = 150,
+                            DiscountPrice = 19.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2009,
@@ -299,15 +298,15 @@ public class AppDbInitializer
                         {
                             ProductCategoryId = 1,
                             Title = "Brestovac",
-                            ShortDescription = "Sam grad Požega imao je te 1948. godine 8.544 stanovnika pa je i priliv od preko jedne tisuće gimnazijalaca imao itekako odraza na sveukupan život u gradu. Promet uglavnom željeznicom ili konjskim zapregama.",
-                            Description = "Sam grad Požega imao je te 1948. godine 8.544 stanovnika pa je i priliv od preko jedne tisuće gimnazijalaca imao itekako odraza na sveukupan život u gradu. Promet uglavnom željeznicom ili konjskim zapregama.",
+                            ShortDescription = "Brestovac - Zapadna Vrata Požeštine",
+                            Description = "Za prostor omeđen bilom planina Požeške Gore - Psunja i Papuka zapadno od Požege, najlogičniji mi je naziv Zapadna Vrata Požeštine. Na cestovnom ulazu i izlazu tog prostora dominira mjesto Brestovac pa otud i naslov ‘BRESTOVAC - ZAPADNA VRATA POŽEŠTINE’. Bilo je u igri i više naslova, ali je ovaj najviše zadovoljio postavljene kriterije.",
                             Author = "Tomislav Wittenberg",
                             Image = "/img/2011 Brestovac/2011 Brestovac.jpg",
                             Available = true,
                             Quantity = 22,
-                            Price = 300,
+                            Price = 39.99m,
                             Discount = true,
-                            DiscountPrice = 250,
+                            DiscountPrice = 33.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2011,
@@ -331,9 +330,9 @@ public class AppDbInitializer
                             Image = "/img/2012 Smotra/2012 Smotra.jpg",
                             Available = true,
                             Quantity = 99,
-                            Price = 100,
+                            Price = 14.99m,
                             Discount = true,
-                            DiscountPrice = 70,
+                            DiscountPrice = 10.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2012,
@@ -357,9 +356,9 @@ public class AppDbInitializer
                             Image = "/img/2013 Tekic/2013 Tekic.jpg",
                             Available = true,
                             Quantity = 7,
-                            Price = 300,
+                            Price = 39.99m,
                             Discount = true,
-                            DiscountPrice = 250,
+                            DiscountPrice = 33.99m,
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(30),
                             YearOfPublication = 2013,
@@ -374,13 +373,13 @@ public class AppDbInitializer
                             Weight = 520
                         },
                         });
-                db.SaveChanges();
-            }
-            
-            // Hero
-            if (!db.Hero.Any())
-            {
-                db.Hero.AddRange(new List<Hero>()
+            db.SaveChanges();
+        }
+
+        // Hero
+        if (!db.Hero.Any())
+        {
+            db.Hero.AddRange(new List<Hero>()
                 {
                     new Hero()
                     {
@@ -439,8 +438,7 @@ public class AppDbInitializer
                     EventText = "- 17%"
                     }
                 });
-                db.SaveChanges();
-            }
+            db.SaveChanges();
         }
     }
 }

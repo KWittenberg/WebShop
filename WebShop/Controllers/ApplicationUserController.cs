@@ -1,6 +1,4 @@
-﻿using WebShop.Utils;
-
-namespace WebShop.Controllers;
+﻿namespace WebShop.Controllers;
 
 [Authorize(Roles = Roles.Admin)] //[Area("Admin")]
 public class ApplicationUserController : Controller
@@ -13,9 +11,14 @@ public class ApplicationUserController : Controller
     private readonly RoleManager<IdentityRole> roleManager;
     private readonly IMapper mapper;
 
-    public ApplicationUserController(ApplicationDbContext db, ICustomerService customerService,
-        IApplicationUserService userService, SignInManager<ApplicationUser> signInManager,
-        UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
+    public ApplicationUserController(
+        ApplicationDbContext db,
+        ICustomerService customerService,
+        IApplicationUserService userService,
+        SignInManager<ApplicationUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IMapper mapper)
     {
         this.db = db;
         this.customerService = customerService;
@@ -257,7 +260,7 @@ public class ApplicationUserController : Controller
     {
         var user = await userService.GetUserAsync(Id);
         var model = mapper.Map<ApplicationUserUpdateBinding>(user);
-        return View(user);
+        return (IActionResult)user;
     }
     [AllowAnonymous]
     [HttpPost]

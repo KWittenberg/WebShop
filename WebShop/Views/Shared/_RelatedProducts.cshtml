@@ -1,6 +1,5 @@
 ﻿@inject IProductService productService
 @{
-    var euro = 7.53450m;
     var relatedProduct = await productService.GetProductsAsync();
 }
 <!-- Related Products Section Begin -->
@@ -40,16 +39,11 @@
 
                             @if (item.Discount is true)
                             {
-                                var priceEuroDiscount = @item.DiscountPrice / euro;
-                                var priceEuro = @item.Price / euro;
-                                <div class="product-price">@item.DiscountPrice Kn &nbsp;&nbsp;<span>@item.Price Kn</span></div>
-                                <div class="product-price-euro">@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
+                                <div class="product-price">@item.DiscountPrice € &nbsp;&nbsp;<span>@item.Price €</span></div>
                             }
                             else
                             {
-                                var priceEuro = @item.Price / euro;
-                                <div class="product-price">@item.Price Kn</div>
-                                <div class="product-price-euro">@priceEuro.ToString("0.00") €</div>
+                                <div class="product-price">@item.Price €</div>
                             }
                         </div>
                     </div>

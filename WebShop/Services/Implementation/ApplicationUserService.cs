@@ -9,8 +9,13 @@ public class ApplicationUserService : IApplicationUserService
     private readonly AppConfig appSettings;
     private readonly IMapper mapper;
 
-    public ApplicationUserService(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-        SignInManager<ApplicationUser> signInManager, IOptions<AppConfig> appSettings, IMapper mapper)
+    public ApplicationUserService(
+        ApplicationDbContext db,
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager,
+        SignInManager<ApplicationUser> signInManager,
+        IOptions<AppConfig> appSettings,
+        IMapper mapper)
     {
         this.db = db;
         this.userManager = userManager;

@@ -1,4 +1,4 @@
-﻿namespace WebShop.Controllers;
+﻿namespace WebShop.Controllers.API;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,7 +15,6 @@ public class AdminApiController : ControllerBase
         this.productService = productService;
     }
 
-
     /// <summary>
     /// ProductCategorys
     /// </summary>
@@ -26,8 +25,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.GetProductCategorysAsync());
     }
-
-
+    
     /// <summary>
     /// Product
     /// </summary>
@@ -40,6 +38,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.GetProductAsync(id));
     }
+    
     [HttpPost]
     [Route("product")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
@@ -47,6 +46,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.AddProductAsync(model));
     }
+    
     [HttpPut]
     [Route("product")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
@@ -54,6 +54,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.UpdateProductAsync(model));
     }
+    
     [HttpDelete]
     [Route("product")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]

@@ -14,7 +14,7 @@
         <h1 class="page-header mb-0">ProductImages</h1>
     </div>
     <div class="ms-auto">
-        <a asp-controller="ProductImages" asp-action="AddOrEdit" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>
+        @*<a asp-controller="ProductImages" asp-action="AddOrEdit" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add New</a>*@
     </div>
 </div>
 <div class="mt-5 col-xl-12">
@@ -59,8 +59,8 @@
                             <td>@item.Created</td>
                             <td>
                                 <div class="btn-group btn-group-sm">
-                                    <a asp-controller="ProductImages" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
-                                    <a asp-controller="ProductImages" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                    @*<a asp-controller="ProductImages" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-eye"></i></a>
+                                    <a asp-controller="ProductImages" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm"><i class="bi bi-pencil-square"></i></a>*@
                                     <button class="deleteBtn btn btn-secondary btn-sm" type="button" data-id="@item.Id"><i class="bi bi-trash"></i></button>
                                     @*<form asp-controller="ProductImages" asp-action="Delete" asp-route-id="@item.Id"><button type="submit" class="btn btn-secondary btn-sm" onclick="return confirm('Are you sure to delete this record?')"><i class="bi bi-trash"></i></button></form>*@
                                 </div>

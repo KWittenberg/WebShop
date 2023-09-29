@@ -2,7 +2,6 @@
 @inject IProductService productService
 @{
     ViewData["Title"] = "BoltaShop";
-    var euro = 7.53450m;
     var productCategory = await productService.GetProductCategorysAsync();
 }
 <!-- Breadcrumb Section Begin -->
@@ -123,16 +122,13 @@
                                         <div class="catagory-name">@product.Author</div><a href="@Url.Action("ItemView", "Shop", new { id = product.Id })"><h4 style="color: #A9A9A9"><b>@product.Title</b></h4></a>
                                         @if (product.Discount == true)
                                         {
-                                            var priceEuroDiscount = @product.DiscountPrice / euro;
-                                            var priceEuro = @product.Price / euro;
-                                            <div class="product-price">@product.DiscountPrice Kn &nbsp;&nbsp;<span>@product.Price Kn</span></div>
-                                            <div class="product-price-euro" >@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
+                                            <div class="product-price">@product.DiscountPrice € &nbsp;&nbsp;<span>@product.Price €</span></div>
+                                            //<div class="product-price-euro" >@priceKnDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceKn.ToString("0.00") €</span></div>
                                         }
                                         else
                                         {
-                                            var priceEuro = @product.Price / euro;
-                                            <div class="product-price">@product.Price Kn</div>
-                                            <div class="product-price-euro">@priceEuro.ToString("0.00") €</div>
+                                            <div class="product-price">@product.Price €</div>
+                                            //<div class="product-price-euro">@priceKn.ToString("0.00") €</div>
                                         }
                                     </div>
                                 </div>

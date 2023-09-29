@@ -24,8 +24,7 @@ public class AddressController : Controller
                     View(await this.db.Address
                         .Include(am => am.ApplicationUser)
                         .OrderBy(x => x.ApplicationUser)
-                        .ToListAsync()) :
-                    Problem("Entity set 'ApplicationDbContext.Address'  is null.");
+                        .ToListAsync()) : Problem("Entity set 'ApplicationDbContext.Address'  is null.");
     }
 
     /// <summary>
@@ -43,8 +42,7 @@ public class AddressController : Controller
         //return RedirectToAction("Index");
         return RedirectToAction("Index", address);
     }
-
-
+    
 
     /// <summary>
     /// GET: Address/Details/1
@@ -61,8 +59,7 @@ public class AddressController : Controller
 
         return View(address);
     }
-
-
+    
     /// <summary>
     /// Address/Create
     /// </summary>

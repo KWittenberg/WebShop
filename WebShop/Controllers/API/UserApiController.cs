@@ -1,17 +1,17 @@
-﻿namespace WebShop.Controllers;
+﻿namespace WebShop.Controllers.API;
 
 [Route("api/[controller]")]
 public class UserApiController : ControllerBase
 {
     private readonly IApplicationUserService userService;
     private readonly SignInManager<ApplicationUser> signInManager;
+    
     public UserApiController(IApplicationUserService userService, SignInManager<ApplicationUser> signInManager)
     {
         this.userService = userService;
         this.signInManager = signInManager;
     }
-
-
+    
 
     /// <summary>
     /// Token

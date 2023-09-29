@@ -1,6 +1,5 @@
 ﻿@inject IProductService productService
 @{
-    var euro = 7.53450m;
     var carouselOffer = await productService.GetAvailableProductsAsync();
 }
 <!-- Carousel -->
@@ -40,16 +39,11 @@
 
                                 @if (product.Discount == true)
                                 {
-                                    var priceEuroDiscount = @product.DiscountPrice / euro;
-                                    var priceEuro = @product.Price / euro;
-                                    <div class="product-price">@product.DiscountPrice Kn &nbsp;&nbsp;<span>@product.Price Kn</span></div>
-                                    <div class="product-price-euro">@priceEuroDiscount.ToString("0.00") € &nbsp;&nbsp;<span>@priceEuro.ToString("0.00") €</span></div>
+                                    <div class="product-price">@product.DiscountPrice € &nbsp;&nbsp;<span>@product.Price €</span></div>
                                 }
                                 else
                                 {
-                                    var priceEuro = @product.Price / euro;
-                                    <div class="product-price">@product.Price Kn</div>
-                                    <div class="product-price-euro">@priceEuro.ToString("0.00") €</div>
+                                    <div class="product-price">@product.Price €</div>
                                 }
                             </div>
                         </div>
@@ -134,16 +128,12 @@
                                         <div class="pd-desc">
                                             @if (product.Discount is true)
                                             {
-                                                var priceEuroDiscount = @product.DiscountPrice / euro;
-                                                var priceEuro = @product.Price / euro;
-                                                <h3>@string.Format("{0:C}", product.DiscountPrice)<span>@string.Format("{0:C}", product.Price)</span>&nbsp; @priceEuroDiscount.ToString("0.00") € <span>@priceEuro.ToString("0.00") €</span></h3>
+                                                <div class="product-price"><b style="color: darkgoldenrod">@product.DiscountPrice € </b>&nbsp;&nbsp;<span><s> @product.Price € </s></span></div>
                                                 <input type="text" readonly hidden value="@product.DiscountPrice" name="Price">
                                             }
                                             else
                                             {
-                                                var priceEuro = @product.Price / euro;
-                                                <h3 style="display: inline;">@string.Format("{0:C}", product.Price) &nbsp;</h3>
-                                                <h4 style="display: inline;">@priceEuro.ToString("0.00") €</h4>
+                                                <div class="product-price">@product.Price €</div>
                                                 <input type="text" readonly hidden value="@product.Price" name="Price">
                                             }
                                         </div>

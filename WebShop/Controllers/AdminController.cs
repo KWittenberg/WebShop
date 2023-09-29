@@ -57,8 +57,7 @@ public class AdminController : Controller
     public async Task<IActionResult> DetailsProduct(int id)
     {
         var product = await productService.GetProductAsync(id);
-
-        return View(product);
+        return (IActionResult)product;
     }
 
 
@@ -110,7 +109,7 @@ public class AdminController : Controller
     {
         var product = await productService.GetProductAsync(id);
         var model = mapper.Map<ProductUpdateBinding>(product);
-        return View(product);
+        return (IActionResult)product;
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -150,10 +149,10 @@ public class AdminController : Controller
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> AddProductCategory()
-    {
-        return View();
-    }
+    //public async Task<IActionResult> AddProductCategory()
+    //{
+    //    return View();
+    //}
     [HttpPost]
     public async Task<IActionResult> AddProductCategory(ProductCategoryBinding model)
     {
