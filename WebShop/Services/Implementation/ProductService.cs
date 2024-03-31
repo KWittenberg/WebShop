@@ -537,7 +537,7 @@ public class ProductService : IProductService
         await db.SaveChangesAsync();
         return mapper.Map<OrderViewModel>(order);
     }
-    
+
     /// <summary>
     /// UpdateShoppinCartStatus
     /// Ako je shoppingcart u statusu active npr 2h.
@@ -558,7 +558,7 @@ public class ProductService : IProductService
         SuspendShoppingCarts(shoppingCarts);
         await db.SaveChangesAsync();
     }
-    
+
     /// <summary>
     /// SuspendShoppingCart
     /// </summary>

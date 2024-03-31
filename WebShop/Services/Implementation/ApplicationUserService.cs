@@ -26,10 +26,6 @@ public class ApplicationUserService : IApplicationUserService
     }
 
 
-    /// <summary>
-    /// GetApplicationUserRolesAsync
-    /// </summary>
-    /// <returns></returns>
     public async Task<List<ApplicationUserRoleViewModel>> GetApplicationUserRolesAsync()
     {
         var roles = await db.Roles.ToListAsync();
@@ -37,11 +33,6 @@ public class ApplicationUserService : IApplicationUserService
         return roles.Select(x => mapper.Map<ApplicationUserRoleViewModel>(x)).ToList();
     }
 
-    /// <summary>
-    /// GetApplicationUserRoleAsync
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public async Task<string> GetApplicationUserRoleAsync(string id)
     {
         var dboApplicationUser = await db.ApplicationUser.FindAsync(id);
@@ -50,22 +41,12 @@ public class ApplicationUserService : IApplicationUserService
         return role.First();
     }
 
-
-    /// <summary>
-    /// GetRolesAsync
-    /// </summary>
-    /// <returns></returns>
     public async Task<List<ApplicationUserViewModel>> GetRolesAsync()
     {
         var dbo = await db.Roles.ToListAsync();
         return dbo.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
     }
 
-    /// <summary>
-    /// GetRoleAsync
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public async Task<ApplicationUserViewModel> GetRoleAsync(string id)
     {
         var role = await db.Roles.FindAsync(id);
@@ -74,11 +55,6 @@ public class ApplicationUserService : IApplicationUserService
 
 
 
-    /// <summary>
-    /// GetUserAsync
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public async Task<ApplicationUser?> GetUserAsync(ApplicationUserBinding model)
     {
         // First check if user exist
@@ -88,24 +64,19 @@ public class ApplicationUserService : IApplicationUserService
         return user;
     }
 
-    /// <summary>
-    /// GetApplicationUsersAsync
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public async Task<List<ApplicationUserViewModel>> GetApplicationUsersAsync()
     {
-        var dboUsers = db.ApplicationUser.Include(x => x.Address).ToList();
+        var dboUsers = await db.ApplicationUser.Include(x => x.Address).ToListAsync();
         var response = dboUsers.Select(x => mapper.Map<ApplicationUserViewModel>(x)).ToList();
-        response.ForEach(x => x.Role = GetApplicationUserRoleAsync(x.Id).Result);
+
+        // response.ForEach(x => x.Role = GetApplicationUserRoleAsync(x.Id).Result);
+        foreach (var user in response)
+        {
+            user.Role = await GetApplicationUserRoleAsync(user.Id);
+        }
         return response;
     }
-
-    /// <summary>
-    /// GetApplicationUserAsync
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    
     public async Task<ApplicationUserViewModel> GetApplicationUserAsync(string id)
     {
         var dboUser = await db.ApplicationUser.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id);
@@ -116,11 +87,6 @@ public class ApplicationUserService : IApplicationUserService
     }
 
 
-    /// <summary>
-    /// GetUserAsync
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public async Task<ApplicationUserViewModel> GetUserAsync(string id)
     {
         var dboUser = await db.ApplicationUser.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == id);
@@ -135,13 +101,6 @@ public class ApplicationUserService : IApplicationUserService
     //}
 
 
-    /// <summary>
-    /// CreateApplicationUserAsync
-    /// </summary>
-    /// <param name="model"></param>
-    /// <param name="role"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
     public async Task<ApplicationUser?> CreateApplicationUserAsync(ApplicationUserBinding model)
     {
         var find = await userManager.FindByEmailAsync(model.Email);
@@ -171,11 +130,6 @@ public class ApplicationUserService : IApplicationUserService
         return user;
     }
 
-    /// <summary>
-    /// UpdateApplicationUserAsync
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public async Task<ApplicationUserViewModel> UpdateApplicationUserAsync(ApplicationUserUpdateBinding model)
     {
         var dboUser = await db.ApplicationUser.Include(x => x.Address).FirstOrDefaultAsync(x => x.Id == model.Id);
@@ -230,11 +184,6 @@ public class ApplicationUserService : IApplicationUserService
         //return mapper.Map<ApplicationUserViewModel>(dbo);
     }
 
-    /// <summary>
-    /// UpdateUserAsync
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public async Task<ApplicationUserViewModel> UpdateUserAsync(UserUpdateBinding model)
     {
         var dboUser = await db.ApplicationUser.FirstOrDefaultAsync(x => x.Id == model.Id);
@@ -249,11 +198,6 @@ public class ApplicationUserService : IApplicationUserService
         return mapper.Map<ApplicationUserViewModel>(dboUser);
     }
 
-    /// <summary>
-    /// DeleteApplicationUserAsync
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public async Task<ApplicationUserViewModel> DeleteApplicationUserAsync(ApplicationUserUpdateBinding model)
     {
         var roles = await db.Roles.FirstOrDefaultAsync(x => x.Id == model.RoleId);
@@ -265,11 +209,6 @@ public class ApplicationUserService : IApplicationUserService
         return mapper.Map<ApplicationUserViewModel>(dbo);
     }
 
-    /// <summary>
-    /// DeleteAllUserRoles
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
     private async Task DeleteAllUserRoles(ApplicationUser user)
     {
         var userRoles = await userManager.GetRolesAsync(user);
@@ -279,15 +218,7 @@ public class ApplicationUserService : IApplicationUserService
         }
     }
 
-
-
-    /// <summary>
-    /// Registration User with Address
-    /// </summary>
-    /// <param name="model"></param>
-    /// <param name="role"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    
     public async Task<ApplicationUser?> RegistrationAsync(UserBinding model, string role)
     {
         var find = await userManager.FindByEmailAsync(model.Email);
@@ -326,13 +257,6 @@ public class ApplicationUserService : IApplicationUserService
         return user;
     }
 
-    /// <summary>
-    /// Create User Async only Email and Password
-    /// </summary>
-    /// <param name="model"></param>
-    /// <param name="role"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
     public async Task<ApplicationUser?> CreateUserAsync(UserBinding model, string role)
     {
         var find = await userManager.FindByEmailAsync(model.Email);
@@ -356,12 +280,6 @@ public class ApplicationUserService : IApplicationUserService
         return user;
     }
 
-    /// <summary>
-    /// Create API User Async
-    /// </summary>
-    /// <param name="model"></param>
-    /// <param name="role"></param>
-    /// <returns></returns>
     public async Task<ApplicationUserViewModel?> CreateApiUserAsync(UserBinding model, string role)
     {
         var result = await CreateUserAsync(model, role);
@@ -370,13 +288,6 @@ public class ApplicationUserService : IApplicationUserService
     }
 
 
-
-
-    /// <summary>
-    /// GetToken
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public async Task<string> GetToken(TokenLoginBinding model)
     {
         var signInResult = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);

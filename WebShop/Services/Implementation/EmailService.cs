@@ -9,13 +9,6 @@ public class EmailService : IEmailService
         this.config = config;
     }
 
-    /// <summary>
-    /// SendEmail
-    /// </summary>
-    /// <param name="to"></param>
-    /// <param name="subject"></param>
-    /// <param name="body"></param>
-    /// <returns></returns>
     public Task SendEmail(string to, string subject, string body)
     {
         var email = new MimeMessage();
@@ -50,10 +43,6 @@ public class EmailService : IEmailService
         smtp.Disconnect(true);
     }
 
-    /// <summary>
-    /// SendEmailMessage
-    /// </summary>
-    /// <param name="model"></param>
     public void SendEmailMessage(ContactBinding model)
     {
         model.To = this.config.GetSection("EmailUsername").Value;

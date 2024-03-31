@@ -15,22 +15,15 @@ public class AdminApiController : ControllerBase
         this.productService = productService;
     }
 
-    /// <summary>
-    /// ProductCategorys
-    /// </summary>
-    /// <returns></returns>
+
     [Route("product-categorys")]
     [ProducesResponseType(typeof(List<ProductCategoryViewModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetProductCategorysAsync()
     {
         return Ok(await productService.GetProductCategorysAsync());
     }
-    
-    /// <summary>
-    /// Product
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
+
+
     [HttpGet]
     [Route("product/{id}")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
@@ -38,7 +31,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.GetProductAsync(id));
     }
-    
+
     [HttpPost]
     [Route("product")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
@@ -46,7 +39,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.AddProductAsync(model));
     }
-    
+
     [HttpPut]
     [Route("product")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
@@ -54,7 +47,7 @@ public class AdminApiController : ControllerBase
     {
         return Ok(await productService.UpdateProductAsync(model));
     }
-    
+
     [HttpDelete]
     [Route("product")]
     [ProducesResponseType(typeof(ProductViewModel), StatusCodes.Status200OK)]
